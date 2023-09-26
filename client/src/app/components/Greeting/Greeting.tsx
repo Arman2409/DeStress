@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-import styles from "../../../styles/components/greeting.module.scss"
+import styles from "../../../styles/components/Greeting.module.scss"
 import { logoVariants } from "./utils/variants"
 
 const Greeting = () => {

@@ -1,0 +1,23 @@
+@import "../../customs.scss";
+@import "../../colors.scss";
+
+.tile {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border: 1px solid $color4;
+  border-radius: 5px;
+  overflow: hidden;
+
+  &_image {
+    @extend .absolute_background;
+  }
+
+  &_hover_cont {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: red;
+  }
+}
