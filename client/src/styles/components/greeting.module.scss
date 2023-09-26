@@ -1,0 +1,8 @@
+@import "../customs.scss";
+
+.main {
+        @extend .centered;
+        width: 200px;
+        height: 100%;
+        border: 1px solid pink,
+}
