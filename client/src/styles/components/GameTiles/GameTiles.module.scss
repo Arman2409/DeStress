@@ -1,0 +1,15 @@
+@import "../../customs.scss";
+
+.game_tiles_main {
+    @extend .centered;   
+    width: 70vw;
+}
+
+// can come handy 
+.games_groups {
+
+}
+
+.games_group {
+    display: flex;
+}
