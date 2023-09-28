@@ -1,0 +1,16 @@
+@import "../../colors.scss";
+@import "../../customs.scss";
+
+.info_window {
+   @extend .centered;
+   @extend .screen_size;
+   @extend .demo;
+
+   z-index: 4;
+   position: absolute;
+}
+
+.info_content {
+   width: 80%;
+   height: 80%;
+}

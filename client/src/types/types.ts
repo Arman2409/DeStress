@@ -4,3 +4,11 @@ export interface GameType {
     order: number
     name: string
 }
+
+export interface InfoDetailsType { 
+    onAction: Function
+    onCancel: Function 
+    actionText: string
+    cancelText: string
+    infoText: string
+}
