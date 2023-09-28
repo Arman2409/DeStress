@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
 import type { GameType } from "../../../../../types/types";
 import { hoverContVariants } from "./utils/variants";
 
-const Tile = ({ image, link }: Omit<GameType, "order">) => {
+const Tile = ({ image, link, name }: Omit<GameType, "order">) => {
     const [hovered, setHovered] = useState<boolean>(false);
-    
-    useEffect(() => {
-     console.log(hovered);
-     
-    }, [hovered])
+    const router = useRouter();
+
     return (
         <motion.div 
           className={styles.tile}
+          onClick={() => router.push(link)}
           onHoverStart={() => setHovered(true)}
           onHoverEnd={() => setHovered(false)}
           >
@@ -22,13 +21,15 @@ const Tile = ({ image, link }: Omit<GameType, "order">) => {
                 src={image}
                 className={styles.tile_image}
             />
-            <motion.div
+            {hovered && <motion.div
                 key={hovered.toString()}
+                initial="initial"
+                animate="animate"
                 className={styles.tile_hover_cont}
                 variants={hoverContVariants}
-
-            >      
-            </motion.div>
+            > 
+             {name}
+            </motion.div>}
         </motion.div>
     )
 }
