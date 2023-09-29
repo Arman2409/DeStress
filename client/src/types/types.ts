@@ -6,9 +6,9 @@ export interface GameType {
 }
 
 export interface InfoDetailsType { 
-    onAction: Function
+    onOk: Function
     onCancel: Function 
-    actionText: string
+    confirmText: string
     cancelText: string
     infoText: string
 }

@@ -1,14 +1,23 @@
 "use client"
-import { useLayoutEffect } from "react";
+import { useLayoutEffect } from "react"
+import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/Roshambo.module.scss"
 import useInfoWindow from "../globals/hooks/useInfoWindow";
 
 const Roshambo = () => {
-    const { openWindow, Provider } = useInfoWindow();
+    const { openWindow, Provider, closeWindow } = useInfoWindow();
+    const router = useRouter();
 
     useLayoutEffect(() => {
-       openWindow({} as any);
+        openWindow(
+            {
+                infoText: "5This is cool game",
+                onOk: closeWindow,
+                onCancel: () => router.push("/"),
+                cancelText: "Go Back",
+                confirmText: "Continue"
+            });
     }, [])
 
     return (

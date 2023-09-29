@@ -2,42 +2,60 @@
 
 import { useCallback, useContext, createContext, useState } from "react"
 import Button from "antd/lib/button"
+import { AiOutlineClose } from "react-icons/ai"
+import { motion } from "framer-motion"
 
 import styles from "../../../styles/globals/hooks/usInfoWindow.module.scss"
 import type { InfoDetailsType } from "../../../types/types";
+import { infoWindowVariants } from "./utils/variants"
 
 export const InfoContext = createContext({} as any);
 
 const ContextHolder = () => {
-    const { details } = useContext(InfoContext);
-    const { infoText, onAction, onCancel, actionText, cancelText } = details
+    const { details, setDetails } = useContext(InfoContext);
+    const { infoText, onOk, onCancel, confirmText, cancelText } = details || {}
 
     return (
         <>
             {details && (
                 <div className={styles.info_window}>
-                    <div className={styles.info_content}>
-                        <h1>
-                            Info
-                        </h1>
-                        <p>
-                            {infoText}
-                        </p>
+                    <AiOutlineClose
+                        className={styles.close_icon}
+                        onClick={() => setDetails(null)}
+                    />
+                    <motion.div
+                        className={styles.info_content}
+                        variants={infoWindowVariants}
+                        initial="initial"
+                        animate="animate"
+                    >
+                        <div className={styles.info_data}>
+                            <h1 className={styles.info_title}>
+                                Info
+                            </h1>
+                            <p>
+                                {infoText}
+                            </p>
+                        </div>
                         <div className={styles.buttons_cont}>
-                            {actionText && (
-                                <Button
-                                  onClick={onAction}>
-                                    {actionText}
-                                </Button>
-                            )}
                             {cancelText && (
                                 <Button
-                                  onClick={onCancel}>
+                                    type="primary"
+                                    className={styles.cancel_button}
+                                    onClick={onCancel}>
                                     {cancelText}
                                 </Button>
                             )}
+                            {confirmText && (
+                                <Button
+                                    type="primary"
+                                    className={styles.ok_button}
+                                    onClick={onOk}>
+                                    {confirmText}
+                                </Button>
+                            )}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             )}
         </>
@@ -45,7 +63,7 @@ const ContextHolder = () => {
 }
 
 const useInfoWindow = () => {
-    const [details, setDetails] = useState<{}>({} as any);
+    const [details, setDetails] = useState<InfoDetailsType|null>(null);
 
     const Provider = ({ children }: any) => {
         return (
@@ -61,7 +79,9 @@ const useInfoWindow = () => {
 
     const openWindow = useCallback((infoDetails: InfoDetailsType) => setDetails(infoDetails), [setDetails]);
 
-    return { openWindow, Provider }
+    const closeWindow = useCallback(() => setDetails(null), [setDetails])
+
+    return { openWindow, Provider, closeWindow }
 }
 
 export default useInfoWindow
