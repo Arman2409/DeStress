@@ -1,4 +1,3 @@
-"use client"
 import { chunk } from "lodash"
 
 import styles from "../../../styles/components/GameTiles/GameTiles.module.scss"

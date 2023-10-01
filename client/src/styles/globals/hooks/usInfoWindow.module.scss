@@ -1,0 +1,72 @@
+@import "../../colors.scss";
+@import "../../customs.scss";
+
+.info_window {
+   @extend .centered;
+   @extend .screen_size;
+
+   z-index: 10;
+   position: absolute;
+}
+
+.info_demo {
+   @extend .demo;
+   @extend .absolute_background;
+
+   z-index: 11;
+}
+.info_content {
+   width: 70%;
+   height: 70%;
+   padding: 25px;
+   background-color: $color3;
+   overflow: hidden;
+   z-index: 12;
+}
+
+.info_data {
+   width: 100%;
+   height: 85%;
+   overflow-y: auto;
+   font-size: 20px;
+}
+
+.info_title {
+   text-align: center;
+   font-size: 30px;
+}
+
+.buttons_cont {
+   width: 100%;
+   height: 15%;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.close_icon {
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   cursor: pointer;
+   font-size: 30px;
+   color: $color3;
+}
+
+.ok_button {
+   margin: 15px;
+   background-color: greenyellow;
+   color: $color2;
+   width: 125px;
+   height: 40px;
+   font-size: 20px;
+}
+
+.cancel_button {
+   margin: 15px;
+   background-color: orangered;
+   color: $color4;
+   width: 125px;
+   height: 40px;
+   font-size: 20px;
+}

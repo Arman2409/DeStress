@@ -10,18 +10,24 @@
   margin: 25px;
   overflow: hidden;
   cursor: pointer;
+  box-shadow: 1px 0px 1px 1px $color4;
 
   &_image {
     @extend .absolute_background;
   }
 
   &_hover_cont {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-color: red;
-
+    @extend .absolute_background;
     @extend .centered;
+    
+    color: $color4;
+    font-weight: 900;
+
+    &::after {
+      @extend .absolute_background;
+      @extend .demo;
+
+      content: "";     
+    }
   }
 }
