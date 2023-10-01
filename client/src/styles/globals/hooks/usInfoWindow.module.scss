@@ -4,18 +4,24 @@
 .info_window {
    @extend .centered;
    @extend .screen_size;
-   @extend .demo;
 
-   z-index: 4;
+   z-index: 10;
    position: absolute;
 }
 
+.info_demo {
+   @extend .demo;
+   @extend .absolute_background;
+
+   z-index: 11;
+}
 .info_content {
    width: 70%;
    height: 70%;
    padding: 25px;
    background-color: $color3;
    overflow: hidden;
+   z-index: 12;
 }
 
 .info_data {

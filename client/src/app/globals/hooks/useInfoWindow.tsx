@@ -19,6 +19,7 @@ const ContextHolder = () => {
         <>
             {details && (
                 <div className={styles.info_window}>
+                    <div className={styles.info_demo} />
                     <AiOutlineClose
                         className={styles.close_icon}
                         onClick={() => setDetails(null)}
@@ -28,6 +29,7 @@ const ContextHolder = () => {
                         variants={infoWindowVariants}
                         initial="initial"
                         animate="animate"
+                        exit="animate"
                     >
                         <div className={styles.info_data}>
                             <h1 className={styles.info_title}>
@@ -58,7 +60,7 @@ const ContextHolder = () => {
                     </motion.div>
                 </div>
             )}
-        </>
+            </>
     )
 }
 

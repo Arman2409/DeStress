@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/Roshambo.module.scss"
 import useInfoWindow from "../globals/hooks/useInfoWindow";
+import Instruction from "./components/Instruction/Instruction";
 
 const Roshambo = () => {
     const { openWindow, Provider, closeWindow } = useInfoWindow();
@@ -24,7 +25,7 @@ const Roshambo = () => {
         <Provider>
             <div className={styles.roshambo_main}>
                 <div className={styles.roshambo_cont}>
-
+                    <Instruction />
                 </div>
             </div>
         </Provider>
