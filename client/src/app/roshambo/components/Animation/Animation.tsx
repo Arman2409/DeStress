@@ -13,10 +13,10 @@ const Animation = () => {
     return (
         <div className={styles.animation_main}>
             <div className={styles.animation_left}>
-              <ShakingHand jest={chosenJest}/>
+              <ShakingHand side="left" duration={3} initialJest="rock" jest={chosenJest}/>
             </div>
             <div className={styles.animation_right}>
-              <ShakingHand />
+              <ShakingHand side="right" duration={3} initialJest="rock" />
             </div>
         </div>
     )

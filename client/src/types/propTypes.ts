@@ -10,4 +10,7 @@ export type JestProps = {
 
 export type ShakingHandProps = {
     jest?:string
+    initialJest: string
+    side: "left"|"right"
+    duration: number
 }

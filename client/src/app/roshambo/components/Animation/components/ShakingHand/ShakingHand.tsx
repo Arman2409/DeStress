@@ -2,22 +2,29 @@ import { useEffect, useState } from "react"
 import type { ShakingHandProps } from "../../../../../../types/propTypes"
 import { jestImages } from "./utils/utils"
 
-const ShakingHand = ({jest}:ShakingHandProps) => {
-    const [jestState, setJestState] = useState<string|undefined>(jest);
+const getRandomJest = () => {
+  const randomNumber = Math.round(Math.random() * 2);
+  return Object.keys(jestImages.left)[randomNumber];
+}
+
+const ShakingHand = ({jest = "rock", side, initialJest, duration}:ShakingHandProps) => {
+    const [imageSource, setImageSource] = useState<string>("");
     
-    const getRandomJest = () => {
-       const randomNumber = Math.round(Math.random() * 2);
-       return Object.keys(jestImages)[randomNumber];
+    const getImageSrc = (jestName: string) => {
+      const sideImages = jestImages[side as keyof typeof jestImages];
+      return sideImages[jestName as keyof typeof sideImages];
     }
 
     useEffect(() => {
-      if(!jest) {
-        setJestState(getRandomJest())
-      }
+      setImageSource(getImageSrc(initialJest))
+      setTimeout(() => {
+        setImageSource(getImageSrc(jest))
+      }, duration * 1000)
     }, [])
+
     return (
       <div className="">
-        <img src={jestImages[jest as keyof typeof jestImages]}></img>
+        <img src={imageSource}></img>
       </div>
     )
 }
