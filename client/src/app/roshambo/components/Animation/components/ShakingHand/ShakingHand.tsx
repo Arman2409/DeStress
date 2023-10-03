@@ -35,7 +35,7 @@ const ShakingHand = ({ jest, showingMode, side, initialJest, duration }: Shaking
       style={{
         position: "relative",
         left: side === "left" ? "-50px" : undefined,
-        right: side === "right" ? "-100px" : undefined,
+        right: side === "right" ? "-200px" : undefined,
       }}
       src={imageSource} />
   )

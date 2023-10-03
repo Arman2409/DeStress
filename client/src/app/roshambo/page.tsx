@@ -16,10 +16,21 @@ const Roshambo = () => {
     const router = useRouter();
     const [chosenJest, setChosenJest] = useState<JestType|null>(null);
     const [ opponentJest, setOpponentJest] = useState<JestType|null>(null);
+    const [score, setScore] = useState<[number, number]>([0, 0]);
 
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
 
     useLayoutEffect(() => {
+        const visitedGamesData = sessionStorage.getItem("destress_visited_games");
+        const visitedGames = visitedGamesData ? JSON.parse(visitedGamesData) : "";
+        if(Array.isArray(visitedGames)) {
+            if(visitedGames.includes("roshambo")) {
+               return;
+            }
+            visitedGames.push("roshambo");
+            sessionStorage.setItem("destress_visited_games", JSON.stringify(visitedGames));
+        }
+        sessionStorage.setItem("destress_visited_games", JSON.stringify(["roshambo"]));
         openWindow(
             {
                 infoText: "5This is cool game",
@@ -28,21 +39,23 @@ const Roshambo = () => {
                 cancelText: "Go Back",
                 confirmText: "Continue"
             });
-    }, [])
+    }, [openWindow])
 
     return (
         <RoshamboContext.Provider value={{
             chosenJest,
             dispatchJest:setChosenJest,
             opponentJest,
-            dispatchOpponentJest: setOpponentJest
+            dispatchOpponentJest: setOpponentJest,
+            score,
+            dispatchScore: setScore,
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
                     <div className={styles.roshambo_cont}>
                        {chosenJest && <Animation />}
                        {!chosenJest && <Instruction />}
-                        {opponentJest && <Summary />}
+                       {opponentJest && <Summary />}
                     </div>
                 </div>
             </InfoWindowProvider>
