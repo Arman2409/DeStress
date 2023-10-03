@@ -1,19 +1,25 @@
 .animation_main {
     width: 100%;
     height: 100%;
-    display: flex;
+    border: 2px solid pink;
+    overflow: hidden;
+}
+
+.score_cont {
+    height: 20%;
     border: 2px solid pink;
 }
 
+.animation_cont {
+    display: flex;
+    height: 80%;
+}
 .animation_left {
     width: 50%;
-    height: 80%;
     border: 2px solid pink;
-
 }
 
 .animation_right {
     width: 50%;
-    height: 80%;
     border: 2px solid pink;
 }

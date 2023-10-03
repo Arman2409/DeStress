@@ -5,6 +5,8 @@ export const jestImages = {
         rock: "/roshambo/gestures/left/rock_jest.png",
     },
     right: {
-        
+        paper: "/roshambo/gestures/right/paper.png",
+        scissors: "/roshambo/gestures/right/scissors.png",
+        rock: "/roshambo/gestures/right/rock.png",
     }
 }

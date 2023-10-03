@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+
+import styles from "../../../../../../styles/roshambo/components/Animation/components/ShakingHand.module.scss"
 import type { ShakingHandProps } from "../../../../../../types/propTypes"
-import { jestImages } from "./utils/utils"
+import { jestImages } from "./utils/data"
+import { shakingImageVariants } from "./utils/variants"
 
-const getRandomJest = () => {
-  const randomNumber = Math.round(Math.random() * 2);
-  return Object.keys(jestImages.left)[randomNumber];
-}
-
-const ShakingHand = ({jest = "rock", side, initialJest, duration}:ShakingHandProps) => {
+const ShakingHand = ({jest, side, initialJest, duration}:ShakingHandProps) => {
     const [imageSource, setImageSource] = useState<string>("");
     
     const getImageSrc = (jestName: string) => {
@@ -18,14 +17,22 @@ const ShakingHand = ({jest = "rock", side, initialJest, duration}:ShakingHandPro
     useEffect(() => {
       setImageSource(getImageSrc(initialJest))
       setTimeout(() => {
-        setImageSource(getImageSrc(jest))
+           setImageSource(getImageSrc(jest))
       }, duration * 1000)
-    }, [])
+    }, [setImageSource])
 
     return (
-      <div className="">
-        <img src={imageSource}></img>
-      </div>
+        <motion.img 
+          className={styles.shaking_image}
+          variants={shakingImageVariants}
+          initial="initial"
+          animate="animate"
+          style={{
+            position: "relative",
+            left: side === "left" ? "-50px" : undefined,
+            right: side === "right" ? "-100px" : undefined,
+          }}
+          src={imageSource} />
     )
 }
 

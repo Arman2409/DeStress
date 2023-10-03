@@ -1,4 +1,6 @@
-export const jestsData = [
+import type { JestDetailsType } from "../../../../../types/types";
+
+export const jestsData:JestDetailsType[] = [
     {
         name: "paper",
         keys: ["1"],

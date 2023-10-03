@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 
 import styles from "../../../../styles/roshambo/components/Instruction/Instruction.module.scss"
-import type { JestType } from "../../../../types/types"
+import type { JestDetailsType } from "../../../../types/types"
 import Jest from "./components/Jest/Jest"
 import { RoshamboContext } from "../../page"
 import { jestsData } from "./utils/data"
 
 let keysArr: string[] = [];
-jestsData.forEach(({ keys }: JestType) => {
+jestsData.forEach(({ keys }: JestDetailsType) => {
   keysArr.push(...keys);
 })
 
 const Instruction = () => {
-  const [ jests, setJests ] = useState<JestType[]>(jestsData);
+  const [ jests, setJests ] = useState<JestDetailsType[]>(jestsData);
   const handlingJest = useRef<boolean>(false);
   const [chosen, setChosen] = useState("");
   const { dispatchJest } = useContext(RoshamboContext);
@@ -20,7 +20,7 @@ const Instruction = () => {
   const handleNewJest = useCallback((key:string|"", name?: string) => {
     if(handlingJest.current) return;
     handlingJest.current = true;
-    setJests(jests =>  jests.map((jest: JestType) => 
+    setJests(jests =>  jests.map((jest: JestDetailsType) => 
       {  
       if (jest.keys.includes(key) || jest.name === name) {
         setChosen(jest.name)
@@ -65,7 +65,7 @@ const Instruction = () => {
           src="./roshambo/giphy.gif" />
       </div>
       <div className={styles.instruction_illustration}>
-        {jests.map((jest: JestType) => {
+        {jests.map((jest: JestDetailsType) => {
           const { name = "" } = { ...jest };
           if (name === "scissors") return (
             <Jest
