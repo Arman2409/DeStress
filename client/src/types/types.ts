@@ -1,3 +1,5 @@
+export type JestType = "scissors"|"rock"|"paper"
+
 export interface GameType {
     order: number
     image: string
@@ -13,9 +15,9 @@ export interface InfoDetailsType {
     onCancel: Function
 }
 
-export interface JestType {
+export interface JestDetailsType {
     keyClicked?: boolean
-    name: string
+    name: JestType
     keyboardImg: string
     jestImg: string
     keys: string[]

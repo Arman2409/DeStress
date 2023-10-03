@@ -1,14 +1,22 @@
 "use client"
-import { useLayoutEffect } from "react"
+import { createContext, useLayoutEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/Roshambo.module.scss"
-import useInfoWindow from "../globals/hooks/useInfoWindow";
-import Instruction from "./components/Instruction/Instruction";
+import type { RoshamboContextType } from "../../types/contextTypes"
+import type { JestType } from "../../types/types"
+import useInfoWindow from "../globals/hooks/useInfoWindow"
+import Instruction from "./components/Instruction/Instruction"
+import Animation from "./components/Animation/Animation"
+import Summary from "./components/Summary/Summary"
+
+export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
 const Roshambo = () => {
-    const { openWindow, Provider, closeWindow } = useInfoWindow();
     const router = useRouter();
+    const [chosenJest, setChosenJest] = useState<JestType|"">("");
+    const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
+    const [ result, setResult] = useState<JestType[]>([]);
 
     useLayoutEffect(() => {
         openWindow(
@@ -22,13 +30,22 @@ const Roshambo = () => {
     }, [])
 
     return (
-        <Provider>
-            <div className={styles.roshambo_main}>
-                <div className={styles.roshambo_cont}>
-                    <Instruction />
+        <RoshamboContext.Provider value={{
+            chosenJest,
+            dispatchJest:setChosenJest,
+            result,
+            dispatchResult: setResult
+        }}>
+            <InfoWindowProvider>
+                <div className={styles.roshambo_main}>
+                    <div className={styles.roshambo_cont}>
+                        {chosenJest && <Animation />}
+                        {!chosenJest && <Instruction />}
+                        {result.length && <Summary />}
+                    </div>
                 </div>
-            </div>
-        </Provider>
+            </InfoWindowProvider>
+        </RoshamboContext.Provider>
     )
 }
 

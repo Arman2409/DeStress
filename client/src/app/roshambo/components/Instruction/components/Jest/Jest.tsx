@@ -5,12 +5,13 @@ import styles from "../../../../../../styles/roshambo/components/Instruction/com
 import type { JestProps } from "../../../../../../types/propTypes"
 import { keyboardKeyVariants } from "./utils/variants"
 
-const Jest = ({ keyClicked, borderRight, borderLeft, keyboardImg, jestImg, }: JestProps) => {
+const Jest = ({ keyClicked, name, borderRight, borderLeft, keyboardImg, jestImg, onClick}: JestProps) => {
   const [hovered, setHovered] = useState<boolean>(false)
 
   return (
     <div
       className={keyClicked ? styles.jest_main_clicked : styles.jest_main}
+      onClick={() => onClick("", name)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

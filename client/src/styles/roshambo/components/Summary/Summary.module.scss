@@ -1,0 +1,15 @@
+@import "../../../customs.scss";
+@import "../../../colors.scss";
+
+.summary_main {
+  @extend .demo;
+  @extend .centered;
+  @extend .absolute_background;
+}
+
+.summary_content {
+    width: 200px;
+    height: 200px; 
+    background-color: $color2; 
+    
+}
