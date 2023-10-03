@@ -1,18 +1,17 @@
 "use client"
 
-import { useCallback, useContext, createContext, useState } from "react"
+import { useCallback, useState } from "react"
 import Button from "antd/lib/button"
 import { AiOutlineClose } from "react-icons/ai"
 import { motion } from "framer-motion"
 
 import styles from "../../../styles/globals/hooks/usInfoWindow.module.scss"
-import type { InfoDetailsType } from "../../../types/types";
+import type { InfoDetailsType } from "../../../types/types"
+import type { InfoContextHolderProps } from "../../../types/propTypes"
 import { infoWindowVariants } from "./utils/variants"
 
-export const InfoContext = createContext({} as any);
 
-const ContextHolder = () => {
-    const { details, setDetails } = useContext(InfoContext);
+const ContextHolder = ({ details, setDetails }: InfoContextHolderProps) => {
     const { infoText, onOk, onCancel, confirmText, cancelText } = details || {}
 
     return (
@@ -44,7 +43,7 @@ const ContextHolder = () => {
                                 <Button
                                     type="primary"
                                     className={styles.cancel_button}
-                                    onClick={onCancel}>
+                                    onClick={onCancel as any}>
                                     {cancelText}
                                 </Button>
                             )}
@@ -52,7 +51,7 @@ const ContextHolder = () => {
                                 <Button
                                     type="primary"
                                     className={styles.ok_button}
-                                    onClick={onOk}>
+                                    onClick={onOk as any}>
                                     {confirmText}
                                 </Button>
                             )}
@@ -60,22 +59,22 @@ const ContextHolder = () => {
                     </motion.div>
                 </div>
             )}
-            </>
+        </>
     )
 }
 
 const useInfoWindow = () => {
-    const [details, setDetails] = useState<InfoDetailsType|null>(null);
+    const [details, setDetails] = useState<InfoDetailsType | null>(null);
 
     const Provider = ({ children }: any) => {
         return (
-            <InfoContext.Provider value={{
-                details,
-                setDetails
-            }}>
-                <ContextHolder />
+            <>
+                <ContextHolder
+                    details={details}
+                    setDetails={setDetails}
+                />
                 {children}
-            </InfoContext.Provider>
+            </>
         )
     }
 

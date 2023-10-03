@@ -10,3 +10,9 @@ export const combinations = {
         ["rock", "paper"]
     ]
 }
+
+export const statusTexts = {
+    "win": "You won!",
+    "defeat": "You lost...",
+    "draw": "Draw"
+}

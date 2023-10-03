@@ -1,4 +1,5 @@
 export type JestType = "scissors"|"rock"|"paper"
+export type GameStatusType = "draw"|"lose"|"win"
 
 export interface GameType {
     order: number

@@ -14,9 +14,10 @@ export const RoshamboContext = createContext<RoshamboContextType>({} as Roshambo
 
 const Roshambo = () => {
     const router = useRouter();
-    const [chosenJest, setChosenJest] = useState<JestType|"">("");
+    const [chosenJest, setChosenJest] = useState<JestType|null>(null);
+    const [ opponentJest, setOpponentJest] = useState<JestType|null>(null);
+
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
-    const [ result, setResult] = useState<JestType[]>([]);
 
     useLayoutEffect(() => {
         openWindow(
@@ -33,15 +34,15 @@ const Roshambo = () => {
         <RoshamboContext.Provider value={{
             chosenJest,
             dispatchJest:setChosenJest,
-            result,
-            dispatchResult: setResult
+            opponentJest,
+            dispatchOpponentJest: setOpponentJest
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
                     <div className={styles.roshambo_cont}>
-                        {chosenJest && <Animation />}
-                        {!chosenJest && <Instruction />}
-                        {result.length && <Summary />}
+                       {chosenJest && <Animation />}
+                       {!chosenJest && <Instruction />}
+                        {opponentJest && <Summary />}
                     </div>
                 </div>
             </InfoWindowProvider>

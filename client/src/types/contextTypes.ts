@@ -1,6 +1,8 @@
+import type { JestType } from "./types"
+
 export type RoshamboContextType = {
-    chosenJest: string
+    chosenJest: JestType|null
     dispatchJest: Function
-    result: string[]
-    dispatchResult: Function
+    opponentJest: JestType|null
+    dispatchOpponentJest: Function
 }

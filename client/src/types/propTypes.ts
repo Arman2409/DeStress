@@ -1,3 +1,5 @@
+import type { InfoDetailsType, JestType } from "./types"
+
 export type JestProps = {
     keyClicked?: boolean
     borderRight?: boolean
@@ -9,8 +11,14 @@ export type JestProps = {
 }
 
 export type ShakingHandProps = {
-    jest:string
-    initialJest: string
+    jest: JestType|null
+    showingMode: boolean
+    initialJest: JestType|null
     side: "left"|"right"
     duration: number
+}
+
+export type InfoContextHolderProps = {
+    details: InfoDetailsType|null
+    setDetails: Function
 }
