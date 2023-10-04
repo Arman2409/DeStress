@@ -8,7 +8,7 @@ export const shakingImageVariants: Variants = {
         transform: ["rotate(5deg)", "rotate(5deg)", "rotate(0deg)"],
         transition: {
             duration: 0.5,
-            repeat: 1,
+            repeat: 3,
             repeatType: "reverse"
         }
     }
