@@ -9,6 +9,7 @@ import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Instruction from "./components/Instruction/Instruction"
 import Animation from "./components/Animation/Animation"
 import Summary from "./components/Summary/Summary"
+import BackButton from "../globals/components/BackButton/BackButton"
 
 export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
@@ -53,6 +54,7 @@ const Roshambo = () => {
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
                     <div className={styles.roshambo_cont}>
+                    <BackButton extraStyles={{borderRadius: "20px"}}/>
                        {chosenJest && <Animation />}
                        {!chosenJest && <Instruction />}
                        {opponentJest && <Summary />}

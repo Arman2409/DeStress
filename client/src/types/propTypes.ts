@@ -22,3 +22,8 @@ export type InfoContextHolderProps = {
     details: InfoDetailsType|null
     setDetails: Function
 }
+
+export type BackButtonProps = {
+    extraStyles?: any 
+    action?: any
+}
