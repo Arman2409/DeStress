@@ -10,7 +10,7 @@ const getRandomJest = () => {
   return Object.keys(jestImages.left)[randomNumber];
 }
 
-const duration = 3;
+const duration = 2;
 
 const Animation = () => {
   const { chosenJest, dispatchOpponentJest, opponentJest } = useContext(RoshamboContext);
