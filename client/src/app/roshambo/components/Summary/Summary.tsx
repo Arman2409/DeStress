@@ -5,7 +5,9 @@ import type { GameStatusType } from "../../../../types/types"
 import { RoshamboContext } from "../../page"
 import { defineGameStatus } from "../../utils/functions"
 import { statusesData } from "./utils/data"
+import configs from "../../../../configs/configs"
 
+const {summaryWaitTime} = {...configs.roshambo};
 const {texts, icons} = {...statusesData};
 
 const Summary = () => {
@@ -23,7 +25,7 @@ const Summary = () => {
       setTimeout(() => {
         dispatchOpponentJest(null);
         dispatchJest(null);
-      }, 2000)
+      }, summaryWaitTime * 1000)
     }, [dispatchOpponentJest, dispatchJest])
 
     return (

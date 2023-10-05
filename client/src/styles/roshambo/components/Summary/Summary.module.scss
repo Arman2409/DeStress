@@ -9,7 +9,6 @@
 .summary_demo {
   @extend .absolute_background;
   @extend .demo;
-  opacity: 0.2;
 }
 
 .summary_content {
@@ -21,7 +20,7 @@
     background-color: $color2; 
     opacity: 1;
     z-index: 12;
-    font-size: 25px;
+    font-size: 30px;
     border-radius: 15px;
     color: $color1;
 }
