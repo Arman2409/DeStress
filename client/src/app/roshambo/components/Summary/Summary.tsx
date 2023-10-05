@@ -1,46 +1,41 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation"
-import Button from "antd/lib/button"
+import { useContext, useEffect, useState } from "react";
 
 import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss"
-import { combinations } from "./utils/data";
-import { RoshamboContext } from "../../page";
+import type { GameStatusType } from "../../../../types/types"
+import { RoshamboContext } from "../../page"
+import { defineGameStatus } from "../../utils/functions"
+import { statusesData } from "./utils/data"
+import configs from "../../../../configs/configs"
+
+const {summaryWaitTime} = {...configs.roshambo};
+const {texts, icons} = {...statusesData};
 
 const Summary = () => {
-    const router = useRouter();
-    const { result } = useContext(RoshamboContext);
-    const [gameStatus, setGameStatus] = useState<"draw"|"defeat"|"win">("draw");
-
-    const restartGame = useCallback(() => {
-
-    }, [])
+    const { chosenJest, opponentJest, dispatchJest, dispatchOpponentJest } = useContext(RoshamboContext);
+    const [gameStatus, setGameStatus] = useState<GameStatusType>("draw");
+    const [iconState, setIconState] = useState<any>(null);
 
     useEffect(() => {
-      if(result[0] === result[1]) {
-        console.log("draw");
-        
-        return;
-    };
-    console.log(combinations.winning.includes(result), combinations.defeating.includes(result));
+      const gameStatus = defineGameStatus(chosenJest || "rock", opponentJest || "rock");
+      setGameStatus(gameStatus || "draw");
+      setIconState(icons[gameStatus as keyof typeof icons])
+    }, [chosenJest, opponentJest, gameStatus, setGameStatus])
     
-      if(combinations.defeating.includes(result)) {
-        console.log("defeat");
-        setGameStatus("defeat");
-      }
-      if(combinations.winning.includes(result)) {
-        console.log("win");
-        setGameStatus("win");
-      }
-    }, [])
+    useEffect(() => {
+      setTimeout(() => {
+        dispatchOpponentJest(null);
+        dispatchJest(null);
+      }, summaryWaitTime * 1000)
+    }, [dispatchOpponentJest, dispatchJest])
 
     return (
         <div className={styles.summary_main}>
+            <div className={styles.summary_demo} />
             <div className={styles.summary_content}>
-                <h2>
-                  
+                <h2 className={styles.summary_title}>
+                  {texts[gameStatus as keyof typeof texts]}
                 </h2>
-                <Button onClick={() => router.push("/")}>Main Menu</Button>
-                <Button onClick={restartGame}>Restart</Button>
+                {iconState}
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 export const gamesData = [
     {
         "order": 1,
-        "image": "/logo.png",
+        "image": "/tiles/roshambo.jpg",
         "link": "/roshambo",
         "name": "Roshambo"
     },

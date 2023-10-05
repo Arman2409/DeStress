@@ -1,6 +1,11 @@
+import type { GameStatusType, JestType } from "./types"
+
 export type RoshamboContextType = {
-    chosenJest: string
+    chosenJest: JestType | null
+    opponentJest: JestType | null
+    opponentScore: number
+    userScore: number
+    result: GameStatusType
     dispatchJest: Function
-    result: string[]
-    dispatchResult: Function
+    dispatchOpponentJest: Function
 }

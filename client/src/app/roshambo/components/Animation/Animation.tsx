@@ -1,39 +1,51 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 
 import styles from "../../../../styles/roshambo/components/Animation/Animation.module.scss"
-import ShakingHand from "./components/ShakingHand/ShakingHand";
-import { jestImages } from "./components/ShakingHand/utils/data";
-import { RoshamboContext } from "../../page";
+import type { JestType } from "../../../../types/types"
+import type { AnimationProps } from "../../../../types/propTypes"
+import ShakingHand from "./components/ShakingHand/ShakingHand"
+import { RoshamboContext } from "../../page"
+import { getRandomJest } from "./utils/functions"
+import configs from "../../../../configs/configs";
 
-const getRandomJest = () => {
-  const randomNumber = Math.round(Math.random() * 2);
-  return Object.keys(jestImages.left)[randomNumber];
-}
+const { animationDuration} = {...configs.roshambo}
 
-const duration = 3;
-
-const Animation = () => {
-  const { chosenJest, dispatchResult } = useContext(RoshamboContext);
-
-  const opponentJest = getRandomJest();
+const Animation = ({background}:AnimationProps) => {
+  const { chosenJest, dispatchOpponentJest, opponentJest } = useContext(RoshamboContext);
+  const opponentJestMemo = useMemo<JestType>(() => opponentJest || getRandomJest(), [getRandomJest, opponentJest]);
 
   useEffect(() => {
-     setTimeout(() => {
-        dispatchResult([chosenJest, opponentJest])
-     }, duration * 1000)
-  }, [])
+   if (!opponentJest) {
+      setTimeout(() => {
+        dispatchOpponentJest(opponentJestMemo);
+      }, animationDuration * 1000 + 500)
+   }
+  }, [opponentJest, opponentJestMemo, dispatchOpponentJest])
 
   return (
-    <div className={styles.animation_main}>
-      <div className={styles.score_cont}>
-        
-      </div>
-      <div className={styles.animation_cont}>
-        <div className={styles.animation_left}>
-          <ShakingHand side="left" duration={duration} initialJest="rock" jest={chosenJest} />
+    <div 
+      className={styles.animation_main}
+      style={{
+        backgroundImage: `url(/roshambo/backgrounds/${background})`
+      }}>
+      <div className={styles.animations_cont}>
+        <div className={styles.animation_cont}>
+          <ShakingHand
+            side="left"
+            duration={animationDuration}
+            initialJest="rock"
+            jest={chosenJest} 
+            showingMode={Boolean(opponentJest)}
+            />
         </div>
-        <div className={styles.animation_right}>
-          <ShakingHand side="right" duration={duration} initialJest="rock" jest={opponentJest}/>
+        <div className={styles.animation_cont}>
+          <ShakingHand
+            side="right"
+            duration={animationDuration}
+            initialJest="rock"
+            jest={opponentJestMemo}
+            showingMode={Boolean(opponentJest)}
+             />
         </div>
       </div>
     </div>
