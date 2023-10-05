@@ -34,10 +34,10 @@ const Instruction = () => {
       return { ...jest };
     }
     ))
-  }, [setJests])
+  }, [setJests, setChosen])
 
   useEffect(() => {
-    window.addEventListener("keypress", (event: { key: string }) => {
+    window.addEventListener("keypress", (event: KeyboardEvent) => {
       if (alreadyChosen.current) return;
       if (keysArr.includes(event.key)) { 
         handleNewJest(event.key);

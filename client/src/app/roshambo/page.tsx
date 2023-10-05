@@ -11,7 +11,7 @@ import Animation from "./components/Animation/Animation"
 import Summary from "./components/Summary/Summary"
 import BackButton from "../globals/components/BackButton/BackButton"
 import Score from "./components/Score/Score"
-import { defineGameStatus } from "./utils/functions"
+import { defineGameStatus, getRandomBackground } from "./utils/functions"
 
 export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
@@ -23,6 +23,7 @@ const Roshambo = () => {
     const [opponentScore, setOpponentScore] = useState<number>(0);
     const [result, setResult] = useState<GameStatusType>("draw");
     const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
+    const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);
 
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
     
@@ -73,10 +74,10 @@ const Roshambo = () => {
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
                     <div className={styles.roshambo_cont}>
-                        <BackButton extraStyles={{ borderRadius: "20px" }} />
+                        <BackButton extraStyles={{ borderRadius: "20px" , zIndex: 6}} />
                         {showScore && <Score />}
-                        {chosenJest && <Animation />}
-                        {!chosenJest && <Instruction />}
+                        {chosenJest ? <Animation background={backgroundMemo} />
+                         :  <Instruction /> }
                         {opponentJest && <Summary />}
                     </div>
                 </div>

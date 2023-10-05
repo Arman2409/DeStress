@@ -1,5 +1,8 @@
 import type { GameStatusType, JestType } from "../../../types/types"
 import { combinations } from "./data"
+import configs from "../../../configs/configs"
+
+const {backgrounds} = {...configs.roshambo};
 
 export const defineGameStatus = (jest1:JestType|null, jest2:JestType|null):GameStatusType|null => {
   if(!jest1 || !jest2) return null;
@@ -18,4 +21,9 @@ export const defineGameStatus = (jest1:JestType|null, jest2:JestType|null):GameS
       }
     })
     return status;
-  }
+}
+
+export const getRandomBackground = () => {
+  const randomOrder = Math.floor(Math.random() * backgrounds.length);
+  return backgrounds[randomOrder];
+}

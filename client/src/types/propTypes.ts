@@ -31,3 +31,7 @@ export type BackButtonProps = {
 export type AnimatingScoresProps = {
     score: number
 }
+
+export type AnimationProps = {
+    background: string
+}
