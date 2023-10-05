@@ -1,5 +1,5 @@
 "use client"
-import { createContext, useEffect, useLayoutEffect, useState } from "react"
+import { createContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/Roshambo.module.scss"
@@ -22,10 +22,11 @@ const Roshambo = () => {
     const [userScore, setUserScore] = useState<number>(0);
     const [opponentScore, setOpponentScore] = useState<number>(0);
     const [result, setResult] = useState<GameStatusType>("draw");
+    const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
 
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
-
-    useLayoutEffect(() => {
+    
+    useEffect(() => {
         const visitedGamesData = sessionStorage.getItem("destress_visited_games");
         const visitedGames = visitedGamesData ? JSON.parse(visitedGamesData) : "";
         if (Array.isArray(visitedGames)) {
@@ -73,7 +74,7 @@ const Roshambo = () => {
                 <div className={styles.roshambo_main}>
                     <div className={styles.roshambo_cont}>
                         <BackButton extraStyles={{ borderRadius: "20px" }} />
-                        <Score />
+                        {showScore && <Score />}
                         {chosenJest && <Animation />}
                         {!chosenJest && <Instruction />}
                         {opponentJest && <Summary />}
