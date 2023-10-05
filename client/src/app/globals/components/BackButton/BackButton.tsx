@@ -1,15 +1,15 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import { FaArrowLeft } from "react-icons/fa"
-import { motion, useAnimationControls } from "framer-motion"
+import { motion } from "framer-motion"
 
 import styles from "../../../../styles/globals/components/BackButton.module.scss"
 import type { BackButtonProps } from "../../../../types/propTypes"
 import { arrowIconVariants } from "./utils/variants"
 
 const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {
+    const [hovered, setHovered] = useState<boolean>(false)
     const router = useRouter();
-    const controls = useAnimationControls()
 
     const goBack = useCallback(() => router.push("/"), [])
 
@@ -18,10 +18,13 @@ const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {
             className={styles.back_button_main}
             style={extraStyles}
             onClick={action || goBack}
-            onMouseEnter={() => controls.start(arrowIconVariants.animate)}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
             >
             <motion.div
-                animate={controls}
+                animate={hovered ? "animate" : {}}
+                initial="initial"
+                variants={arrowIconVariants}
             >
                 <FaArrowLeft />
             </motion.div>
