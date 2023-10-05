@@ -27,3 +27,7 @@ export type BackButtonProps = {
     extraStyles?: any 
     action?: any
 }
+
+export type AnimatingScoresProps = {
+    score: number
+}

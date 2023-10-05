@@ -51,13 +51,13 @@ const Roshambo = () => {
             const gameStatus = defineGameStatus(chosenJest, opponentJest);
             setResult(gameStatus || "draw");
             if (gameStatus === "win") {
-                setUserScore(curr => curr + 1)
+                setUserScore(curr => curr + 1);
             }
             if (gameStatus === "lose") {
-                setOpponentScore(curr => curr + 1)
+                setOpponentScore(curr => curr + 1);
             }
         }
-    }, [chosenJest, opponentJest])
+    }, [chosenJest, opponentJest, setOpponentScore, setResult, setUserScore])
 
     return (
         <RoshamboContext.Provider value={{

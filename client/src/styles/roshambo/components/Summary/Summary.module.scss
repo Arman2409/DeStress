@@ -9,6 +9,7 @@
 .summary_demo {
   @extend .absolute_background;
   @extend .demo;
+  opacity: 0.2;
 }
 
 .summary_content {
