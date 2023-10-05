@@ -13,13 +13,13 @@ jestsData.forEach(({ keys }: JestDetailsType) => {
 
 const Instruction = () => {
   const [ jests, setJests ] = useState<JestDetailsType[]>(jestsData);
-  const handlingJest = useRef<boolean>(false);
   const [chosen, setChosen] = useState("");
   const { dispatchJest } = useContext(RoshamboContext);
+  const alreadyChosen = useRef<boolean>(false);
 
   const handleNewJest = useCallback((key:string|"", name?: string) => {
-    if(handlingJest.current) return;
-    handlingJest.current = true;
+    if(alreadyChosen.current) return;
+    alreadyChosen.current = true;
     setJests(jests =>  jests.map((jest: JestDetailsType) => 
       {  
       if (jest.keys.includes(key) || jest.name === name) {
@@ -34,12 +34,11 @@ const Instruction = () => {
       return { ...jest };
     }
     ))
-    handlingJest.current = false;
   }, [setJests])
 
   useEffect(() => {
     window.addEventListener("keypress", (event: { key: string }) => {
-      if (handlingJest.current) return;
+      if (alreadyChosen.current) return;
       if (keysArr.includes(event.key)) { 
         handleNewJest(event.key);
       }
