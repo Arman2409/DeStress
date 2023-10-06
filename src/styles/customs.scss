@@ -27,3 +27,7 @@
 @mixin mainBoxShadow($color:$color4) {
     box-shadow: 0px 0px 15px 5px $color;
 } 
+
+@mixin mainTextShadow($color: $color3) {
+    text-shadow: 2px 2px 0 $color, 2px -2px 0 $color, -2px 2px 0 $color, -2px -2px 0 $color, 2px 0px 0 $color, 0px 2px 0 $color, -2px 0px 0 $color, 0px -2px 0 $color;
+}
