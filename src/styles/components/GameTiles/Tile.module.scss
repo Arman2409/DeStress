@@ -2,32 +2,30 @@
 @import "../../colors.scss";
 
 .tile {
+  @extend .centered;
+  @include mainBoxShadow($color3);
+
   width: 150px;
   height: 150px;
   position: relative;
   border: 1px solid $color4;
   border-radius: 5px;
   margin: 25px;
-  overflow: hidden;
   cursor: pointer;
-  box-shadow: 1px 0px 1px 1px $color4;
+
+  &_corner_image {
+    position: absolute;
+    z-index: 20;
+  }
+
+  &_title {
+    @include mainTextShadow($color3);
+    color: $color4;
+    z-index: 6;
+    font-weight: 900;
+  }
 
   &_image {
     @extend .absolute_background;
-  }
-
-  &_hover_cont {
-    @extend .absolute_background;
-    @extend .centered;
-    
-    color: $color4;
-    font-weight: 900;
-
-    &::after {
-      @extend .absolute_background;
-      @extend .demo;
-
-      content: "";     
-    }
   }
 }

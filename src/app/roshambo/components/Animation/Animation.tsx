@@ -26,7 +26,7 @@ const Animation = ({background}:AnimationProps) => {
     <div 
       className={styles.animation_main}
       style={{
-        backgroundImage: `url(/roshambo/backgrounds/${background})`
+        backgroundImage: `url(${background})`
       }}>
       <div className={styles.animations_cont}>
         <div className={styles.animation_cont}>

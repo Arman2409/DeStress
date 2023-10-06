@@ -5,6 +5,7 @@ export interface GameType {
     order: number
     image: string
     link: string
+    cornerImage: string
     name: string
 }
 
