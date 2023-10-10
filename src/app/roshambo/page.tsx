@@ -2,7 +2,7 @@
 import { createContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 
-import styles from "../../styles/roshambo/Roshambo.module.scss"
+import styles from "../../styles/roshambo/page.module.scss"
 import type { RoshamboContextType } from "../../types/contextTypes"
 import type { GameStatusType, JestType } from "../../types/types"
 import useInfoWindow from "../globals/hooks/useInfoWindow"

@@ -8,10 +8,10 @@ export const gamesData = [
     },
     {
         "order": 1,
-        "image": "/logo.png",
-        "link": "/game",
-        "name": "first game",
-        "cornerImage": ""
+        "image": "/tiles/shark.jpg",
+        "link": "/sharkHunt",
+        "name": "Shark hunt",
+        "cornerImage": "/tiles/corner/shark.png"
     },
      {
         "order": 1,

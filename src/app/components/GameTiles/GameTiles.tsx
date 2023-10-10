@@ -7,7 +7,7 @@ import Tile from "./components/Tile/Tile"
 
 const GameTiles = () => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
-        return order - currOrder
+        return order - currOrder;
     })
 
     const gameGroups = chunk(games, 4);

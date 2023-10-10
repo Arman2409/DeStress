@@ -9,3 +9,7 @@ export type RoshamboContextType = {
     dispatchJest: Function
     dispatchOpponentJest: Function
 }
+
+export type SharkHuntContextType = {
+    
+}
