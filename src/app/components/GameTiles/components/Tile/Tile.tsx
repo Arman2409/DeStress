@@ -10,7 +10,7 @@ import { backgroundImageVariants, cornerImageVariants, titleVariants } from "./u
 const Tile = ({ image, cornerImage, link, name }: Omit<GameType, "order">) => {
     const [hovered, setHovered] = useState<boolean>(false);
     const router = useRouter();
-
+    
     return (
         <motion.div
             className={styles.tile}
