@@ -1,4 +1,10 @@
-import type { InfoDetailsType, JestType } from "./types"
+import type { GameType, InfoDetailsType, JestType } from "./types"
+
+export type GameTilesProps = {
+    choseGame: Function
+}
+
+export type TileProps = Omit<GameType, "order"> & {choseGame: Function}
 
 export type JestProps = {
     keyClicked?: boolean

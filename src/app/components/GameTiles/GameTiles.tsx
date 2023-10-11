@@ -3,9 +3,10 @@ import { chunk } from "lodash"
 import styles from "../../../styles/components/GameTiles/GameTiles.module.scss"
 import { gamesData } from "./utils/data"
 import type { GameType } from "../../../types/types"
+import type { GameTilesProps } from "../../../types/propTypes"
 import Tile from "./components/Tile/Tile"
 
-const GameTiles = () => {
+const GameTiles = ({choseGame}: GameTilesProps) => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
@@ -20,7 +21,7 @@ const GameTiles = () => {
                         key={index}
                         className={styles.games_group}>
                         {games.map((game: GameType) => (
-                            <Tile {...game} key={game.order} />
+                            <Tile {...game} choseGame={choseGame} key={game.order} />
                         ))}
                     </div>
                 ))}

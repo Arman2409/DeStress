@@ -9,7 +9,7 @@ const Greeting = () => {
    return (
       <div className={styles.main}>
          <motion.img
-            src="/logo_title.png"
+            src="/logos/logo_title.png"
             initial="initial"
             animate="animate"
             whileHover="hover"

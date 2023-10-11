@@ -15,21 +15,21 @@ export const gamesData = [
     },
      {
         "order": 1,
-        "image": "/logo.png",
+        "image": "/logos/logo.png",
         "link": "/game",
         "name": "first game",
         "cornerImage": ""
     },
     {
         "order": 1,
-        "image": "/logo.png",
+        "image": "/logos/logo.png",
         "link": "/game",
         "name": "first game",
         "cornerImage": ""
     } ,
     {
         "order": 1,
-        "image": "/logo.png",
+        "image": "/logos/logo.png",
         "link": "/game",
         "name": "first game",
         "cornerImage": ""
