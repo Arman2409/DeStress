@@ -1,126 +1,58 @@
-// import Phaser from "phaser"
-import { useCallback, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
+import Phaser from "phaser"
 
-// import Canvas from "./components/Canvas/Canvas"
-
-// const GameComp = () => {
-//   const gameRef = useRef<any>();
-
-//   useEffect(() => {
-//     const preload = () => {
-      
-//       console.log(this);
-
-//       if (this) {
-//         // this.load.image("shark", "/sharkHunt/shark.png");
-//       }
-//     }
-
-//     const create = () => {
-//       console.log(this);
-
-      
-//       if (this) {
-//         // this.add.image(100, 200, "shark");
-//       }
-//     }
-//     const config: Phaser.Types.Core.GameConfig = {
-//       type: Phaser.AUTO as any,
-//       width: "400px",
-//       height: "400px",
-//       parent: 'phaser-container',
-//       backgroundColor: '#93cbee',
-//       pixelArt: true, // Prevent pixel art from becoming blurred when scaled.
-//       physics: {
-//         default: 'arcade',
-//         arcade: {
-//           gravity: { y: 300 },
-//           debug: false
-//         }
-//       },
-//       autoFocus: true,
-//       scene: {
-//         preload: preload,
-//         create: create
-//       }
-//     }
-
-//     gameRef.current = new Phaser.Game(config);
-//   }, [])
-
-//   return (
-//     <div id="phaser-container" />
-//   )
-// }
-
-// export default GameComp;
-import React, { useState } from "react";
-import Phaser from "phaser";
-
-interface Fish {
-  x: number;
-  y: number;
-  sprite: Phaser.GameObjects.Sprite;
-}
+import { eventKeys } from "./utils/data"
 
 const Game: React.FC = () => {
   const gameRef = useRef<any>();
-
-  const [shark, setShark] = useState<any | null>(null);
-  const [fish, setFish] = useState<Fish[]>([]);
+  const scene = useRef<any>();
 
   useEffect(() => {
-      class Example extends Phaser.Scene {
-        constructor(){
-          super()
-        }
-          preload = () => {
-            this.load.image("shark", "./sharkHunt/shark.png");
-          }
-          create = () => {
-            const sharkl = this.add.sprite(100, 100, "shark").setScale(0.1);
-            sharkl.anims.create({
-              key: 'left',
-              frameRate: 10,
-              repeat: -1,
-              duration: 1
-          });
-          console.log({sharkl});
-          
-          setShark(sharkl);
-
-          }
-          update = () => {
-            if (shark && gameRef.current) {
-              shark.sprite.x += (fish[0].x - shark.x) / 10;
-              shark.sprite.y += (fish[0].y - shark.y) / 10;
-            }
-          }
+    class Example extends Phaser.Scene {
+      shark: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
+      constructor() {
+        super()
       }
 
+      preload = () => {
+        this.load.image("shark", "./sharkHunt/shark.png");
+      }
+      create = () => {
+        this.shark= this.add.sprite(100, 100, "shark").setScale(0.1).setRotation(1.5);
+      }
+      update = () => {
 
-      gameRef.current = new Phaser.Game({
-        type: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        parent: "phaser-container",
-        backgroundColor: "blue",
-        scene: Example
-      });
+      }
+    }
 
-       
-  }, []);
-
-  useEffect(() => {
+    scene.current = new Example();
+    gameRef.current = new Phaser.Game({
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      parent: "phaser-container",
+      backgroundColor: "blue",
+      scene: scene.current
+    });
     window.addEventListener("keyup", (e: KeyboardEvent) => {
-      if(e.key === "1") {
-        console.log("here 1");
-        console.log({shark});
-        
-        shark.anims.play("left")
+      if (eventKeys.top.includes(e.key)) {
+        scene.current.shark.y = scene.current.shark.y - 15;
+        scene.current.shark.setRotation(0);
       }
-     })
-  }, [shark])
+      if (eventKeys.bottom.includes(e.key)) {
+        scene.current.shark.y = scene.current.shark.y + 15;
+        scene.current.shark.setRotation(3);
+      }
+      if (eventKeys.left.includes(e.key)) {
+        scene.current.shark.x = scene.current.shark.x - 15;
+        scene.current.shark.setRotation(4.5);
+      }
+      if (eventKeys.right.includes(e.key)) {
+        scene.current.shark.x = scene.current.shark.x + 15;
+        scene.current.shark.setRotation(1.5);
+      }
+    })
+  }, []);
 
   return (
     <div>

@@ -35,7 +35,7 @@ const SharkHunt = () => {
     }, [])
 
     return (
-        // <SharkHuntContext.Provider value={{}}>
+        <SharkHuntContext.Provider value={{}}>
             <InfoWindowProvider>
                 <div className={styles.shark_hunt_main}>
                     <div className={styles.shark_hunt_cont}>
@@ -43,8 +43,8 @@ const SharkHunt = () => {
                         <Game />
                     </div>
                 </div>
-            </InfoWindowProvider>
-        // </SharkHuntContext.Provider>
+            </InfoWindowProvider> 
+        </SharkHuntContext.Provider>
     )
 }
 
