@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import Phaser from "phaser"
+
+import styles from "../../../styles/sharkHunt/components/Game.module.scss"
 
 import { eventKeys } from "./utils/data"
 
@@ -8,8 +10,9 @@ const Game: React.FC = () => {
   const scene = useRef<any>();
 
   useEffect(() => {
-    class Example extends Phaser.Scene {
+    class Ocean extends Phaser.Scene {
       shark: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
+      graphics: Phaser.GameObjects.Graphics = {} as  Phaser.GameObjects.Graphics;
       constructor() {
         super()
       }
@@ -18,23 +21,30 @@ const Game: React.FC = () => {
         this.load.image("shark", "./sharkHunt/shark.png");
       }
       create = () => {
+        this.graphics = this.add.graphics({ fillStyle: { color: 0xff0000 } });
         this.shark= this.add.sprite(100, 100, "shark").setScale(0.1).setRotation(1.5);
+        this.physics.add.collider(this.shark, this.graphics);
       }
       update = () => {
 
       }
     }
 
-    scene.current = new Example();
+    scene.current = new Ocean();
+    const phaserContainer = document.querySelector("#phaser-container");
+
+    if(phaserContainer) {
+      phaserContainer.innerHTML = "";
+    }
     gameRef.current = new Phaser.Game({
       type: Phaser.AUTO,
-      width: 800,
-      height: 600,
+      width: "100%",
+      height: "100%",
       parent: "phaser-container",
       backgroundColor: "blue",
       scene: scene.current
     });
-    window.addEventListener("keyup", (e: KeyboardEvent) => {
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (eventKeys.top.includes(e.key)) {
         scene.current.shark.y = scene.current.shark.y - 15;
         scene.current.shark.setRotation(0);
@@ -45,7 +55,7 @@ const Game: React.FC = () => {
       }
       if (eventKeys.left.includes(e.key)) {
         scene.current.shark.x = scene.current.shark.x - 15;
-        scene.current.shark.setRotation(4.5);
+        scene.current.shark.setRotation(4.5)
       }
       if (eventKeys.right.includes(e.key)) {
         scene.current.shark.x = scene.current.shark.x + 15;
@@ -55,10 +65,7 @@ const Game: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Shark Game</h1>
-      <div id="phaser-container" />
-    </div>
+      <div id="phaser-container" className={styles.phaser_cont} />
   );
 };
 

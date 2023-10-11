@@ -1,20 +1,25 @@
 "use client"
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
-import type { GameType } from "../../../../../types/types";
+import type { TileProps } from "../../../../../types/propTypes";
 import { backgroundImageVariants, cornerImageVariants, titleVariants } from "./utils/variants";
 
-const Tile = ({ image, cornerImage, link, name }: Omit<GameType, "order">) => {
+const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);
     const router = useRouter();
+
+    const clickTile = useCallback(() => {
+        router.push(link)
+        choseGame && choseGame()
+    }, [choseGame, router])
     
     return (
         <motion.div
             className={styles.tile}
-            onClick={() => router.push(link)}
+            onClick={clickTile}
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
         >
