@@ -3,6 +3,7 @@ import Phaser from "phaser"
 
 import styles from "../../../styles/sharkHunt/components/Game.module.scss"
 import { eventKeys } from "./utils/data"
+import { getRandomSchoolDetails } from "./utils/functions"
 
 const Game: React.FC = () => {
   const gameRef = useRef<any>();
@@ -34,17 +35,12 @@ const Game: React.FC = () => {
           delay: 700,
           callback: this.updateShark,
           loop: true,
-        })
-        this.time.addEvent({
-          delay: 500,
-          callback: this.updateAllFishes,
-          loop: true,
-        })
-        this.time.addEvent({
-          delay: 400,
-          callback: this.createRandomFishSchool,
-          loop: true,
-        })
+        }),
+          this.time.addEvent({
+            delay: 1200,
+            callback: this.createRandomFishSchool,
+            loop: true,
+          })
       }
       updateShark = () => {
         const { key } = { ...this.shark.texture }
@@ -59,41 +55,6 @@ const Game: React.FC = () => {
         if (key === "sharkFrame3") {
           this.shark.setTexture("sharkFrame1");
           return;
-        }
-      }
-      updateAllFishes = () => {
-
-      }
-      getRandomSchoolPlacementAndDirection = () => {
-        let { width, height } = this.sys.game.canvas;
-        let x: number, y: number = 0;
-        const fromSide = Boolean(Math.round(Math.random()));
-        if (fromSide) {
-          const fromLeft = Boolean(Math.round(Math.random()));
-          if (fromLeft) {
-            y = - 200;
-          } else {
-            y = width + 200;
-          }
-          x = Math.random() * height;
-          return {
-            x: Math.random() * height,
-            y,
-            dirY: fromLeft ? width + 200 : -200,
-            dirX: Math.random() * height
-          }
-        }
-        const fromTop = Boolean(Math.round(Math.random()));
-        if (fromTop) {
-          x = -200;
-        } else {
-          x = height + 200;
-        }
-        return {
-          x,
-          y: Math.random() * width,
-          dirX: fromTop ? height + 200 : -200,
-          dirY: Math.random() * width,
         }
       }
       createRandomFishSchool = () => {
@@ -114,35 +75,38 @@ const Game: React.FC = () => {
           fishCount: Math.random() * 5,
           interval: []
         }
-        const { x, y, dirX, dirY } = this.getRandomSchoolPlacementAndDirection();
+        const { width, height } = this.sys.game.canvas;
+        const { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
+
         const { fishCount } = { ...newSchool }
-        for (let x = 0; x < fishCount; x++) {
-          const newFish = this.add.sprite(x + Math.random() * 50, y + Math.random() * 50, "fishFrame1").setScale(0.1);
+        for (let count = 0; count < fishCount; count++) {
+          const newFish = this.add.sprite(x + Math.random() * 25, y + Math.random() * 25, "fishFrame1").setScale(0.05);
+          newFish.setRotation(angle);
           newSchool.fishes.push(newFish);
         }
         newSchool.startingPoint = { x, y }
         newSchool.direction = { x: dirX, y: dirY }
         let intervalRepeat = 0;
         newSchool.interval = setInterval(() => {
-          if (intervalRepeat >= 100) {
+          if (intervalRepeat > 120) {
             clearInterval(newSchool.interval);
             return;
           }
           intervalRepeat++;
-          const repeat = Math.random() * 80 + 10;
+          const repeat = Math.random() * 100 + 10;
           let xChange = 0;
           let yChange = 0;
           xChange += (dirX - x) / repeat;
           yChange += (dirY - y) / repeat;
+
           newSchool.fishes.forEach((fish: any) => {
             fish.x += xChange;
             fish.y += yChange;
-            const angle = Math.abs(dirX - x);
             fish.setTexture(`fishFrame${Math.round(Math.random() * 2) + 1}`)
           })
-        }, 200)
-        fishSchools.current.push(newSchool);
+        }, 100)
 
+        fishSchools.current.push(newSchool);
       }
 
     }
