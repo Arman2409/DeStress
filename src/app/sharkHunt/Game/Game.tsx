@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from "react"
 import Phaser from "phaser"
+import { remove } from "lodash"
 
 import styles from "../../../styles/sharkHunt/components/Game.module.scss"
 import { eventKeys } from "./utils/data"
-import { getRandomSchoolDetails } from "./utils/functions"
+import { generateUniqueId, getEscapeDirection, getRandomSchoolDetails } from "./utils/functions"
 
 const Game: React.FC = () => {
   const gameRef = useRef<any>();
   const scene = useRef<any>();
-  const fishSchools = useRef<any[]>([]);
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
-      schoolsCount: number = 0;
+      fishSchools: any[] = [];
       shark: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       fish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       graphics: Phaser.GameObjects.Graphics = {} as Phaser.GameObjects.Graphics;
@@ -41,6 +41,11 @@ const Game: React.FC = () => {
             callback: this.createRandomFishSchool,
             loop: true,
           })
+        this.time.addEvent({
+          delay: 400,
+          callback: this.checkForCollision,
+          loop: true,
+        })
       }
       updateShark = () => {
         const { key } = { ...this.shark.texture }
@@ -57,56 +62,118 @@ const Game: React.FC = () => {
           return;
         }
       }
+      checkForCollision = () => {
+        const { x, y } = { ...this.shark }
+        this.fishSchools = this.fishSchools.map((school) => {
+          const { currentPosition = { x: 0, y: 0 }, fishCount = 1 } = { ...school }
+          const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
+          if (((x < schoolX && x > schoolX - 100) || (x > schoolX && x < schoolX + 100)) && ((y < schoolY && y > schoolY - 100) || (y > schoolY && y < schoolY + 100))) {
+            const { width, height } = this.sys.game.canvas;
+            const escapeDirections = [];
+            for(let i = 0; i < fishCount; i++) {
+              escapeDirections.push(getEscapeDirection(width, height));
+            }
+            
+            return {
+              ...school,
+              escapingFrom: {x:schoolX, y:schoolY},
+              escapeDirections
+            }
+          }
+          return { ...school }
+        })
+      }
       createRandomFishSchool = () => {
-        this.schoolsCount++;
         const newSchool: {
-          fishes: any[],
-          id: number,
-          startingPoint: any,
-          fishCount: number,
-          direction: any,
+          id: string
+          fishes: any[]
+          startingPoint: any
+          fishCount: number
+          direction: any
           interval: any
+          currentPosition: any
+          escapingFrom: null|{x: number, y:number}
+          escapeDirections: Array<any>
         } =
         {
-          id: this.schoolsCount,
+          id: generateUniqueId(),
           fishes: [],
           startingPoint: { x: 0, y: 0 },
           direction: {},
-          fishCount: Math.random() * 5,
-          interval: []
+          currentPosition: {},
+          fishCount: Math.round(Math.random() * 10),
+          interval: [],
+          escapingFrom: null,
+          escapeDirections: []
         }
         const { width, height } = this.sys.game.canvas;
-        const { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
+        let { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
 
         const { fishCount } = { ...newSchool }
         for (let count = 0; count < fishCount; count++) {
-          const newFish = this.add.sprite(x + Math.random() * 25, y + Math.random() * 25, "fishFrame1").setScale(0.05);
+          const newFish = this.add.sprite(x + Math.random() * 50, y + Math.random() * 50, "fishFrame1").setScale(0.05);
           newFish.setRotation(angle);
           newSchool.fishes.push(newFish);
         }
         newSchool.startingPoint = { x, y }
+        newSchool.currentPosition = { x, y }
         newSchool.direction = { x: dirX, y: dirY }
         let intervalRepeat = 0;
         newSchool.interval = setInterval(() => {
           if (intervalRepeat > 120) {
             clearInterval(newSchool.interval);
+            remove(this.fishSchools, ({ id = 0 }) => {
+              return id === newSchool.id;
+            })
             return;
+          }
+          const school = this.fishSchools.find(({id}) => id === newSchool.id);
+          const isEscaping = Boolean(school.escapingFrom);
+          if (isEscaping) { 
+            const {x:escapeX = 0, y:escapeY = 0} = {...school.escapingFrom}
+            x = escapeX;
+            y = escapeY;
           }
           intervalRepeat++;
           const repeat = Math.random() * 100 + 10;
-          let xChange = 0;
-          let yChange = 0;
-          xChange += (dirX - x) / repeat;
-          yChange += (dirY - y) / repeat;
+          let xChange = (dirX - x) / repeat;
+          let yChange = (dirY - y) / repeat;
+          let { x: currentX = 0, y: currentY = 0 } = { ...newSchool.currentPosition };
+          if (currentX < -100 || currentX > width + 100 || currentY < -100 || currentY > height + 100) {
+            clearInterval(newSchool.interval);
+            remove(this.fishSchools, ({ id = 0 }) => {
+              return id === newSchool.id;
+            })
+            return;
+          }
 
-          newSchool.fishes.forEach((fish: any) => {
+          const currentPosition = {
+            x: currentX += xChange,
+            y: currentY += yChange,
+          }
+          this.fishSchools = this.fishSchools.map((school) => {
+            const { id = 0 } = {...school};
+             if (id === newSchool.id) {
+              return ({
+                ...school,
+                currentPosition
+              });
+            }
+            return {...school};
+          })
+          newSchool.fishes.forEach((fish: any, index: number) => {
+            if(isEscaping) {
+              const {x, y} = school.escapeDirections[index];
+               xChange = (dirX - x) / repeat;
+               yChange = (dirY - y) / repeat;
+            }
             fish.x += xChange;
             fish.y += yChange;
             fish.setTexture(`fishFrame${Math.round(Math.random() * 2) + 1}`)
           })
         }, 100)
 
-        fishSchools.current.push(newSchool);
+        this.fishSchools.push(newSchool)
       }
 
     }
