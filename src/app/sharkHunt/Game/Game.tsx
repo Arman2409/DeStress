@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import Phaser from "phaser"
 import { remove } from "lodash"
 
@@ -7,7 +7,7 @@ import type { FishSchoolType, PointType } from "../../../types/sharkHunt"
 import { eventKeys } from "./utils/data"
 import { generateUniqueId, getEscapeDirection, getRandomSchoolDetails } from "./utils/functions"
 
-const Game: React.FC = () => {
+const Game = () => {
   const gameRef = useRef<any>();
   const scene = useRef<any>();
 
@@ -75,7 +75,6 @@ const Game: React.FC = () => {
                 (y > schoolY && y < schoolY + 100))) {
             const { width, height } = this.sys.game.canvas;
             const escapeDirections = [];
-            
             for(let i = 0; i < fishCount; i++) {
               escapeDirections.push(getEscapeDirection(width, height));
             }
@@ -193,20 +192,34 @@ const Game: React.FC = () => {
     });
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (eventKeys.top.includes(e.key)) {
+        scene.current.shark.setRotation(0);
+        if(scene.current.shark.y <= 80) {
+          return;
+        }
         scene.current.shark.y = scene.current.shark.y - 15;
-        scene.current.shark.setRotation(0)
       }
       if (eventKeys.bottom.includes(e.key)) {
-        scene.current.shark.y = scene.current.shark.y + 15;
         scene.current.shark.setRotation(3);
+        const { height } = scene.current?.sys?.game?.canvas;
+        if(scene.current.shark.y >= height - 80) {
+          return;
+        }
+        scene.current.shark.y = scene.current.shark.y + 15;
       }
       if (eventKeys.left.includes(e.key)) {
-        scene.current.shark.x = scene.current.shark.x - 15;
         scene.current.shark.setRotation(4.5)
+        if(scene.current.shark.x <= 80) {
+          return;
+        }
+        scene.current.shark.x = scene.current.shark.x - 15;
       }
       if (eventKeys.right.includes(e.key)) {
-        scene.current.shark.x = scene.current.shark.x + 15;
         scene.current.shark.setRotation(1.5);
+        const { width } = scene.current?.sys?.game?.canvas;
+        if(scene.current.shark.x >= width - 80) {
+          return;
+        }
+        scene.current.shark.x = scene.current.shark.x + 15;
       }
     })
   }, []);
