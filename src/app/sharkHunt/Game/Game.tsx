@@ -3,6 +3,7 @@ import Phaser from "phaser"
 import { remove } from "lodash"
 
 import styles from "../../../styles/sharkHunt/components/Game.module.scss"
+import type { FishSchoolType, PointType } from "../../../types/sharkHunt"
 import { eventKeys } from "./utils/data"
 import { generateUniqueId, getEscapeDirection, getRandomSchoolDetails } from "./utils/functions"
 
@@ -12,7 +13,7 @@ const Game: React.FC = () => {
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
-      fishSchools: any[] = [];
+      fishSchools: FishSchoolType[] = [];
       shark: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       fish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       graphics: Phaser.GameObjects.Graphics = {} as Phaser.GameObjects.Graphics;
@@ -37,7 +38,7 @@ const Game: React.FC = () => {
           loop: true,
         }),
           this.time.addEvent({
-            delay: 1200,
+            delay: 500,
             callback: this.createRandomFishSchool,
             loop: true,
           })
@@ -65,11 +66,16 @@ const Game: React.FC = () => {
       checkForCollision = () => {
         const { x, y } = { ...this.shark }
         this.fishSchools = this.fishSchools.map((school) => {
+         
           const { currentPosition = { x: 0, y: 0 }, fishCount = 1 } = { ...school }
           const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
-          if (((x < schoolX && x > schoolX - 100) || (x > schoolX && x < schoolX + 100)) && ((y < schoolY && y > schoolY - 100) || (y > schoolY && y < schoolY + 100))) {
+          if (((x < schoolX && x > schoolX - 100) ||
+               (x > schoolX && x < schoolX + 100)) &&
+               ((y < schoolY && y > schoolY - 100) ||
+                (y > schoolY && y < schoolY + 100))) {
             const { width, height } = this.sys.game.canvas;
             const escapeDirections = [];
+            
             for(let i = 0; i < fishCount; i++) {
               escapeDirections.push(getEscapeDirection(width, height));
             }
@@ -84,23 +90,13 @@ const Game: React.FC = () => {
         })
       }
       createRandomFishSchool = () => {
-        const newSchool: {
-          id: string
-          fishes: any[]
-          startingPoint: any
-          fishCount: number
-          direction: any
-          interval: any
-          currentPosition: any
-          escapingFrom: null|{x: number, y:number}
-          escapeDirections: Array<any>
-        } =
+        const newSchool: FishSchoolType =
         {
           id: generateUniqueId(),
           fishes: [],
           startingPoint: { x: 0, y: 0 },
-          direction: {},
-          currentPosition: {},
+          direction: { x: 0, y: 0 },
+          currentPosition: { x: 0, y: 0 },
           fishCount: Math.round(Math.random() * 10),
           interval: [],
           escapingFrom: null,
@@ -128,17 +124,17 @@ const Game: React.FC = () => {
             return;
           }
           const school = this.fishSchools.find(({id}) => id === newSchool.id);
-          const isEscaping = Boolean(school.escapingFrom);
+          const isEscaping = Boolean(school?.escapingFrom);
           if (isEscaping) { 
-            const {x:escapeX = 0, y:escapeY = 0} = {...school.escapingFrom}
+            const {x:escapeX = 0, y:escapeY = 0} = {...school?.escapingFrom}
             x = escapeX;
-            y = escapeY;
+            y = escapeY;    
           }
           intervalRepeat++;
           const repeat = Math.random() * 100 + 10;
           let xChange = (dirX - x) / repeat;
           let yChange = (dirY - y) / repeat;
-          let { x: currentX = 0, y: currentY = 0 } = { ...newSchool.currentPosition };
+          let { x: currentX = 0, y: currentY = 0 } = { ...school?.currentPosition };
           if (currentX < -100 || currentX > width + 100 || currentY < -100 || currentY > height + 100) {
             clearInterval(newSchool.interval);
             remove(this.fishSchools, ({ id = 0 }) => {
@@ -163,7 +159,7 @@ const Game: React.FC = () => {
           })
           newSchool.fishes.forEach((fish: any, index: number) => {
             if(isEscaping) {
-              const {x, y} = school.escapeDirections[index];
+              const {x:dirX, y:dirY} = school?.escapeDirections[index] as PointType;            
                xChange = (dirX - x) / repeat;
                yChange = (dirY - y) / repeat;
             }

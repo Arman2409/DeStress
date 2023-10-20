@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss"
-import type { GameStatusType } from "../../../../types/types"
+import type { GameStatusType } from "../../../../types/roshambo"
 import { RoshamboContext } from "../../page"
 import { defineGameStatus } from "../../utils/functions"
 import { statusesData } from "./utils/data"

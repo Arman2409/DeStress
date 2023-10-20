@@ -67,11 +67,11 @@ export const getRandomSchoolDetails = (width:number, height:number) => {
     }
 }
 
-export const getEscapeDirection = (width:number, height:number) => {
+export const getEscapeDirection = (width:number, height:number) => { 
     let x:number = 0, y:number = 0;
     const extraSpace = 120;
     const toSide = getRandomBoolean();
-    if (toSide) {
+    if (toSide) {   
        const toLeft = getRandomBoolean();
        x = toLeft ? -extraSpace : width + extraSpace;
        y = Math.round(Math.random() * height);
@@ -80,7 +80,7 @@ export const getEscapeDirection = (width:number, height:number) => {
         const toTop = getRandomBoolean();
         y = toTop ? -extraSpace : height + extraSpace;
         x = Math.round(Math.random() * width);
-    }
+    }   
     return ({
         x,
         y
@@ -93,4 +93,4 @@ export const generateUniqueId = () => {
     const uniqueId = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
   
     return uniqueId;
-  }
+}

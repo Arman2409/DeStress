@@ -2,8 +2,7 @@ import { chunk } from "lodash"
 
 import styles from "../../../styles/components/GameTiles/GameTiles.module.scss"
 import { gamesData } from "./utils/data"
-import type { GameType } from "../../../types/types"
-import type { GameTilesProps } from "../../../types/propTypes"
+import type { GameTilesProps, GameType } from "../../../types/main"
 import Tile from "./components/Tile/Tile"
 
 const GameTiles = ({choseGame}: GameTilesProps) => {

@@ -1,4 +1,4 @@
-import type { GameStatusType, JestType } from "../../../types/types"
+import type { GameStatusType, JestType } from "../../../types/roshambo"
 import { combinations } from "./data"
 import configs from "../../../configs/configs"
 

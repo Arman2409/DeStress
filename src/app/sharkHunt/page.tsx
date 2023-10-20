@@ -3,7 +3,7 @@ import { createContext, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/sharkHunt/page.module.scss"
-import type { SharkHuntContextType } from "../../types/contextTypes"
+import type { SharkHuntContextType } from "../../types/sharkHunt"
 import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Game from "./Game/Game"
 import BackButton from "../globals/components/BackButton/BackButton"
