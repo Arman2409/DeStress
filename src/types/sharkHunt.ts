@@ -1,3 +1,5 @@
+export type DirectionType = "left" | "right" | "top" | "bottom"
+
 // context 
 
 export type SharkHuntContextType = {
@@ -20,4 +22,16 @@ export interface FishSchoolType  {
     currentPosition: PointType
     escapingFrom: null|PointType
     escapeDirections: Array<PointType>
+}
+
+export interface SharkType
+{ 
+    sprite: Phaser.GameObjects.Sprite,
+    updateInterval: any 
+}
+
+export interface OceanSceneType extends Phaser.Scene
+{
+    shark: SharkType
+    fishSchools: FishSchoolType[]
 }

@@ -5,9 +5,9 @@ import type { AnimationProps, JestType } from "../../../../types/roshambo"
 import ShakingHand from "./components/ShakingHand/ShakingHand"
 import { RoshamboContext } from "../../page"
 import { getRandomJest } from "./utils/functions"
-import configs from "../../../../configs/configs";
+import configs from "../../../../configs/roshambo";
 
-const { animationDuration} = {...configs.roshambo}
+const { animationDuration } = {...configs}
 
 const Animation = ({background}:AnimationProps) => {
   const { chosenJest, dispatchOpponentJest, opponentJest } = useContext(RoshamboContext);

@@ -5,9 +5,9 @@ import type { GameStatusType } from "../../../../types/roshambo"
 import { RoshamboContext } from "../../page"
 import { defineGameStatus } from "../../utils/functions"
 import { statusesData } from "./utils/data"
-import configs from "../../../../configs/configs"
+import configs from "../../../../configs/roshambo"
 
-const {summaryWaitTime} = {...configs.roshambo};
+const {summaryWaitTime} = {...configs};
 const {texts, icons} = {...statusesData};
 
 const Summary = () => {
