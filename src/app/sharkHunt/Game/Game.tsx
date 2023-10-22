@@ -8,7 +8,7 @@ import configs from "../../../configs/sharkHunt"
 import { eventKeys } from "./utils/data"
 import { checkForCollision, generateUniqueId, getRandomSchoolDetails, updateSharkFrame } from "./utils/functions"
 
-const {createFishSchoolDelay, sharkStep, maxFishEachSchool} = {...configs};
+const {createFishSchoolInterval, sharkStep, maxFishEachSchool} = {...configs};
 
 const Game = () => {
   const gameRef = useRef<any>();
@@ -40,7 +40,7 @@ const Game = () => {
           updateInterval: setInterval(() => updateSharkFrame(this.shark.sprite), 500)
         };
         this.time.addEvent({
-          delay: createFishSchoolDelay * 1000,
+          delay: createFishSchoolInterval * 1000,
           callback: this.createRandomFishSchool,
           loop: true,
         })

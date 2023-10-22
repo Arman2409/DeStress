@@ -72,8 +72,8 @@ const Roshambo = () => {
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
+                <BackButton extraStyles={{ zIndex: 6}} />
                     <div className={styles.roshambo_cont}>
-                        <BackButton extraStyles={{ borderRadius: "20px" , zIndex: 6}} />
                         {showScore && <Score />}
                         {chosenJest ? <Animation background={backgroundMemo} />
                          :  <Instruction /> }

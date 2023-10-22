@@ -38,8 +38,8 @@ const SharkHunt = () => {
         <SharkHuntContext.Provider value={{}}>
             <InfoWindowProvider>
                 <div className={styles.shark_hunt_main}>
+                    <BackButton />
                     <div className={styles.shark_hunt_cont}>
-                        {/* <BackButton extraStyles={{ borderRadius: "20px"}} /> */}
                         <Game />
                     </div>
                 </div>
