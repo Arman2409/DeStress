@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa"
 import { motion } from "framer-motion"
 
 import styles from "../../../../styles/globals/components/BackButton.module.scss"
-import type { BackButtonProps } from "../../../../types/propTypes"
+import type { BackButtonProps } from "../../../../types/main"
 import { arrowIconVariants } from "./utils/variants"
 
 const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {

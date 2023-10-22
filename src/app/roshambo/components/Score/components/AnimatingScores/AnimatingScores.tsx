@@ -1,7 +1,7 @@
 import {motion} from "framer-motion"
 
 import styles from "../../../../../../styles/roshambo/components/Score/components/AnimatingScores.module.scss"
-import type { AnimatingScoresProps } from "../../../../../../types/propTypes";
+import type { AnimatingScoresProps } from "../../../../../../types/roshambo"
 import { getVariants } from "./utils/variants"
 
 const AnimatingScores = ({score}:AnimatingScoresProps) => (

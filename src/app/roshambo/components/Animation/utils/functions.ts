@@ -1,4 +1,4 @@
-import type { JestType } from "../../../../../types/types";
+import type { JestType } from "../../../../../types/roshambo";
 import { jestImages } from "../components/ShakingHand/utils/data"
 
 export const getRandomJest = ():JestType => {

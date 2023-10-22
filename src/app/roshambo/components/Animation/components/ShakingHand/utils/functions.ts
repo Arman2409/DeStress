@@ -1,4 +1,4 @@
-import type { JestType } from "../../../../../../../types/types"
+import type { JestType } from "../../../../../../../types/roshambo"
 import { jestImages } from "./data"
 
 export const getImageSrc = (jestName: JestType, jestSide: "left"|"right") => {

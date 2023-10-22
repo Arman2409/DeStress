@@ -2,7 +2,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 
 import styles from "../../../../../../styles/roshambo/components/Instruction/components/Jest.module.scss"
-import type { JestProps } from "../../../../../../types/propTypes"
+import type { JestProps } from "../../../../../../types/roshambo"
 import { keyboardKeyVariants } from "./utils/variants"
 
 const Jest = ({ keyClicked, name, borderRight, borderLeft, keyboardImg, jestImg, onClick}: JestProps) => {

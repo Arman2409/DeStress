@@ -6,8 +6,8 @@ import { AiOutlineClose } from "react-icons/ai"
 import { motion } from "framer-motion"
 
 import styles from "../../../styles/globals/hooks/usInfoWindow.module.scss"
-import type { InfoDetailsType } from "../../../types/types"
-import type { InfoContextHolderProps } from "../../../types/propTypes"
+import type { InfoDetailsType } from "../../../types/globals"
+import type { InfoContextHolderProps } from "../../../types/main"
 import { infoWindowVariants } from "./utils/variants"
 
 

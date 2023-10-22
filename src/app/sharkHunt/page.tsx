@@ -3,7 +3,7 @@ import { createContext, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/sharkHunt/page.module.scss"
-import type { SharkHuntContextType } from "../../types/contextTypes"
+import type { SharkHuntContextType } from "../../types/sharkHunt"
 import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Game from "./Game/Game"
 import BackButton from "../globals/components/BackButton/BackButton"
@@ -38,8 +38,8 @@ const SharkHunt = () => {
         <SharkHuntContext.Provider value={{}}>
             <InfoWindowProvider>
                 <div className={styles.shark_hunt_main}>
+                    <BackButton />
                     <div className={styles.shark_hunt_cont}>
-                        {/* <BackButton extraStyles={{ borderRadius: "20px"}} /> */}
                         <Game />
                     </div>
                 </div>
