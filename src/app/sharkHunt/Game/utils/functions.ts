@@ -1,43 +1,31 @@
 import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../types/sharkHunt";
 
+const pi = Math.PI;
+
 const getRandomBoolean = () => Boolean(Math.round(Math.random()));
 
-export const getAngle = (start: number, end: number, size: number, direction:DirectionType ) => {
-    const pi = Math.PI;
+export const getAngle = (startX: number, startY: number, endX: number, endY: number, direction:DirectionType ) => {
     let angle = 0;
-    const distance = end - start;
-    const angleDifference = Math.abs(distance) / size * (pi / 2);
+    const xChange = Math.abs(endX - startX);
+    const yChange = Math.abs(endY - startY);
     
+    const tan  = direction === "top" || direction === "bottom" ? xChange / yChange : yChange / xChange;
+    const angle_in_radians = Math.atan(tan);
+
     switch (direction) {
         case "right":
-            if (distance) {
-                angle = (pi / 2) + angleDifference;
-            } else {
-                angle = (pi / 2) - angleDifference;
-            }
+            angle = endY - startY > 0 ? (pi / 2) + angle_in_radians : (pi / 2) - angle_in_radians;
             break;
         case "bottom":
-            if (distance) {
-                angle = pi - angleDifference;
-            } else {
-                angle = pi + angleDifference;
-            }
+            angle = endX - startX > 0 ? pi - angle_in_radians : pi + angle_in_radians;
             break;
         case "left":
-            if (distance) {
-                angle = pi * 1.5 - angleDifference;
-            } else {
-                angle = pi * 1.5 + angleDifference;
-            }
+            angle = endY - startY > 0 ? (pi * 1.5) - angle_in_radians : (pi * 1.5) + angle_in_radians;
             break;
         case "top":
-            if (distance) {
-                angle = angleDifference;
-            } else {
-                angle = pi * 2 - angleDifference;
-            }
+            angle = endX - startX > 0 ? (pi * 2) + angle_in_radians : (pi * 2) - angle_in_radians;
             break;
-    }
+    }    
     return angle;
 }
 
@@ -49,14 +37,13 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
         const dirY = Math.random() * height;
         let dirX = 0;
         y = Math.random() * height;
-        
         if (fromLeft) {
             x = 0;
             dirX = width;
-            angle = getAngle(y, dirY, height, "right")    
+            angle = getAngle(x, y, dirX, dirY, "right")    
         } else {
             x = width;
-            angle = getAngle(y, dirY, height, "left");
+            angle = getAngle(x, y, dirX,  dirY, "left");
         }
         return {
             x,
@@ -73,10 +60,10 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
     if (fromTop) {
         y = 0;
         dirY = height;
-        angle = getAngle(x, dirX, width, "bottom")
+        angle = getAngle(x, y, dirX,  dirY, "bottom")
     } else {
         y = height;
-        angle = getAngle(x, dirX, width, "top")
+        angle = getAngle(x, y,  dirX, dirY, "top")
     }
     return {
         x,
@@ -146,21 +133,9 @@ export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHe
             const escapeDirections = [];
             for (let i = 0; i < fishCount; i++) {
                 const escapeDirection = getEscapeDirection(sysWidth, sysHeight);
-                console.log(escapeDirection);
                 escapeDirections.push(escapeDirection);
                 const {x:escapeX,y:escapeY, direction} = {...escapeDirection};
-                let start = 0, end = 0, size = 0;
-                if (direction === "left" || direction === "right") {
-                    start = schoolX;
-                    end = escapeX;
-                    size = sysWidth;
-                }
-                if (direction === "top" || direction === "bottom") {
-                    start = schoolY;
-                    end = escapeY;
-                    size = sysHeight; 
-                }
-                const angle = getAngle(start, end, size, direction);
+                const angle = getAngle(schoolX, schoolY, escapeX, escapeY,  direction);
                 fishes[i].setRotation(angle);
             }
             return {

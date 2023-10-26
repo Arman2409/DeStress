@@ -13,6 +13,7 @@ const {createFishSchoolInterval, sharkStep, maxFishEachSchool} = {...configs};
 const Game = () => {
   const gameRef = useRef<any>();
   const scene = useRef<any>();
+  const isMoving = useRef<boolean>(false);
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
@@ -155,26 +156,35 @@ const Game = () => {
         if (scene.current.shark.sprite.y <= 80) {
           return;
         }
+        isMoving.current = true;
         setTimeout(() => {
+          isMoving.current = false;
           scene.current.shark.sprite.y = scene.current.shark.sprite.y - sharkStep;
-        }, 500)
+        }, 25)
       }
       if (eventKeys.bottom.includes(e.key)) {
+        if(isMoving.current) return;
         scene.current.shark.sprite.setRotation(3);
         const { height } = scene.current?.sys?.game?.canvas;
         if (scene.current.shark.sprite.y >= height - 80) {
           return;
         }
+        isMoving.current = true;
         setTimeout(() => {
+          isMoving.current = false;
           scene.current.shark.sprite.y = scene.current.shark.sprite.y + sharkStep;
-        }, 500)
+        }, 25)
       }
       if (eventKeys.left.includes(e.key)) {
         scene.current.shark.sprite.setRotation(4.5)
         if (scene.current.shark.sprite.x <= 80) {
           return;
         }
-        scene.current.shark.sprite.x = scene.current.shark.sprite.x - 15;
+        isMoving.current = true;
+        setTimeout(() => {
+          isMoving.current = false;
+          scene.current.shark.sprite.x = scene.current.shark.sprite.x - sharkStep;
+        }, 25)
       }
       if (eventKeys.right.includes(e.key)) {
         scene.current.shark.sprite.setRotation(1.5);
@@ -182,7 +192,11 @@ const Game = () => {
         if (scene.current.shark.sprite.x >= width - 80) {
           return;
         }
-        scene.current.shark.sprite.x = scene.current.shark.sprite.x + 15;
+        isMoving.current = true;
+        setTimeout(() => {
+          isMoving.current = false;
+          scene.current.shark.sprite.x = scene.current.shark.sprite.x + sharkStep;
+        }, 25)
       }
     })
   }, []);
