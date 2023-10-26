@@ -1,8 +1,8 @@
-import type { GameStatusType, JestType } from "../../../types/types"
+import type { GameStatusType, JestType } from "../../../types/roshambo"
 import { combinations } from "./data"
-import configs from "../../../configs/configs"
+import configs from "../../../configs/roshambo"
 
-const {backgrounds} = {...configs.roshambo};
+const {backgrounds} = {...configs};
 
 export const defineGameStatus = (jest1:JestType|null, jest2:JestType|null):GameStatusType|null => {
   if(!jest1 || !jest2) return null;

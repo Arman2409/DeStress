@@ -1,4 +1,4 @@
-import type { JestDetailsType } from "../../../../../types/types";
+import type { JestDetailsType } from "../../../../../types/roshambo";
 
 export const jestsData:JestDetailsType[] = [
     {

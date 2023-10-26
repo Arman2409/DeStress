@@ -1,5 +1,4 @@
 export default {
-    roshambo: {
         animationDuration: 2.5,
         summaryWaitTime: 2,
         backgrounds: [
@@ -12,5 +11,4 @@ export default {
             "/roshambo/backgrounds/highway.jpeg",
             "/roshambo/backgrounds/factory.webp",
         ]
-    }
 }

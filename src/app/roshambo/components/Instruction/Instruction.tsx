@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 
 import styles from "../../../../styles/roshambo/components/Instruction/Instruction.module.scss"
-import type { JestDetailsType } from "../../../../types/types"
+import type { JestDetailsType } from "../../../../types/roshambo"
 import Jest from "./components/Jest/Jest"
 import { RoshamboContext } from "../../page"
 import { jestsData } from "./utils/data"

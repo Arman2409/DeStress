@@ -1,33 +1,50 @@
-const getRandomBoolean = () => Boolean(Math.round(Math.random())); 
+import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../types/sharkHunt";
 
-export const getRandomSchoolDetails = (width:number, height:number) => {
-    let x: number, y: number, angle: number = 0;
-    const pi = Math.PI;
+const pi = Math.PI;
+
+const getRandomBoolean = () => Boolean(Math.round(Math.random()));
+
+export const getAngle = (startX: number, startY: number, endX: number, endY: number, direction:DirectionType ) => {
+    let angle = 0;
+    const xChange = Math.abs(endX - startX);
+    const yChange = Math.abs(endY - startY);
+    
+    const tan  = direction === "top" || direction === "bottom" ? xChange / yChange : yChange / xChange;
+    const angle_in_radians = Math.atan(tan);
+
+    switch (direction) {
+        case "right":
+            angle = endY - startY > 0 ? (pi / 2) + angle_in_radians : (pi / 2) - angle_in_radians;
+            break;
+        case "bottom":
+            angle = endX - startX > 0 ? pi - angle_in_radians : pi + angle_in_radians;
+            break;
+        case "left":
+            angle = endY - startY > 0 ? (pi * 1.5) - angle_in_radians : (pi * 1.5) + angle_in_radians;
+            break;
+        case "top":
+            angle = endX - startX > 0 ? (pi * 2) + angle_in_radians : (pi * 2) - angle_in_radians;
+            break;
+    }    
+    return angle;
+}
+
+export const getRandomSchoolDetails = (width: number, height: number) => {
+    let x: number, y: number, angle = 0;
     const fromSide = getRandomBoolean();
     if (fromSide) {
         const fromLeft = getRandomBoolean();
         const dirY = Math.random() * height;
         let dirX = 0;
         y = Math.random() * height;
-        const dy = dirY - y;
-        const angleDifference = Math.abs(dy) / width * (pi / 2);
         if (fromLeft) {
             x = 0;
             dirX = width;
-            if (dy > 0) {
-                angle = (pi / 2) + angleDifference
-            } else {
-                angle = (pi / 2) - angleDifference;
-            }
+            angle = getAngle(x, y, dirX, dirY, "right")    
         } else {
             x = width;
-            if (dy > 0) {
-                angle = pi * 1.5 - angleDifference
-            } else {
-                angle = pi * 1.5 + angleDifference;
-            }
+            angle = getAngle(x, y, dirX,  dirY, "left");
         }
-
         return {
             x,
             y,
@@ -40,23 +57,13 @@ export const getRandomSchoolDetails = (width:number, height:number) => {
     const dirX = Math.random() * width;
     let dirY = 0;
     x = Math.random() * width;
-    const dx = dirX - x;
-    const angleDifference = Math.abs(dx) / width * (pi / 2);
     if (fromTop) {
         y = 0;
         dirY = height;
-        if (dx > 0) {
-            angle = pi - angleDifference;
-        } else {
-            angle = pi + angleDifference
-        }
+        angle = getAngle(x, y, dirX,  dirY, "bottom")
     } else {
         y = height;
-        if (dx > 0) {
-            angle = angleDifference;
-        } else {
-            angle = pi * 2 - angleDifference
-        }
+        angle = getAngle(x, y,  dirX, dirY, "top")
     }
     return {
         x,
@@ -67,23 +74,26 @@ export const getRandomSchoolDetails = (width:number, height:number) => {
     }
 }
 
-export const getEscapeDirection = (width:number, height:number) => {
-    let x:number = 0, y:number = 0;
+export const getEscapeDirection = (width: number, height: number) => {
+    let x = 0, y = 0, direction: DirectionType;
     const extraSpace = 120;
     const toSide = getRandomBoolean();
     if (toSide) {
-       const toLeft = getRandomBoolean();
-       x = toLeft ? -extraSpace : width + extraSpace;
-       y = Math.round(Math.random() * height);
+        const toLeft = getRandomBoolean();
+        direction = toLeft ? "left" : "right";
+        x = toLeft ? -extraSpace : width + extraSpace;
+        y = Math.round(Math.random() * height);
     }
     else {
         const toTop = getRandomBoolean();
+        direction = toTop ? "top" : "bottom";
         y = toTop ? -extraSpace : height + extraSpace;
         x = Math.round(Math.random() * width);
     }
     return ({
         x,
-        y
+        y,
+        direction
     })
 }
 
@@ -91,6 +101,63 @@ export const generateUniqueId = () => {
     const randomNumber = Math.random();
     const randomString = randomNumber.toString(36);
     const uniqueId = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
-  
+
     return uniqueId;
-  }
+}
+
+export const updateSharkFrame = (sharkSprite: Phaser.GameObjects.Sprite) => {
+    const { key } = { ...sharkSprite?.texture }
+    if (key === "sharkFrame1") {
+        sharkSprite?.setTexture("sharkFrame2");
+        return;
+    }
+    if (key === "sharkFrame2") {
+        sharkSprite?.setTexture("sharkFrame3");
+        return;
+    }
+    if (key === "sharkFrame3") {
+        sharkSprite?.setTexture("sharkFrame1");
+        return;
+    }
+}
+
+export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number) => {
+    const { x = 0, y = 0 } = { ...scene.shark.sprite }
+    scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
+        const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
+        if (escapingFrom) return {...school};
+        const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
+        if (((x < schoolX && x > schoolX - 200) ||
+            (x > schoolX && x < schoolX + 200)) &&
+            ((y < schoolY && y > schoolY - 200) ||
+                (y > schoolY && y < schoolY + 200))) {
+            const escapeDirections = [];
+            for (let i = 0; i < fishCount; i++) {
+                const escapeDirection = getEscapeDirection(sysWidth, sysHeight);
+                escapeDirections.push(escapeDirection);
+                const {x:escapeX,y:escapeY, direction} = {...escapeDirection};
+                const angle = getAngle(schoolX, schoolY, escapeX, escapeY,  direction);
+                let rotateFishIntervalRep = 0;
+                const repeatance = Math.round(Math.random() * 4 + 1);
+                const rotateInterval = setInterval(() => {
+                    if(repeatance === rotateFishIntervalRep) {
+                        fishes[i].setRotation(angle);
+                        clearInterval(rotateInterval);
+                        return;
+                    }
+                    rotateFishIntervalRep++;
+                    fishes[i].setRotation(Math.round(Math.random() * pi))
+                }, 150)
+            }
+            return {
+                ...school,
+                escapingFrom: {
+                    x: schoolX,
+                    y: schoolY
+                },
+                escapeDirections
+            }
+        }
+        return { ...school }
+    })
+}

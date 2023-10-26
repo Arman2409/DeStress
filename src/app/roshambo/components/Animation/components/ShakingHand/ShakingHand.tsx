@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 import styles from "../../../../../../styles/roshambo/components/Animation/components/ShakingHand.module.scss"
-import type { ShakingHandProps } from "../../../../../../types/propTypes"
+import type { ShakingHandProps } from "../../../../../../types/roshambo"
 import { shakingImageVariants } from "./utils/variants"
 import { getImageSrc } from "./utils/functions"
 

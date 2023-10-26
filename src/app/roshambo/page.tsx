@@ -3,8 +3,7 @@ import { createContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/page.module.scss"
-import type { RoshamboContextType } from "../../types/contextTypes"
-import type { GameStatusType, JestType } from "../../types/types"
+import type { RoshamboContextType, GameStatusType, JestType } from "../../types/roshambo"
 import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Instruction from "./components/Instruction/Instruction"
 import Animation from "./components/Animation/Animation"
@@ -73,8 +72,8 @@ const Roshambo = () => {
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
+                <BackButton extraStyles={{ zIndex: 6}} />
                     <div className={styles.roshambo_cont}>
-                        <BackButton extraStyles={{ borderRadius: "20px" , zIndex: 6}} />
                         {showScore && <Score />}
                         {chosenJest ? <Animation background={backgroundMemo} />
                          :  <Instruction /> }
