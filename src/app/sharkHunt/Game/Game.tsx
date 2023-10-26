@@ -17,7 +17,7 @@ const Game = () => {
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
-
+      
       fishSchools: FishSchoolType[] = [];
       shark: SharkType  = {} as SharkType;
       fish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;

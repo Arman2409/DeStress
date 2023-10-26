@@ -1,5 +1,5 @@
 export default {
     createFishSchoolInterval: 1,
-    maxFishEachSchool: 25,
+    maxFishEachSchool: 20,
     sharkStep: 10
 }

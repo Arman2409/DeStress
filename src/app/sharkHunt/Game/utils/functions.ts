@@ -124,7 +124,8 @@ export const updateSharkFrame = (sharkSprite: Phaser.GameObjects.Sprite) => {
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number) => {
     const { x = 0, y = 0 } = { ...scene.shark.sprite }
     scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
-        const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes } = { ...school }
+        const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
+        if (escapingFrom) return {...school};
         const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
         if (((x < schoolX && x > schoolX - 200) ||
             (x > schoolX && x < schoolX + 200)) &&
@@ -136,7 +137,17 @@ export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHe
                 escapeDirections.push(escapeDirection);
                 const {x:escapeX,y:escapeY, direction} = {...escapeDirection};
                 const angle = getAngle(schoolX, schoolY, escapeX, escapeY,  direction);
-                fishes[i].setRotation(angle);
+                let rotateFishIntervalRep = 0;
+                const repeatance = Math.round(Math.random() * 4 + 1);
+                const rotateInterval = setInterval(() => {
+                    if(repeatance === rotateFishIntervalRep) {
+                        fishes[i].setRotation(angle);
+                        clearInterval(rotateInterval);
+                        return;
+                    }
+                    rotateFishIntervalRep++;
+                    fishes[i].setRotation(Math.round(Math.random() * pi))
+                }, 150)
             }
             return {
                 ...school,
