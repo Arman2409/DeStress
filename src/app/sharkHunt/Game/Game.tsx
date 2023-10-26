@@ -3,12 +3,12 @@ import Phaser from "phaser"
 import { remove } from "lodash"
 
 import styles from "../../../styles/sharkHunt/components/Game.module.scss"
-import type { FishSchoolType, PointType, SharkType } from "../../../types/sharkHunt"
+import type { FishSchoolType, PointType, JellyfishType } from "../../../types/sharkHunt"
 import configs from "../../../configs/sharkHunt"
 import { eventKeys } from "./utils/data"
-import { checkForCollision, generateUniqueId, getRandomSchoolDetails, updateSharkFrame } from "./utils/functions"
+import { checkForCollision, generateUniqueId, getRandomSchoolDetails, updateFrames } from "./utils/functions"
 
-const {createFishSchoolInterval, sharkStep, maxFishEachSchool} = {...configs};
+const {createFishSchoolInterval, jellyfishStep, jellyFishFramesCount,  maxFishEachSchool} = {...configs};
 
 const Game = () => {
   const gameRef = useRef<any>();
@@ -17,28 +17,28 @@ const Game = () => {
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
-      
+
       fishSchools: FishSchoolType[] = [];
-      shark: SharkType  = {} as SharkType;
+      jellyfish: JellyfishType  = {} as JellyfishType;
       fish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       graphics: Phaser.GameObjects.Graphics = {} as Phaser.GameObjects.Graphics;
-      constructor() {
-        super()
+      constructor(props?:any) {
+        super(props)
       }
 
       preload = () => {
-        this.load.image("sharkFrame1", "./sharkHunt/sharkFrames/frame1.gif");
-        this.load.image("sharkFrame2", "./sharkHunt/sharkFrames/frame2.gif");
-        this.load.image("sharkFrame3", "./sharkHunt/sharkFrames/frame3.gif");
+        for(let i = 1; i <= jellyFishFramesCount; i++) {
+          this.load.image(`jellyfishFrame${i}`, `./sharkHunt/jellyfishFrames/jellyfishFrame${i}.gif`);
+        }
         this.load.image("fishFrame1", "./sharkHunt/fishFrames/frame1.gif");
         this.load.image("fishFrame2", "./sharkHunt/fishFrames/frame2.gif");
         this.load.image("fishFrame3", "./sharkHunt/fishFrames/frame3.gif");
       }
       create = () => {
         this.cameras.main.setBackgroundColor('#ffffff');
-        this.shark = {
-          sprite: this.add.sprite(100, 100, "sharkFrame1").setScale(0.5).setRotation(1.5),
-          updateInterval: setInterval(() => updateSharkFrame(this.shark.sprite), 500)
+        this.jellyfish = {
+          sprite: this.add.sprite(100, 100, "jellyfishFrame1").setScale(0.5).setDepth(5),
+          updateInterval: setInterval(() => updateFrames(this.jellyfish.sprite, "jellyfishFrame", jellyFishFramesCount), 250)
         };
         this.time.addEvent({
           delay: createFishSchoolInterval * 1000,
@@ -71,7 +71,7 @@ const Game = () => {
         const { fishCount } = { ...newSchool }
         for (let count = 0; count < fishCount; count++) {
           const newFish = this.add.sprite(x + Math.random() * 150, y + Math.random() * 150, "fishFrame1").setScale(0.075);
-          newFish.setRotation(angle);
+          newFish.setRotation(angle).setDepth(1);
           newSchool.fishes.push(newFish);
         }
         newSchool.startingPoint = { x, y }
@@ -152,50 +152,50 @@ const Game = () => {
     });
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (eventKeys.top.includes(e.key)) {
-        scene.current.shark.sprite.setRotation(0);
-        if (scene.current.shark.sprite.y <= 80) {
+        scene.current.jellyfish.sprite.setRotation(0);
+        if (scene.current.jellyfish.sprite.y <= 80) {
           return;
         }
         isMoving.current = true;
         setTimeout(() => {
           isMoving.current = false;
-          scene.current.shark.sprite.y = scene.current.shark.sprite.y - sharkStep;
+          scene.current.jellyfish.sprite.y = scene.current.jellyfish.sprite.y - jellyfishStep;
         }, 25)
       }
       if (eventKeys.bottom.includes(e.key)) {
         if(isMoving.current) return;
-        scene.current.shark.sprite.setRotation(3);
+        scene.current.jellyfish.sprite.setRotation(3);
         const { height } = scene.current?.sys?.game?.canvas;
-        if (scene.current.shark.sprite.y >= height - 80) {
+        if (scene.current.jellyfish.sprite.y >= height - 80) {
           return;
         }
         isMoving.current = true;
         setTimeout(() => {
           isMoving.current = false;
-          scene.current.shark.sprite.y = scene.current.shark.sprite.y + sharkStep;
+          scene.current.jellyfish.sprite.y = scene.current.jellyfish.sprite.y + jellyfishStep;
         }, 25)
       }
       if (eventKeys.left.includes(e.key)) {
-        scene.current.shark.sprite.setRotation(4.5)
-        if (scene.current.shark.sprite.x <= 80) {
+        scene.current.jellyfish.sprite.setRotation(4.5)
+        if (scene.current.jellyfish.sprite.x <= 80) {
           return;
         }
         isMoving.current = true;
         setTimeout(() => {
           isMoving.current = false;
-          scene.current.shark.sprite.x = scene.current.shark.sprite.x - sharkStep;
+          scene.current.jellyfish.sprite.x = scene.current.jellyfish.sprite.x - jellyfishStep;
         }, 25)
       }
       if (eventKeys.right.includes(e.key)) {
-        scene.current.shark.sprite.setRotation(1.5);
+        scene.current.jellyfish.sprite.setRotation(1.5);
         const { width } = scene.current?.sys?.game?.canvas;
-        if (scene.current.shark.sprite.x >= width - 80) {
+        if (scene.current.jellyfish.sprite.x >= width - 80) {
           return;
         }
         isMoving.current = true;
         setTimeout(() => {
           isMoving.current = false;
-          scene.current.shark.sprite.x = scene.current.shark.sprite.x + sharkStep;
+          scene.current.jellyfish.sprite.x = scene.current.jellyfish.sprite.x + jellyfishStep;
         }, 25)
       }
     })
