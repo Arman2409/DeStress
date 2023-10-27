@@ -39,7 +39,7 @@ const Roshambo = () => {
         sessionStorage.setItem("destress_visited_games", JSON.stringify(["roshambo"]));
         openWindow(
             {
-                infoText: "5This is cool game",
+                text: "5This is cool game",
                 onOk: closeWindow,
                 onCancel: () => router.push("/"),
                 cancelText: "Go Back",

@@ -1,16 +1,18 @@
 "use client"
-import { createContext, useEffect } from "react"
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-import styles from "../../styles/sharkHunt/page.module.scss"
-import type { SharkHuntContextType } from "../../types/sharkHunt"
+import styles from "../../styles/oceanFlow/page.module.scss"
 import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Game from "./Game/Game"
 import BackButton from "../globals/components/BackButton/BackButton"
+import configs from "../../configs/oceanFlow"
 
-export const SharkHuntContext = createContext<SharkHuntContextType>({});
+const {info, infoImage} = {...configs};
 
-const SharkHunt = () => {
+
+
+const OceanFlow = () => {
     const router = useRouter();
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
 
@@ -26,26 +28,25 @@ const SharkHunt = () => {
         }
         sessionStorage.setItem("destress_visited_games", JSON.stringify(["roshambo"]));
         openWindow({
-            infoText: "5This is cool game",
+            text: info,
             onOk: closeWindow,
             onCancel: () => router.push("/"),
             cancelText: "Go Back",
+            image: infoImage,
             confirmText: "Continue"
         })
     }, [])
 
     return (
-        <SharkHuntContext.Provider value={{}}>
             <InfoWindowProvider>
-                <div className={styles.shark_hunt_main}>
+                <div className={styles.ocean_flow_main}>
                     <BackButton />
-                    <div className={styles.shark_hunt_cont}>
+                    <div className={styles.ocean_flow_cont}>
                         <Game />
                     </div>
                 </div>
             </InfoWindowProvider> 
-        </SharkHuntContext.Provider>
     )
 }
 
-export default SharkHunt;
+export default OceanFlow;
