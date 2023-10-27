@@ -1,5 +1,7 @@
 import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../types/sharkHunt";
+import configs from "../../../../configs/sharkHunt";
 
+const {collisionDistance} = {...configs};
 const pi = Math.PI;
 
 const getRandomBoolean = () => Boolean(Math.round(Math.random()));
@@ -105,32 +107,23 @@ export const generateUniqueId = () => {
     return uniqueId;
 }
 
-export const updateSharkFrame = (sharkSprite: Phaser.GameObjects.Sprite) => {
-    const { key } = { ...sharkSprite?.texture }
-    if (key === "sharkFrame1") {
-        sharkSprite?.setTexture("sharkFrame2");
-        return;
-    }
-    if (key === "sharkFrame2") {
-        sharkSprite?.setTexture("sharkFrame3");
-        return;
-    }
-    if (key === "sharkFrame3") {
-        sharkSprite?.setTexture("sharkFrame1");
-        return;
-    }
+export const updateFrames = (jellyfishSprite: Phaser.GameObjects.Sprite, frameName:string, count: number) => {
+    const { key } = { ...jellyfishSprite?.texture }
+    let current = Number(key.slice(-1));
+    if(current === count) current = 1;
+    jellyfishSprite.setTexture(`${frameName}${current + 1}`);
 }
 
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number) => {
-    const { x = 0, y = 0 } = { ...scene.shark.sprite }
+    const { x = 0, y = 0 } = { ...scene.jellyfish.sprite }
     scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
         const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
         if (escapingFrom) return {...school};
         const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
-        if (((x < schoolX && x > schoolX - 200) ||
-            (x > schoolX && x < schoolX + 200)) &&
-            ((y < schoolY && y > schoolY - 200) ||
-                (y > schoolY && y < schoolY + 200))) {
+        if (((x < schoolX && x > schoolX - collisionDistance) ||
+            (x > schoolX && x < schoolX + collisionDistance)) &&
+            ((y < schoolY && y > schoolY - collisionDistance) ||
+                (y > schoolY && y < schoolY + collisionDistance))) {
             const escapeDirections = [];
             for (let i = 0; i < fishCount; i++) {
                 const escapeDirection = getEscapeDirection(sysWidth, sysHeight);
