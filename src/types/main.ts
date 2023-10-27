@@ -12,7 +12,8 @@ export type InfoContextHolderProps = {
     setDetails: Function
 }
 
-export type BackButtonProps = {
+export type CornerButtonProps = {
+    type: "info" | "back"
     extraStyles?: any 
     action?: any
 }

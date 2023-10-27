@@ -2,12 +2,13 @@ import { useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import { FaArrowLeft } from "react-icons/fa"
 import { motion } from "framer-motion"
+import { FaInfo } from "react-icons/fa"
 
-import styles from "../../../../styles/globals/components/BackButton.module.scss"
-import type { BackButtonProps } from "../../../../types/main"
+import styles from "../../../../styles/globals/components/CornerButton.module.scss"
+import type { CornerButtonProps } from "../../../../types/main"
 import { arrowIconVariants } from "./utils/variants"
 
-const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {
+const BackButton = ({ extraStyles = {}, action, type = "back" }: CornerButtonProps) => {
     const [hovered, setHovered] = useState<boolean>(false)
     const router = useRouter();
 
@@ -15,8 +16,16 @@ const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {
 
     return (
         <div
-            className={styles.back_button_main}
-            style={extraStyles}
+            className={styles.corner_button_main}
+            style={
+                type === "back" ? {
+                    left: "10px",
+                    ...extraStyles,
+                } : 
+                type === "info" && {
+                    right: "10px",
+                ...extraStyles
+            }}
             onClick={action || goBack}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -26,7 +35,8 @@ const BackButton = ({ extraStyles = {}, action }: BackButtonProps) => {
                 initial="initial"
                 variants={arrowIconVariants}
             >
-                <FaArrowLeft />
+                {type === "back" && <FaArrowLeft />}
+                {type === "info" && <FaInfo />}
             </motion.div>
         </div>
     )

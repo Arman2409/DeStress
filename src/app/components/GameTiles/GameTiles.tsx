@@ -9,7 +9,6 @@ const GameTiles = ({choseGame}: GameTilesProps) => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
-
     const gameGroups = chunk(games, 4);
 
     return (

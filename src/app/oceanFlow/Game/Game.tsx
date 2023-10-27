@@ -19,6 +19,7 @@ const Game = () => {
   const scene = useRef<any>();
   const isMoving = useRef<boolean>(false);
 
+
   useEffect(() => {
     class Ocean extends Phaser.Scene {
       plants: Phaser.GameObjects.Sprite[] = [];
@@ -116,7 +117,7 @@ const Game = () => {
         scene.current.jellyfish.sprite.x = scene.current.jellyfish.sprite.x + jellyfishStep;
       }
     })
-  }, []);
+  }, [Phaser, checkForCollision, updateFrames, addPlants, createRandomFishSchool]);
 
   return (
     <div id="phaser-container" className={styles.phaser_cont} />
