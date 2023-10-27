@@ -3,7 +3,8 @@
 export interface InfoDetailsType {
     confirmText: string
     cancelText: string
-    infoText: string
+    text: string
+    image?: string
     onOk: Function
     onCancel: Function
 }

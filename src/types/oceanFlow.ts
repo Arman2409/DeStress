@@ -1,11 +1,5 @@
 export type DirectionType = "left" | "right" | "top" | "bottom"
 
-// context 
-
-export type SharkHuntContextType = {
-    // ...
-}
-
 // interfaces 
 
 export interface PointType {
@@ -33,5 +27,6 @@ export interface JellyfishType
 export interface OceanSceneType extends Phaser.Scene
 {
     jellyfish: JellyfishType
+    plants: any[]
     fishSchools: FishSchoolType[]
 }

@@ -1,7 +1,9 @@
-import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../types/sharkHunt";
-import configs from "../../../../configs/sharkHunt";
+import { remove } from "lodash";
 
-const {collisionDistance} = {...configs};
+import type { DirectionType, FishSchoolType, OceanSceneType, PointType } from "../../../../types/oceanFlow";
+import configs from "../../../../configs/oceanFlow";
+
+const {collisionDistance, maxFishEachSchool} = {...configs};
 const pi = Math.PI;
 
 const getRandomBoolean = () => Boolean(Math.round(Math.random()));
@@ -154,3 +156,107 @@ export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHe
         return { ...school }
     })
 }
+
+const generateWithoutCollisions = (others: PointType[], width:number, height:number) => {
+    const x = 50 + Math.round(Math.random() * (width - 100));
+    const y = 50 + Math.round(Math.random() * (height - 100));
+    others.forEach(({x:otherX, y:otherY}) => {
+       if((x < otherX + 100) && (x > otherX -100) && (y < otherY + 100) && (y > otherY -100)) {
+          return generateWithoutCollisions(others, width, height);
+       }
+    })
+    return {x, y};
+}
+
+export const addPlants = (scene: OceanSceneType) => {
+   const plantsCount = Math.round(Math.random() * 8) + 2;
+   const placeMents:PointType[] = [];
+   const {width, height} = scene.sys.cameras.main;
+   for (let i = 1; i <= plantsCount; i++) {
+    const {x,y} = generateWithoutCollisions(placeMents, width, height);
+    const plant = scene.add.sprite(x, y, "plant1").setScale(0.2).setDepth(1).setRotation(Math.random() * 6.24);
+    scene.plants.push(plant);
+   }
+}
+
+export const createRandomFishSchool = (scene:OceanSceneType) => {
+    const newSchool: FishSchoolType =
+    {
+      id: generateUniqueId(),
+      fishes: [],
+      startingPoint: { x: 0, y: 0 },
+      direction: { x: 0, y: 0 },
+      currentPosition: { x: 0, y: 0 },
+      fishCount: Math.round(Math.random() * maxFishEachSchool),
+      interval: [],
+      escapingFrom: null,
+      escapeDirections: []
+    };
+    const { width, height } = scene.sys.game.canvas;
+    let { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
+
+    const { fishCount } = { ...newSchool }
+    for (let count = 0; count < fishCount; count++) {
+      const newFish = scene.add.sprite(x + Math.random() * 150, y + Math.random() * 150, "fishFrame1").setScale(0.075);
+      newFish.setRotation(angle).setDepth(1).setTint(0xFF0000);
+      newSchool.fishes.push(newFish);
+    }
+    newSchool.startingPoint = { x, y }
+    newSchool.currentPosition = { x, y }
+    newSchool.direction = { x: dirX, y: dirY }
+    let intervalRepeat = 0;
+    newSchool.interval = setInterval(() => {
+      if (intervalRepeat > 120) {
+        clearInterval(newSchool.interval);
+        remove(scene.fishSchools, ({ id = 0 }) => {
+          return id === newSchool.id;
+        })
+        return;
+      }
+      const school = scene.fishSchools.find(({ id }) => id === newSchool.id);
+      const isEscaping = Boolean(school?.escapingFrom);
+      if (isEscaping) {
+        const { x: escapeX = 0, y: escapeY = 0 } = { ...school?.escapingFrom }
+        x = escapeX;
+        y = escapeY;
+      }
+      intervalRepeat++;
+      const repeat = Math.random() * 100 + 10;
+      let xChange = (dirX - x) / repeat;
+      let yChange = (dirY - y) / repeat;
+      let { x: currentX = 0, y: currentY = 0 } = { ...school?.currentPosition };
+      if (currentX < -300 || currentX > width + 300 || currentY < -300 || currentY > height + 300) {
+        clearInterval(newSchool.interval);
+        remove(scene.fishSchools, ({ id = 0 }) => {
+          return id === newSchool.id;
+        })
+        return;
+      }
+      const currentPosition = {
+        x: currentX += xChange,
+        y: currentY += yChange,
+      }
+      scene.fishSchools = scene.fishSchools.map((school) => {
+        const { id = 0 } = { ...school };
+        if (id === newSchool.id) {
+          return ({
+            ...school,
+            currentPosition
+          });
+        }
+        return { ...school };
+      })
+      newSchool.fishes.forEach((fish: any, index: number) => {
+        if (isEscaping) {
+          const { x: dirX, y: dirY } = school?.escapeDirections[index] as PointType;
+          xChange = (dirX - x) / (repeat / 2);
+          yChange = (dirY - y) / (repeat / 2);
+        }
+        fish.x += xChange;
+        fish.y += yChange;
+        fish.setTexture(`fishFrame${Math.round(Math.random() * 2) + 1}`)
+      })
+    }, 100)
+
+    scene.fishSchools.push(newSchool)
+  }

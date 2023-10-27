@@ -9,8 +9,8 @@ export const gamesData = [
     {
         "order": 1,
         "image": "/tiles/shark.jpg",
-        "link": "/sharkHunt",
-        "name": "Shark hunt",
+        "link": "/oceanFlow",
+        "name": "Ocean Flow",
         "cornerImage": "/tiles/corner/shark.png"
     },
      {

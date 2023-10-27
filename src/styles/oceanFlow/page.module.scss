@@ -1,7 +1,7 @@
 @import "../colors.scss";
 @import "../customs.scss";
 
-.shark_hunt_main {
+.ocean_flow_main {
     @extend .centered;
 
     height: 100vh;
@@ -9,7 +9,7 @@
     background-color: $color1;
 }
 
-.shark_hunt_cont {
+.ocean_flow_cont {
     @include mainBoxShadow();
 
     height: 90vh;
