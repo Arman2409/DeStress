@@ -8,9 +8,10 @@ import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Instruction from "./components/Instruction/Instruction"
 import Animation from "./components/Animation/Animation"
 import Summary from "./components/Summary/Summary"
-import BackButton from "../globals/components/BackButton/BackButton"
+import CornerButton from "../globals/components/CornerButton/CornerButton"
 import Score from "./components/Score/Score"
 import { defineGameStatus, getRandomBackground } from "./utils/functions"
+import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
 
 export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
@@ -27,25 +28,20 @@ const Roshambo = () => {
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
     
     useEffect(() => {
-        const visitedGamesData = sessionStorage.getItem("destress_visited_games");
-        const visitedGames = visitedGamesData ? JSON.parse(visitedGamesData) : "";
-        if (Array.isArray(visitedGames)) {
-            if (visitedGames.includes("roshambo")) {
-                return;
-            }
-            visitedGames.push("roshambo");
-            sessionStorage.setItem("destress_visited_games", JSON.stringify(visitedGames));
+        const visited = updateVisitedStatus("roshambo");
+        if(!visited) {
+            openInfo()
         }
-        sessionStorage.setItem("destress_visited_games", JSON.stringify(["roshambo"]));
-        openWindow(
-            {
-                text: "5This is cool game",
-                onOk: closeWindow,
-                onCancel: () => router.push("/"),
-                cancelText: "Go Back",
-                confirmText: "Continue"
-            });
-    }, [openWindow])
+    }, [updateVisitedStatus, openWindow])
+
+    const openInfo = () => openWindow(
+        {
+            text: "5This is cool game",
+            onOk: closeWindow,
+            onCancel: () => router.push("/"),
+            cancelText: "Go Back",
+            confirmText: "Continue"
+    })
 
     useEffect(() => {
         if (chosenJest && opponentJest) {
@@ -72,7 +68,8 @@ const Roshambo = () => {
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
-                <BackButton extraStyles={{ zIndex: 6}} />
+                <CornerButton type="back" extraStyles={{ zIndex: 6}} />
+                <CornerButton type="info" extraStyles={{ zIndex: 6}} action={openInfo}/>
                     <div className={styles.roshambo_cont}>
                         {showScore && <Score />}
                         {chosenJest ? <Animation background={backgroundMemo} />

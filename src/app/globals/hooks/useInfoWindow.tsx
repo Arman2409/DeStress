@@ -12,7 +12,7 @@ import { infoWindowVariants } from "./utils/variants"
 
 const ContextHolder = ({ details, setDetails }: InfoContextHolderProps) => {
     const { text, onOk, onCancel, confirmText, cancelText, image } = details || {}
-
+ 
     return (
         <>
             {details && (

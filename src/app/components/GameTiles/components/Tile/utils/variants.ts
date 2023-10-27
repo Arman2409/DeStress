@@ -19,13 +19,13 @@ export const cornerImageVariants:Variants = {
         maxWidth: "40px",
         maxHeight: "40px",
         top: "-20px",
-        right: "-0px",
+        right: "-20px",
     },
     animate: {
         maxWidth: "80px",
         maxHeight: "80px",
         top: "-40px",
-        right: "-0px",
+        right: "-40px",
         transition: {
             duration: 2
         }

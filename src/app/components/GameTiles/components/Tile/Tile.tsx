@@ -34,6 +34,7 @@ const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
                 src={image}
                 key={hovered.toString()}
                 className={styles.tile_image}
+                alt={name}
                 variants={backgroundImageVariants}
                 initial="initial"
                 animate={hovered ? "animate" : ""}
