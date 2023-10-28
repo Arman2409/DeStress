@@ -5,13 +5,14 @@ A compilation of antistress games and stimuli.The project is completely client s
 ### Structure
 public - images and other media are stored here
 src -  all TypeScript code is located here <br>
-  app - the structuring files and the components of the project <br>  
-    globals - different globally used code <br>
-    components - components for the main page <br>
-    ...folders for each page... <br>
-  configs - different configurations for games' behaviour  <br>
-  styles - project styles  <br>
-  types - project types  <br>
+  &nbsp;app - the structuring files and the components of
+   the project <br>   
+   &nbsp;&nbsp; globals - different globally used code <br>
+   &nbsp;&nbsp; components - components for the main page <br>
+   &nbsp;&nbsp; ...folders for each page... <br>
+  &nbsp;configs - different configurations <br>
+  &nbsp; styles - project styles  <br>
+  &nbsp;types - project types  <br>
 
 
 ### Stack
