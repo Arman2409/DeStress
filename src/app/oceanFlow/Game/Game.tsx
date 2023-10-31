@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Phaser from "phaser"
 
 import styles from "../../../styles/oceanFlow/components/Game.module.scss"
 import type { FishSchoolType } from "../../../types/oceanFlow"
 import configs from "../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
-import { addPlants, checkForCollision, createRandomFishSchool, updateFrames } from "./utils/functions"
+import { addPlants, checkForCollision, createRandomFishSchool } from "./utils/functions"
 
 const {
   createFishSchoolInterval,
@@ -15,10 +15,10 @@ const {
 } = { ...configs };
 
 const Game = () => {
+  const [escapedCount, setEscapedCount] = useState<number>(0);
   const gameRef = useRef<any>();
   const scene = useRef<any>();
   const isMoving = useRef<boolean>(false);
-
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
@@ -60,7 +60,7 @@ const Game = () => {
         const { width, height } = this.sys.game.canvas;
         this.time.addEvent({
           delay: 100,
-          callback: () => checkForCollision(this, width, height),
+          callback: () => checkForCollision(this, width, height, (_:string, count:number) => setEscapedCount(curr => curr + count)),
           loop: true,
         })
       }
@@ -114,7 +114,7 @@ const Game = () => {
         scene.current.jellyfish.x = scene.current.jellyfish.x + jellyfishStep;
       }
     })
-  }, [Phaser, checkForCollision, updateFrames, addPlants, createRandomFishSchool]);
+  }, [Phaser, checkForCollision, addPlants, createRandomFishSchool]);
 
   return (
     <div id="phaser-container" className={styles.phaser_cont} />

@@ -3,7 +3,7 @@ export default {
     maxFishEachSchool: 20,
     jellyfishStep: 10,
     jellyFishFramesCount: 9,
-    collisionDistance: 150,
+    collisionDistance: 250,
     infoImage: "/oceanFlow/eventKeys.png",
     plantsCount: 1,
     backgroundColor: "#E0FFFF",
