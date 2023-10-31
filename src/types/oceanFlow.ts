@@ -18,15 +18,9 @@ export interface FishSchoolType  {
     escapeDirections: Array<PointType>
 }
 
-export interface JellyfishType
-{ 
-    sprite: Phaser.GameObjects.Sprite,
-    updateInterval: any 
-}
-
 export interface OceanSceneType extends Phaser.Scene
 {
-    jellyfish: JellyfishType
+    jellyfish:  Phaser.GameObjects.Sprite,
     plants: any[]
     fishSchools: FishSchoolType[]
 }

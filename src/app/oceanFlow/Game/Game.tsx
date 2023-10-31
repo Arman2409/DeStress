@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import Phaser from "phaser"
 
 import styles from "../../../styles/oceanFlow/components/Game.module.scss"
-import type { FishSchoolType, JellyfishType } from "../../../types/oceanFlow"
+import type { FishSchoolType } from "../../../types/oceanFlow"
 import configs from "../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
 import { addPlants, checkForCollision, createRandomFishSchool, updateFrames } from "./utils/functions"
@@ -12,7 +12,7 @@ const {
   backgroundColor,
   jellyfishStep,
   jellyFishFramesCount
-   } = { ...configs };
+} = { ...configs };
 
 const Game = () => {
   const gameRef = useRef<any>();
@@ -24,7 +24,7 @@ const Game = () => {
     class Ocean extends Phaser.Scene {
       plants: Phaser.GameObjects.Sprite[] = [];
       fishSchools: FishSchoolType[] = [];
-      jellyfish: JellyfishType = {} as JellyfishType;
+      jellyfish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       fish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       graphics: Phaser.GameObjects.Graphics = {} as Phaser.GameObjects.Graphics;
       constructor(props?: any) {
@@ -43,10 +43,15 @@ const Game = () => {
       create = () => {
         addPlants(this);
         this.cameras.main.setBackgroundColor(backgroundColor);
-        this.jellyfish = {
-          sprite: this.add.sprite(100, 100, "jellyfishFrame1").setScale(0.5).setDepth(5),
-          updateInterval: setInterval(() => updateFrames(this.jellyfish.sprite, "jellyfishFrame", jellyFishFramesCount), 250)
-        };
+        this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(0.5).setDepth(5);
+        this.jellyfish.anims.create({
+          key: "jellyfishAnimation",
+          frames: Array.from({length: jellyFishFramesCount}, (_, order) => ({key: "jellyfishFrame" + order})),
+          frameRate: 7.5,
+          duration: 2,
+          repeat: -1,
+        })
+        this.jellyfish.anims.play("jellyfishAnimation")
         this.time.addEvent({
           delay: createFishSchoolInterval * 1000,
           callback: () => createRandomFishSchool(this),
@@ -78,43 +83,35 @@ const Game = () => {
     });
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (eventKeys.top.includes(e.key)) {
-        scene.current.jellyfish.sprite.setRotation(0);
-        if (scene.current.jellyfish.sprite.y <= 80) {
+        scene.current.jellyfish.setRotation(0);
+        if (scene.current.jellyfish.y <= 80) {
           return;
         }
-        isMoving.current = true;
-        isMoving.current = false;
-        scene.current.jellyfish.sprite.y = scene.current.jellyfish.sprite.y - jellyfishStep;
+        scene.current.jellyfish.y = scene.current.jellyfish.y - jellyfishStep;
       }
       if (eventKeys.bottom.includes(e.key)) {
         if (isMoving.current) return;
-        scene.current.jellyfish.sprite.setRotation(3);
+        scene.current.jellyfish.setRotation(3);
         const { height } = scene.current?.sys?.game?.canvas;
-        if (scene.current.jellyfish.sprite.y >= height - 80) {
+        if (scene.current.jellyfish.y >= height - 80) {
           return;
         }
-        isMoving.current = true;
-        isMoving.current = false;
-        scene.current.jellyfish.sprite.y = scene.current.jellyfish.sprite.y + jellyfishStep;
+        scene.current.jellyfish.y = scene.current.jellyfish.y + jellyfishStep;
       }
       if (eventKeys.left.includes(e.key)) {
-        scene.current.jellyfish.sprite.setRotation(4.5)
-        if (scene.current.jellyfish.sprite.x <= 80) {
+        scene.current.jellyfish.setRotation(4.5)
+        if (scene.current.jellyfish.x <= 80) {
           return;
         }
-        isMoving.current = true;
-        isMoving.current = false;
-        scene.current.jellyfish.sprite.x = scene.current.jellyfish.sprite.x - jellyfishStep;
+        scene.current.jellyfish.x = scene.current.jellyfish.x - jellyfishStep;
       }
       if (eventKeys.right.includes(e.key)) {
-        scene.current.jellyfish.sprite.setRotation(1.5);
+        scene.current.jellyfish.setRotation(1.5);
         const { width } = scene.current?.sys?.game?.canvas;
-        if (scene.current.jellyfish.sprite.x >= width - 80) {
+        if (scene.current.jellyfish.x >= width - 80) {
           return;
         }
-        isMoving.current = true;
-        isMoving.current = false;
-        scene.current.jellyfish.sprite.x = scene.current.jellyfish.sprite.x + jellyfishStep;
+        scene.current.jellyfish.x = scene.current.jellyfish.x + jellyfishStep;
       }
     })
   }, [Phaser, checkForCollision, updateFrames, addPlants, createRandomFishSchool]);

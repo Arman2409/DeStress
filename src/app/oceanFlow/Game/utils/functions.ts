@@ -130,7 +130,7 @@ export const updateFrames = (jellyfishSprite: Phaser.GameObjects.Sprite, frameNa
 }
 
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number) => {
-    const { x = 0, y = 0 } = { ...scene.jellyfish.sprite }
+    const { x = 0, y = 0 } = { ...scene.jellyfish }
     scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
         const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
         if (escapingFrom) return { ...school };
@@ -269,7 +269,7 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
             fish.y += yChange;
             fish.setTexture(`fishFrame${Math.round(Math.random() * 2) + 1}`)
         })
-    }, 100)
+    }, 50)
 
     scene.fishSchools.push(newSchool)
 }

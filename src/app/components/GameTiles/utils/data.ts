@@ -21,14 +21,14 @@ export const gamesData = [
         "cornerImage": ""
     },
     {
-        "order": 3,
+        "order": 4,
         "image": "/logos/logo.png",
         "link": "/game",
         "name": "first game",
         "cornerImage": ""
     } ,
     {
-        "order": 3,
+        "order": 5,
         "image": "/logos/logo.png",
         "link": "/game",
         "name": "first game",
