@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 
 import styles from "../../styles/oceanFlow/page.module.scss"
 import useInfoWindow from "../globals/hooks/useInfoWindow"
-import Game from "./Game/Game"
+import Game from "./components/Game/Game"
 import CornerButton from "../globals/components/CornerButton/CornerButton"
 import configs from "../../configs/oceanFlow"
 import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
