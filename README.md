@@ -5,8 +5,7 @@ A compilation of antistress games and stimuli.The project is completely client s
 ### Structure
 public - images and other media are stored here <br>
 src -  all TypeScript code is located here <br>
-  &nbsp;app - the structuring files and the components of
-   the project
+  &nbsp;app - the structuring files and the components of the project <br>
    &nbsp;&nbsp; globals - different globally used code <br>
    &nbsp;&nbsp; components - components for the main page <br>
    &nbsp;&nbsp; ...folders for each page... <br>

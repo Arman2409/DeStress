@@ -10,10 +10,13 @@
     background-size: 100% 100%;
 }
 
-.circle {
+.ball {
     width: 50px;
     height: 50px;
     background-color: $color3;
+    background-image: radial-gradient(at top left, red 0%, green 50%, blue 100%);
+    background-repeat: no-repeat;
+    background-size: 1200% 100%;
     border-radius: 50%;
     position: absolute;
 }

@@ -13,20 +13,24 @@ export default function Home() {
   const circle = useRef<any>(null);
   const isBouncing = useRef<boolean>(false);
   const mousePosition = useRef<MousePositionType>({} as MousePositionType)
-
+  const animatingTimeout = useRef<any>();
+   
   const animateCircle = (left: number, top: number) => {
+    if(!circle.current) return;
     const { x, y } = circle.current.getBoundingClientRect();
     const movementX = Math.abs(left - x);
     const movementY = Math.abs(top - y);
     const toFloor = movementX > movementY;
     animate(circle.current, {
-      top: [y + "px", toFloor ? document.body.clientHeight - 50 + "px" : top - (Math.abs(movementY) / 2) + "px", top - 25 + 'px'],
-      left: [x + "px", toFloor ? left - (Math.abs(movementX) / 2) + "px" : document.body.clientWidth - 50 + "px", left - 25 + 'px']
+      top: [y + "px", toFloor ? document.body.clientHeight - 25 + "px" : top - (Math.abs(movementY) / 2) + "px", top - 25 + 'px'],
+      left: [x + "px", toFloor ? left - (Math.abs(movementX) / 2) + "px" : document.body.clientWidth - 50 + "px", left - 25 + 'px'],
+      height: toFloor &&  ["50px", "50px", "50px", "25px", "50px", "50px", "50px"],
+      width: !toFloor &&  ["50px", "50px", "50px", "25px", "50px", "50px", "50px"],
     }, { duration: 1.5 })
-     setTimeout(() => {
-      const { x, y } = circle.current.getBoundingClientRect();
+    animatingTimeout.current = setTimeout(() => {
+      if(!circle.current) return;
+      const { x, y } = circle.current?.getBoundingClientRect();
       const { left, top } = mousePosition.current
-      
       if (!(x + 24 < left && x + 26 > left) ||
        !(y + 24 < top && y + 26 > top)) {
         animateCircle(left, top);
@@ -38,8 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     document.addEventListener('mousemove', (event: MouseEvent) => {
-      const left = event.clientX;
-      const top = event.clientY;
+      let left = event.clientX, top = event.clientY;
       mousePosition.current = {
         left,
         top,
@@ -47,17 +50,24 @@ export default function Home() {
       if (isBouncing.current) return;
       if (event.movementX !== 0 || event.movementY !== 0) {
         isBouncing.current = true;
-        animateCircle(left, top)
-        return;
+        const checkForChangeInt =  setInterval(() => {
+          const {top: currentTop, left: currentLeft} = {...mousePosition.current};
+          if (currentLeft === left && currentTop === top){
+            clearInterval(checkForChangeInt);
+            animateCircle(left, top)
+            return;
+          }
+          left = currentLeft;
+          top = currentTop;
+        }, 500);
       }
-      circle.current.style.left = left + 'px';
-      circle.current.style.top = top + 'px';
     });
+    return clearTimeout(animatingTimeout.current);
   }, [])
 
   return (
     <main className={styles.main} >
-      <div id="circle" ref={circle} className={styles.circle} />
+      <div id="circle" ref={circle} className={styles.ball} />
       {loading && <Loading />}
       <Greeting />
       <GameTiles choseGame={() => setLoading(true)} />

@@ -20,8 +20,8 @@ const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
         <motion.div
             className={styles.tile}
             onClick={clickTile}
-            onHoverStart={() => setHovered(true)}
-            onHoverEnd={() => setHovered(false)}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
         >
            {cornerImage && <motion.img
                 src={cornerImage}
@@ -32,7 +32,6 @@ const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
             />}
             <motion.img
                 src={image}
-                key={hovered.toString()}
                 className={styles.tile_image}
                 alt={name}
                 variants={backgroundImageVariants}
