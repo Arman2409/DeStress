@@ -24,6 +24,11 @@ export interface MousePositionType {
     left: number,
     top: number
 }
+
+export interface PointType {
+    x: number
+    y: number
+ }
 export interface GameType {
     order: number
     image: string

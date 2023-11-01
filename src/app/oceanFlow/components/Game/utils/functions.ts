@@ -1,9 +1,14 @@
-import { inRange, random, remove } from "lodash";
+import { inRange, random, remove } from "lodash"
 
-import type { DirectionType, FishSchoolType, OceanSceneType, PointType } from "../../../../types/oceanFlow";
-import configs from "../../../../configs/oceanFlow";
+import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../../types/oceanFlow"
+import type { PointType } from "../../../../../types/main"
+import configs from "../../../../../configs/oceanFlow";
+import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions";
 
-const { collisionDistance, maxFishEachSchool } = { ...configs };
+const {
+    collisionDistance,
+    maxFishEachSchool,
+    plantsCountRange } = { ...configs };
 const pi = Math.PI;
 const randomFishColors = [
     0xFF0000, 0x00FF00, 0x0000FF, 0xFFCC00, 0x00FFCC,
@@ -117,22 +122,22 @@ export const getEscapeDirection = (width: number, height: number) => {
 export const generateRandomId = () => {
     const randomNumber = Math.random();
     const randomString = randomNumber.toString(36);
-    const uniqueId = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
+    const id = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
 
-    return uniqueId;
+    return id;
 }
 
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number, callback: Function) => {
- const { x = 0, y = 0 } = { ...scene.jellyfish }
+    const { x = 0, y = 0 } = { ...scene.jellyfish }
     scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
         const { currentPosition = { x: 0, y: 0 }, id, fishCount = 1, fishes, escapingFrom } = { ...school }
         if (escapingFrom) return { ...school };
         const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
         if ((inRange(x, schoolX - collisionDistance, schoolX)
             || inRange(x, schoolX, schoolX + collisionDistance)
-             ) &&
+        ) &&
             (inRange(y, schoolY - collisionDistance, schoolY)
-                 || inRange(y, schoolY, schoolY + collisionDistance))) {
+                || inRange(y, schoolY, schoolY + collisionDistance))) {
             callback(id, fishCount);
             const escapeDirections = [];
             for (let i = 0; i < fishCount; i++) {
@@ -165,37 +170,25 @@ export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHe
     })
 }
 
-const generateWithoutCollisions = (others: PointType[], width: number, height: number) => {
-    const x =  random(50, width - 100);
-    const y = random(50, height - 100);
-    others.forEach(({ x: otherX, y: otherY }) => {
-        if ((x < otherX + 100) && (x > otherX - 100) && (y < otherY + 100) && (y > otherY - 100)) {
-            return generateWithoutCollisions(others, width, height);
-        }
-    })
-    return { x, y };
-}
-
 export const addPlants = (scene: OceanSceneType) => {
-    const plantsCount =  random(0, 8) + 2;
+    const plantsCount = random(plantsCountRange[0], plantsCountRange[1]) + 2;
     const placeMents: PointType[] = [];
     const { width, height } = scene.sys.cameras.main;
     for (let i = 1; i <= plantsCount; i++) {
-        const { x, y } = generateWithoutCollisions(placeMents, width, height);
-        const plant = scene.add.sprite(x, y, "plant1").setScale(0.2).setDepth(1).setRotation(Math.random() * 6.24);
-        scene.plants.push(plant);
+        const { x, y } = generateWithoutCollisions(placeMents, width, height, 75);
+        scene.add.sprite(x, y, "plantFrame").setScale(0.2).setDepth(1).setRotation(Math.random() * 6.24);
     }
 }
 
 
-const removeFishSchool = (school:FishSchoolType, scene:OceanSceneType) => {
+const removeFishSchool = (school: FishSchoolType, scene: OceanSceneType) => {
     school.fishes.forEach((fish) => {
         fish.destroy();
-      })
-      clearInterval(school.interval);
-      remove(scene.fishSchools, ({ id = 0 }) => {
-          return id === school.id;
-      })
+    })
+    clearInterval(school.interval);
+    remove(scene.fishSchools, ({ id = 0 }) => {
+        return id === school.id;
+    })
 }
 
 export const createRandomFishSchool = (scene: OceanSceneType) => {
@@ -216,7 +209,7 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
     let { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
 
     for (let count = 0; count < fishCount; count++) {
-        const newFish = scene.add.sprite(x + random(0, 150), y +  random(0, 150), "fishFrame1").setScale(0.075);
+        const newFish = scene.add.sprite(x + random(0, 150), y + random(0, 150), "fishFrame1").setScale(0.075);
         newFish.setRotation(angle).setDepth(1).setTint(getRandomFishColor());
         newSchool.fishes.push(newFish);
     }
@@ -242,7 +235,7 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
         let yChange = (dirY - y) / repeat;
         let { x: currentX = 0, y: currentY = 0 } = { ...school?.currentPosition };
         if (currentX < -300 || currentX > width + 300
-             || currentY < -300 || currentY > height + 300) {
+            || currentY < -300 || currentY > height + 300) {
             removeFishSchool(newSchool, scene)
             return;
         }

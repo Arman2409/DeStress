@@ -26,13 +26,6 @@ const Roshambo = () => {
     const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);
 
     const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
-    
-    useEffect(() => {
-        const visited = updateVisitedStatus("roshambo");
-        if(!visited) {
-            openInfo()
-        }
-    }, [updateVisitedStatus, openWindow])
 
     const openInfo = () => openWindow(
         {
@@ -42,6 +35,13 @@ const Roshambo = () => {
             cancelText: "Go Back",
             confirmText: "Continue"
     })
+    
+    useEffect(() => {
+        const visited = updateVisitedStatus("roshambo");
+        if(!visited) {
+            openInfo()
+        }
+    }, [updateVisitedStatus, openWindow])
 
     useEffect(() => {
         if (chosenJest && opponentJest) {

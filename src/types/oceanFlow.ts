@@ -1,11 +1,8 @@
+import { PointType } from "./main"
+
 export type DirectionType = "left" | "right" | "top" | "bottom"
 
 // interfaces 
-
-export interface PointType {
-    x: number
-    y: number
- }
 export interface FishSchoolType  {
     id: string
     fishes: Array<any>
@@ -20,7 +17,6 @@ export interface FishSchoolType  {
 
 export interface OceanSceneType extends Phaser.Scene
 {
-    jellyfish:  Phaser.GameObjects.Sprite,
-    plants: any[]
+    jellyfish:  Phaser.GameObjects.Sprite
     fishSchools: FishSchoolType[]
 }
