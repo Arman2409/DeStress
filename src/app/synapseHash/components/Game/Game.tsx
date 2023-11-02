@@ -16,13 +16,15 @@ const Game = () => {
     useEffect(() => {
         class NetWork extends Phaser.Scene {
             neurons: NeuronType[] = []
+            clickedNeuron:string = ""
             constructor(props?: any) {
                 super(props)
             }
             preload = () => {
                 this.load.image("neuronFrame", "./synapseHash/neuron.png");
+                this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
+                this.load.image("clickedNeuronFrame", "./synapseHash/neuronBlur-removebg-preview.png");
             }
-
             create = () => {
                 addRandomNeurons(this);
                 this.cameras.main.setBackgroundColor(backgroundColor)

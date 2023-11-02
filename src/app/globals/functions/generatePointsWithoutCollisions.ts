@@ -2,21 +2,29 @@ import { inRange, random } from "lodash"
 
 import type { PointType } from "../../../types/main"
 
-const generateWithoutCollisions = (others: PointType[], width: number, height: number, distance: number) => {
-    const x = random(distance, width - distance);
-    const y = random(distance, height - distance);
-
+const generateWithoutCollisions = (
+    others: PointType[],
+    width: number,
+    height: number,
+    distance: number): PointType => {
+    const x = random(distance, width);
+    const y = random(distance, height);
+    let hasCollides = false;
     others.forEach(({ x: otherX, y: otherY }) => {
         if (inRange(x, otherX - distance, otherX + distance)
             && inRange(y, otherY - distance, otherY + distance)) {
-            return generateWithoutCollisions(
-                others,
-                width,
-                height,
-                distance);
+            hasCollides = true;
         }
     })
-    return { x, y };
+    if (hasCollides) {
+        return generateWithoutCollisions(
+            others,
+            width,
+            height,
+            distance);
+    } else {
+        return { x, y };
+    }
 }
 
 export default generateWithoutCollisions;

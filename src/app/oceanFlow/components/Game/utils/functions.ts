@@ -4,6 +4,7 @@ import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../
 import type { PointType } from "../../../../../types/main"
 import configs from "../../../../../configs/oceanFlow";
 import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions";
+import generateUniqueId from "../../../../globals/functions/generateUniqueId";
 
 const {
     collisionDistance,
@@ -24,7 +25,6 @@ const getRandomBoolean = () => Boolean(random(0, 1));
 const getRandomFishColor = () => {
     return randomFishColors[random(0, randomFishColors.length)]
 }
-
 
 export const getAngle = (startX: number, startY: number, endX: number, endY: number, direction: DirectionType) => {
     let angle = 0;
@@ -119,14 +119,6 @@ export const getEscapeDirection = (width: number, height: number) => {
     })
 }
 
-export const generateRandomId = () => {
-    const randomNumber = Math.random();
-    const randomString = randomNumber.toString(36);
-    const id = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
-
-    return id;
-}
-
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number, callback: Function) => {
     const { x = 0, y = 0 } = { ...scene.jellyfish }
     scene.fishSchools = scene.fishSchools.map((school: FishSchoolType) => {
@@ -195,7 +187,7 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
     const fishCount = random(1, maxFishEachSchool);
     const newSchool: FishSchoolType =
     {
-        id: generateRandomId(),
+        id: generateUniqueId(scene.fishSchools),
         fishes: [],
         startingPoint: { x: 0, y: 0 },
         direction: { x: 0, y: 0 },

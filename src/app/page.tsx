@@ -7,6 +7,7 @@ import type { MousePositionType } from "../types/main"
 import GameTiles from "./components/GameTiles/GameTiles"
 import Greeting from "./components/Greeting/Greeting"
 import Loading from "./globals/components/Loading/Loading"
+import { animateCircle } from "./utils/functions"
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,31 +16,7 @@ export default function Home() {
   const mousePosition = useRef<MousePositionType>({} as MousePositionType)
   const animatingTimeout = useRef<any>();
    
-  const animateCircle = (left: number, top: number) => {
-    if(!circle.current) return;
-    const { x, y } = circle.current.getBoundingClientRect();
-    const movementX = Math.abs(left - x);
-    const movementY = Math.abs(top - y);
-    const toFloor = movementX > movementY;
-    animate(circle.current, {
-      top: [y + "px", toFloor ? document.body.clientHeight - 25 + "px" : top - (Math.abs(movementY) / 2) + "px", top - 25 + 'px'],
-      left: [x + "px", toFloor ? left - (Math.abs(movementX) / 2) + "px" : document.body.clientWidth - 50 + "px", left - 25 + 'px'],
-      height: toFloor &&  ["50px", "50px", "50px", "25px", "50px", "50px", "50px"],
-      width: !toFloor &&  ["50px", "50px", "50px", "25px", "50px", "50px", "50px"],
-    }, { duration: 1.5 })
-    animatingTimeout.current = setTimeout(() => {
-      if(!circle.current) return;
-      const { x, y } = circle.current?.getBoundingClientRect();
-      const { left, top } = mousePosition.current
-      if (!(x + 24 < left && x + 26 > left) ||
-       !(y + 24 < top && y + 26 > top)) {
-        animateCircle(left, top);
-        return;
-      }
-      isBouncing.current = false;
-    }, 2000);
-  }
-
+ 
   useEffect(() => {
     document.addEventListener('mousemove', (event: MouseEvent) => {
       let left = event.clientX, top = event.clientY;
@@ -54,7 +31,7 @@ export default function Home() {
           const {top: currentTop, left: currentLeft} = {...mousePosition.current};
           if (currentLeft === left && currentTop === top){
             clearInterval(checkForChangeInt);
-            animateCircle(left, top)
+            animateCircle(left, top, circle, isBouncing, animatingTimeout, mousePosition)
             return;
           }
           left = currentLeft;
