@@ -6,6 +6,7 @@ import type { PointType } from "./main"
 export interface NeuronType {
     id: string
     placement: PointType
+    tween?: any
     sprite: Phaser.GameObjects.Sprite
 }
 
