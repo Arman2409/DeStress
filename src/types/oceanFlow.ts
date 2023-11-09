@@ -1,7 +1,5 @@
 import { PointType } from "./main"
 
-export type DirectionType = "left" | "right" | "top" | "bottom"
-
 // interfaces 
 export interface FishSchoolType  {
     id: string

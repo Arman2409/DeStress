@@ -1,9 +1,11 @@
 import { inRange, random, remove } from "lodash"
 
-import type { DirectionType, FishSchoolType, OceanSceneType } from "../../../../../types/oceanFlow"
+import type { FishSchoolType, OceanSceneType } from "../../../../../types/oceanFlow"
 import type { PointType } from "../../../../../types/main"
-import configs from "../../../../../configs/oceanFlow";
+import configs from "../../../../../configs/oceanFlow"
 import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions";
+import generateUniqueId from "../../../../globals/functions/generateUniqueId";
+import getAngle from "../../../../globals/functions/getAngle"
 
 const {
     collisionDistance,
@@ -25,32 +27,6 @@ const getRandomFishColor = () => {
     return randomFishColors[random(0, randomFishColors.length)]
 }
 
-
-export const getAngle = (startX: number, startY: number, endX: number, endY: number, direction: DirectionType) => {
-    let angle = 0;
-    const xChange = Math.abs(endX - startX);
-    const yChange = Math.abs(endY - startY);
-
-    const tan = direction === "top" || direction === "bottom" ? xChange / yChange : yChange / xChange;
-    const angle_in_radians = Math.atan(tan);
-
-    switch (direction) {
-        case "right":
-            angle = endY - startY > 0 ? (pi / 2) + angle_in_radians : (pi / 2) - angle_in_radians;
-            break;
-        case "bottom":
-            angle = endX - startX > 0 ? pi - angle_in_radians : pi + angle_in_radians;
-            break;
-        case "left":
-            angle = endY - startY > 0 ? (pi * 1.5) - angle_in_radians : (pi * 1.5) + angle_in_radians;
-            break;
-        case "top":
-            angle = endX - startX > 0 ? (pi * 2) + angle_in_radians : (pi * 2) - angle_in_radians;
-            break;
-    }
-    return angle;
-}
-
 export const getRandomSchoolDetails = (width: number, height: number) => {
     let x: number, y: number, angle = 0;
     const fromSide = getRandomBoolean();
@@ -62,10 +38,10 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
         if (fromLeft) {
             x = 0;
             dirX = width;
-            angle = getAngle(x, y, dirX, dirY, "right")
+            angle = getAngle(x, y, dirX, dirY)
         } else {
             x = width;
-            angle = getAngle(x, y, dirX, dirY, "left");
+            angle = getAngle(x, y, dirX, dirY);
         }
         return {
             x,
@@ -82,10 +58,10 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
     if (fromTop) {
         y = 0;
         dirY = height;
-        angle = getAngle(x, y, dirX, dirY, "bottom")
+        angle = getAngle(x, y, dirX, dirY)
     } else {
         y = height;
-        angle = getAngle(x, y, dirX, dirY, "top")
+        angle = getAngle(x, y, dirX, dirY)
     }
     return {
         x,
@@ -97,34 +73,23 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
 }
 
 export const getEscapeDirection = (width: number, height: number) => {
-    let x = 0, y = 0, direction: DirectionType;
+    let x = 0, y = 0;
     const extraSpace = 120;
     const toSide = getRandomBoolean();
     if (toSide) {
         const toLeft = getRandomBoolean();
-        direction = toLeft ? "left" : "right";
         x = toLeft ? -extraSpace : width + extraSpace;
         y = random(0, height);
     }
     else {
         const toTop = getRandomBoolean();
-        direction = toTop ? "top" : "bottom";
         y = toTop ? -extraSpace : height + extraSpace;
         x = random(0, width);
     }
     return ({
         x,
-        y,
-        direction
+        y
     })
-}
-
-export const generateRandomId = () => {
-    const randomNumber = Math.random();
-    const randomString = randomNumber.toString(36);
-    const id = randomString.replace(/\.[0-9]*/, "").replace(/^0+/, "");
-
-    return id;
 }
 
 export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHeight: number, callback: Function) => {
@@ -143,8 +108,8 @@ export const checkForCollision = (scene: OceanSceneType, sysWidth: number, sysHe
             for (let i = 0; i < fishCount; i++) {
                 const escapeDirection = getEscapeDirection(sysWidth, sysHeight);
                 escapeDirections.push(escapeDirection);
-                const { x: escapeX, y: escapeY, direction } = { ...escapeDirection };
-                const angle = getAngle(schoolX, schoolY, escapeX, escapeY, direction);
+                const { x: escapeX, y: escapeY } = { ...escapeDirection };
+                const angle = getAngle(schoolX, schoolY, escapeX, escapeY);
                 let rotateFishIntervalRep = 0;
                 const repeatance = random(1, 5);
                 const rotateInterval = setInterval(() => {
@@ -195,7 +160,7 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
     const fishCount = random(1, maxFishEachSchool);
     const newSchool: FishSchoolType =
     {
-        id: generateRandomId(),
+        id: generateUniqueId(scene.fishSchools),
         fishes: [],
         startingPoint: { x: 0, y: 0 },
         direction: { x: 0, y: 0 },
@@ -266,3 +231,5 @@ export const createRandomFishSchool = (scene: OceanSceneType) => {
     }, 50)
     scene.fishSchools.push(newSchool)
 }
+
+
