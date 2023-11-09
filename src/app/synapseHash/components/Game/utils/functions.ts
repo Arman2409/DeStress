@@ -42,7 +42,7 @@ export const addRandomNeurons = (scene: NetworkSceneType) => {
   for (let i = 0; i < neuronsCount; i++) {
     const others = scene.neurons.map(({ placement }) => ({ ...placement }));
     const { x, y } = generateWithoutCollisions(others, width, height, 75);
-    const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame").setRotation(random(0, 6.24)).setScale(0.66);
+    const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame").setRotation(random(0, 6.24)).setScale(0.25);
     newNeuronSprite.setInteractive();
     const newNeuron = {
       id: generateUniqueId(scene.neurons),
