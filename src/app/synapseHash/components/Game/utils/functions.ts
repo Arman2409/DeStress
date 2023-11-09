@@ -17,6 +17,19 @@ const getNeuronTweenConfig = (target: any) => ({
   repeat: -1
 })
 
+const calculateDistance = (x1: number, y1:number, x2:number, y2:number) => {
+    const xDistance = Math.abs(x1 - x2);
+    const yDistance = Math.abs(y1 - y2);
+    const distance = Math.sqrt(xDistance**2 + yDistance**2);
+    const middleX = x2 >= x1 ? xDistance/2 : -xDistance/2;
+    const middleY = y2 >= y1 ? yDistance/2 : -yDistance/2;
+    return ({
+      middleX,
+      middleY,
+      distance
+    });
+}
+
 const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType) => {
   const { sprite, id } = { ...neuron };
   if (scene.clickedNeuron) {
@@ -25,6 +38,10 @@ const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType) => {
     const { x: startX = 0, y: startY = 0 } = { ...previousClicked.sprite };
     const { x: endX, y: endY } = { ...neuron.sprite };
     const angle = getAngle(startX, startY, endX, endY);
+    const {middleX, middleY, distance} = calculateDistance(startX, startY, endX, endY);
+    const newConnection = scene.physics.add.sprite(startX + middleX,startY + middleY, "connectionFrame")
+     .setRotation(-Math.PI/2 + angle)
+     .setScale(distance * 0.003, 1);
     previousClicked.tween.destroy();
     previousClicked.sprite.setRotation(-1.5 + angle);
   }
