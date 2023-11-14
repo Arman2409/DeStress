@@ -22,6 +22,11 @@ const Game = () => {
             }
             preload = () => {
                 this.load.image("neuronFrame", "./synapseHash/neuron.png");
+                this.load.image("connectionFrame", "./synapseHash/connection.png");
+                this.load.image("connectionElectrifiedFrame1", "./synapseHash/connectionElectrified1.png")
+                this.load.image("connectionElectrifiedFrame2", "./synapseHash/connectionElectrified2.png")
+                this.load.image("connectionElectrifiedFrame3", "./synapseHash/connectionElectrified3.png")
+                this.load.image("connectionElectrifiedFrame4", "./synapseHash/connectionElectrified4.png")
                 this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
                 this.load.image("clickedNeuronFrame", "./synapseHash/neuronBlur-removebg-preview.png");
             }
