@@ -1,6 +1,8 @@
 
 import type { PointType } from "./main"
 
+
+export type ConnectionType =  Array<[string, string]>
 // interfaces 
 
 export interface NeuronType {
@@ -13,4 +15,5 @@ export interface NeuronType {
 export interface NetworkSceneType extends Phaser.Scene {
     clickedNeuron: any
     neurons: any[]
+    neuronConnections: ConnectionType[]
 }

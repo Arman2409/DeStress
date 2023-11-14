@@ -6,6 +6,7 @@ import type { FishSchoolType } from "../../../../types/oceanFlow"
 import configs from "../../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
 import { addPlants, checkForCollision, createRandomFishSchool } from "./utils/functions"
+import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
 
 const {
   createFishSchoolInterval,
@@ -41,7 +42,7 @@ const Game = () => {
         this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(0.5).setDepth(5);
         this.jellyfish.anims.create({
           key: "jellyfishAnimation",
-          frames: Array.from({length: jellyFishFramesCount}, (_, order) => ({key: "jellyfishFrame" + order})),
+          frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + order })),
           frameRate: 7.5,
           duration: 2,
           repeat: -1,
@@ -55,7 +56,7 @@ const Game = () => {
         const { width, height } = this.sys.game.canvas;
         this.time.addEvent({
           delay: 100,
-          callback: () => checkForCollision(this, width, height, (_:string, count:number) => setEscapedCount(curr => curr + count)),
+          callback: () => checkForCollision(this, width, height, (_: string, count: number) => setEscapedCount(curr => curr + count)),
           loop: true,
         })
       }
@@ -111,7 +112,13 @@ const Game = () => {
   }, [Phaser, checkForCollision, addPlants, createRandomFishSchool]);
 
   return (
-    <div id="phaser-container" className={styles.phaser_cont} />
+    <>
+      <ScoreAlert
+        score={escapedCount}
+        mode="custom"
+      />
+      <div id="phaser-container" className={styles.phaser_cont} />
+    </>
   );
 };
 
