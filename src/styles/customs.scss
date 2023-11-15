@@ -21,9 +21,12 @@
     background-color: black;
     opacity: 0.5;
     z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-// colors might be imported
+// colors should be imported for mixins
 @mixin mainBoxShadow($color:$color4) {
     box-shadow: 0px 0px 15px 5px $color;
 } 
