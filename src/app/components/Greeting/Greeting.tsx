@@ -3,20 +3,28 @@
 import { motion } from "framer-motion"
 
 import styles from "../../../styles/components/Greeting.module.scss"
-import { logoVariants } from "./utils/variants"
+import { logoVariants, subTitleVariants } from "./utils/variants"
 
-const Greeting = () => {
-   return (
-      <div className={styles.main}>
-         <motion.img
-            src="/logos/logo_title.png"
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
-            variants={logoVariants}
-         />
-      </div>
-   )
-}
+const Greeting = () => (
+   <div
+     className={styles.main}>
+      <motion.img
+         src="/logos/logo_title.png"
+         initial="initial"
+         animate="animate"
+         whileHover="hover"
+         variants={logoVariants}
+      />
+      <motion.p
+         initial="initial"
+         animate="animate"
+         whileHover="hover"
+         className={styles.sub_title}
+         variants={subTitleVariants} >
+         Antistress games' compilation
+      </motion.p>
+   </div>
+)
+
 
 export default Greeting;
