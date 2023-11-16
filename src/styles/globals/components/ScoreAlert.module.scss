@@ -1,0 +1,21 @@
+@import "../../colors.scss";
+@import "../../customs.scss";
+
+.score_main {
+    @include mainBoxShadow();
+
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: $color2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 125px;
+    overflow: hidden;
+    border-radius: 15px;
+    z-index: 6;
+    color: $color4;
+    font-size: 22px;
+}

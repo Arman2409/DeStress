@@ -1,5 +1,5 @@
 export default {
     backgroundColor: "#E0FFFF",
-    neuronsCountRange: [5, 7],
+    neuronsCountRange: [2, 4],
     electrifiedConnectionFramesCount: 4
 }

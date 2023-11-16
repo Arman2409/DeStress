@@ -31,11 +31,27 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
   });
 }
 
-const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType) => {
+const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType, callback: Function) => {
   const { sprite, id } = { ...neuron };
   if (scene.clickedNeuron) {
     const previousClicked = scene.clickedNeuron;
-    scene.clickedNeuron = neuron;
+    const { id: prevId } = previousClicked;
+    previousClicked.tween.destroy();
+    let hasConnection = false;
+    scene.neuronConnections.forEach((elem: any) => {
+      if (elem.includes(id) && elem.includes(prevId)) {
+        hasConnection = true;
+      }
+    })
+    scene.clickedNeuron = {
+      tween: scene.tweens.add(getNeuronTweenConfig(sprite)),
+      ...neuron
+    }
+    if (hasConnection && scene.neuronConnections.length) {
+      return;
+    }
+    scene.neuronConnections.push([prevId, id]);
+    callback(scene.neuronConnections.length);
     const { x: startX = 0, y: startY = 0 } = { ...previousClicked.sprite };
     const { x: endX, y: endY } = { ...neuron.sprite };
     const angle = getAngle(startX, startY, endX, endY);
@@ -61,18 +77,19 @@ const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType) => {
         newConnection.y = startY + middleY;
         newConnection.setScale(distance * 0.003, 1)
       }, 250)
+      previousClicked.sprite.setRotation(-1.5 + angle);
     }, 250)
-    previousClicked.tween.destroy();
-    previousClicked.sprite.setRotation(-1.5 + angle);
+  } else {
+    scene.clickedNeuron = {
+      tween: scene.tweens.add(getNeuronTweenConfig(sprite)),
+      ...neuron
+    }
   }
+  
   sprite.setTexture("neuronElectrifiedFrame");
-  scene.clickedNeuron = {
-    tween: scene.tweens.add(getNeuronTweenConfig(sprite)),
-    ...neuron
-  }
 }
 
-export const addRandomNeurons = (scene: NetworkSceneType) => {
+export const addRandomNeurons = (scene: NetworkSceneType, clickCallback: Function, callback:Function) => {
   const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
   const { width, height } = scene.sys.cameras.main;
 
@@ -94,6 +111,7 @@ export const addRandomNeurons = (scene: NetworkSceneType) => {
     }
     newNeuronSprite.on("pointerover", () => scene.input.setDefaultCursor("pointer"));
     newNeuronSprite.on("pointerout", () => scene.input.setDefaultCursor("default"));
-    newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron))
+    newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron, clickCallback))
   }
+  callback(neuronsCount);
 }

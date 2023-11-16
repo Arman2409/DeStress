@@ -18,3 +18,7 @@ export interface OceanSceneType extends Phaser.Scene
     jellyfish:  Phaser.GameObjects.Sprite
     fishSchools: FishSchoolType[]
 }
+
+export type ScoreProps = {
+    score: number
+}

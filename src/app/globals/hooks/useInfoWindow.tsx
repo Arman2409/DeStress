@@ -12,12 +12,12 @@ import { infoWindowVariants } from "./utils/variants"
 
 const ContextHolder = ({ details, setDetails }: InfoContextHolderProps) => {
     const { text, onOk, onCancel, confirmText, cancelText, image } = details || {}
- 
+
     return (
         <>
             {details && (
                 <div className={styles.info_window}>
-                    <div className={styles.info_demo} onClick={() => setDetails(null)}/>
+                    <div className={styles.info_demo} onClick={() => setDetails(null)} />
                     <AiOutlineClose
                         className={styles.close_icon}
                         onClick={() => setDetails(null)}
@@ -36,7 +36,10 @@ const ContextHolder = ({ details, setDetails }: InfoContextHolderProps) => {
                             <p>
                                 {text}
                             </p>
-                            {image && <img src={image} className={styles.info_image} />}
+                            {image && <img
+                                src={image}
+                                className={styles.info_image}
+                            />}
                         </div>
                         <div className={styles.buttons_cont}>
                             {cancelText && (
