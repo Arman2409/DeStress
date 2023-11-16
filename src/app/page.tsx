@@ -5,16 +5,16 @@ import styles from "../styles/page.module.scss"
 import type { MousePositionType } from "../types/main"
 import GameTiles from "./components/GameTiles/GameTiles"
 import Greeting from "./components/Greeting/Greeting"
+import Footer from "./components/Footer/Footer"
 import Loading from "./globals/components/Loading/Loading"
 import { animateCircle } from "./utils/functions"
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const circle = useRef<any>(null);
   const isBouncing = useRef<boolean>(false);
-  const mousePosition = useRef<MousePositionType>({} as MousePositionType)
-  const animatingTimeout = useRef<any>();
-
+  const mousePosition = useRef<MousePositionType>({} as MousePositionType);
+  const circle = useRef<any>(null);
+  const animatingTimeout = useRef<any>(null);
 
   useEffect(() => {
     document.addEventListener('mousemove', (event: MouseEvent) => {
@@ -50,7 +50,10 @@ const Home = () => {
       />
       {loading && <Loading />}
       <Greeting />
-      <GameTiles choseGame={() => setLoading(true)} />
+      <GameTiles
+        choseGame={() => setLoading(true)}
+      />
+      <Footer />
     </main>
   )
 }
