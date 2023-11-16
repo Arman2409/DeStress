@@ -8,10 +8,10 @@ export const gamesData = [
     },
     {
         "order": 2,
-        "image": "/logos/logo.png",
+        "image": "/tiles/synapseHash.jpg",
         "link": "/synapseHash",
         "name": "Synapse Hash",
-        "cornerImage": ""
+        "cornerImage": "/tiles/corner/neuron.png"
     },
     {
         "order": 3,
@@ -20,18 +20,4 @@ export const gamesData = [
         "name": "Roshambo",
         "cornerImage": "/tiles/corner/fist.png",
     },
-    {
-        "order": 4,
-        "image": "/logos/logo.png",
-        "link": "/game",
-        "name": "first game",
-        "cornerImage": ""
-    } ,
-    {
-        "order": 5,
-        "image": "/logos/logo.png",
-        "link": "/game",
-        "name": "first game",
-        "cornerImage": ""
-    }
 ]
