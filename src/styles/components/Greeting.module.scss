@@ -1,7 +1,17 @@
 @import "../customs.scss";
+@import "../colors.scss";
 
 .main {
-        @extend .centered;   
+        @extend .centered;
+
+        flex-direction: column;
         width: 30vw;
         height: 100%;
+}
+
+.sub_title {
+        font-weight: 900;
+        color: $color1;
+        font-size: 22px;
+        cursor: default;
 }
