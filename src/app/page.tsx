@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import styles from "../styles/page.module.scss"
-import type { MousePositionType } from "../types/main"
+import type { MousePosition } from "../types/main"
 import GameTiles from "./components/GameTiles/GameTiles"
 import Greeting from "./components/Greeting/Greeting"
 import Footer from "./components/Footer/Footer"
@@ -12,7 +12,7 @@ import { animateCircle } from "./utils/functions"
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const isBouncing = useRef<boolean>(false);
-  const mousePosition = useRef<MousePositionType>({} as MousePositionType);
+  const mousePosition = useRef<MousePosition>({} as MousePosition);
   const circle = useRef<any>(null);
   const animatingTimeout = useRef<any>(null);
 

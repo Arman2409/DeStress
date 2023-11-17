@@ -1,6 +1,6 @@
 import { random } from "lodash"
 
-import type { NetworkSceneType, NeuronType } from "../../../../../types/synapseHash"
+import type { NetworkScene, Neuron } from "../../../../../types/synapseHash"
 import configs from "../../../../../configs/synapseHash"
 import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions"
 import generateUniqueId from "../../../../globals/functions/generateUniqueId"
@@ -31,7 +31,7 @@ const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
   });
 }
 
-const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType, callback: Function) => {
+const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) => {
   const { sprite, id } = { ...neuron };
   if (scene.clickedNeuron) {
     const previousClicked = scene.clickedNeuron;
@@ -85,11 +85,10 @@ const clickNeuron = (scene: NetworkSceneType, neuron: NeuronType, callback: Func
       ...neuron
     }
   }
-  
   sprite.setTexture("neuronElectrifiedFrame");
 }
 
-export const addRandomNeurons = (scene: NetworkSceneType, clickCallback: Function, callback:Function) => {
+export const addRandomNeurons = (scene: NetworkScene, clickCallback: Function, callback:Function) => {
   const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
   const { width, height } = scene.sys.cameras.main;
 

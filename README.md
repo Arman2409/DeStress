@@ -1,6 +1,6 @@
 # DeStress
 
-A compilation of antistress games and stimuli.The project is completely client side.
+A compilation of antistress games and stimulis.The project is completely client side.
 
 ### Structure
 public - images and other media are stored here <br>

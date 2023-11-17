@@ -3,7 +3,7 @@ import { createContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/page.module.scss"
-import type { RoshamboContextType, GameStatusType, JestType } from "../../types/roshambo"
+import type { RoshamboContextDetails, GameStatus, Jest } from "../../types/roshambo"
 import Instruction from "./components/Instruction/Instruction"
 import Animation from "./components/Animation/Animation"
 import Summary from "./components/Summary/Summary"
@@ -16,15 +16,15 @@ import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
 
 const { info, infoImage } = { ...configs };
 
-export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
+export const RoshamboContext = createContext<RoshamboContextDetails>({} as RoshamboContext);
 
 const Roshambo = () => {
     const router = useRouter();
-    const [chosenJest, setChosenJest] = useState<JestType | null>(null);
-    const [opponentJest, setOpponentJest] = useState<JestType | null>(null);
+    const [chosenJest, setChosenJest] = useState<Jest | null>(null);
+    const [opponentJest, setOpponentJest] = useState<Jest | null>(null);
     const [userScore, setUserScore] = useState<number>(0);
     const [opponentScore, setOpponentScore] = useState<number>(0);
-    const [result, setResult] = useState<GameStatusType>("draw");
+    const [result, setResult] = useState<GameStatus>("draw");
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
     const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);

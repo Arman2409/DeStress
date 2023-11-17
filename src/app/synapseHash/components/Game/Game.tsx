@@ -4,7 +4,7 @@ import Button from "antd/lib/button"
 import { FaPlay } from "react-icons/fa"
 
 import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss"
-import type { NeuronType, ConnectionType } from "../../../../types/synapseHash"
+import type { Neuron, Connection } from "../../../../types/synapseHash"
 import configs from "../../../../configs/synapseHash"
 import { addRandomNeurons } from "./utils/functions"
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
@@ -26,9 +26,9 @@ const Game = () => {
     useEffect(() => {
         if (initializeGame) {
             class NetWork extends Phaser.Scene {
-                neurons: NeuronType[] = [];
+                neurons: Neuron[] = [];
                 clickedNeuron: string = "";
-                neuronConnections: ConnectionType[] = [];
+                neuronConnections: Connection[] = [];
 
                 constructor(props?: any) {
                     super(props)

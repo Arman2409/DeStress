@@ -1,7 +1,7 @@
 import { chunk } from "lodash"
 
 import styles from "../../../styles/components/GameTiles/GameTiles.module.scss"
-import type { GameTilesProps, GameType } from "../../../types/main"
+import type { GameTilesProps, Game } from "../../../types/main"
 import { gamesData } from "./utils/data"
 import Tile from "./components/Tile/Tile"
 
@@ -14,11 +14,11 @@ const GameTiles = ({choseGame}: GameTilesProps) => {
     return (
         <div className={styles.game_tiles_main}>
             <div className={styles.games_groups}>
-                {gameGroups.map((games: GameType[], index) => (
+                {gameGroups.map((games: Game[], index) => (
                     <div
                         key={index}
                         className={styles.games_group}>
-                        {games.map((game: GameType) => (
+                        {games.map((game: Game) => (
                             <Tile {...game} choseGame={choseGame} key={game.order} />
                         ))}
                     </div>

@@ -1,25 +1,26 @@
 
-import type { PointType } from "./main"
+import type { Point } from "./main"
 
-export type ConnectionType =  Array<[string, string]>
+export type Connection =  Array<[string, string]>
 
-// interfaces 
-
-export interface NeuronType {
-    id: string
-    placement: PointType
-    tween?: any
-    sprite: Phaser.GameObjects.Sprite
-}
-
-export interface NetworkSceneType extends Phaser.Scene {
-    clickedNeuron: any
-    neurons: any[]
-    neuronConnections: ConnectionType[]
-}
-
+// props 
 export type CompletedAlertProps = {
     setStatus: Function
     status: boolean
     startNew: Function
+}
+
+// interfaces 
+
+export interface Neuron {
+    id: string
+    placement: Point
+    tween?: any
+    sprite: Phaser.GameObjects.Sprite
+}
+
+export interface NetworkScene extends Phaser.Scene {
+    clickedNeuron: any
+    neurons: Neuron[]
+    neuronConnections: Connection[]
 }
