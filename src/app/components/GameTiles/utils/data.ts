@@ -15,7 +15,7 @@ export const gamesData = [
     },
     {
         "order": 3,
-        "image": "/tiles/roshambo.jpg",
+        "image": "/tiles/roshambo.png",
         "link": "/roshambo",
         "name": "Roshambo",
         "cornerImage": "/tiles/corner/fist.png",

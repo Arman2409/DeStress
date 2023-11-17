@@ -4,12 +4,12 @@ import Button from "antd/lib/button"
 import { FaPlay } from "react-icons/fa"
 
 import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss"
-import type { NeuronType, ConnectionType, ConnectionsStatusType } from "../../../../types/synapseHash"
+import type { NeuronType, ConnectionType } from "../../../../types/synapseHash"
 import configs from "../../../../configs/synapseHash"
 import { addRandomNeurons } from "./utils/functions"
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
-import CompletedAlert from "./components/CompletedAlert/CompletedAlert"
-
+import CompleteAlert from "./components/CompletedAlert/CompletedAlert"
+import Loading from "../../../globals/components/Loading/Loading"
 
 const {
     backgroundColor
@@ -17,12 +17,14 @@ const {
 
 const Game = () => {
     const [connectionsCount, setConnectionsCount] = useState<number>(0);
-    const [status, setStatus] = useState<ConnectionsStatusType>(false);
+    const [showSkipStatus, setShowSkipStatus] = useState<boolean>(false);
+    const [initializeGame, setInitializeGame] = useState<boolean>(true);
+
     const scene = useRef<any>(null);
     const possibleConnections = useRef<number>(0);
 
     useEffect(() => {
-        if (!status) {
+        if (initializeGame) {
             class NetWork extends Phaser.Scene {
                 neurons: NeuronType[] = [];
                 clickedNeuron: string = "";
@@ -45,14 +47,13 @@ const Game = () => {
                 create = () => {
                     addRandomNeurons(this,
                         (connections: number) => {
-                            if (connections === possibleConnections.current) setStatus("completed")
+                            if (connections === possibleConnections.current) setInitializeGame(true);
                             setConnectionsCount((currCount:number) => currCount + connections)
                         },
                         (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
                     this.cameras.main.setBackgroundColor(backgroundColor)
                 }
             }
-
             scene.current = new NetWork();
             const phaserContainer = document.querySelector("#phaser-container");
             if (phaserContainer) {
@@ -68,24 +69,27 @@ const Game = () => {
                     default: 'arcade',
                 },
             })
+            setInitializeGame(false);
         }
-    }, [status, Phaser, addRandomNeurons, setConnectionsCount, setStatus])
+    }, [showSkipStatus, Phaser, initializeGame, setInitializeGame, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
 
     return (
         <>
-            {status && <CompletedAlert
-                status={status}
-                setStatus={setStatus} />}
+            {showSkipStatus && <CompleteAlert
+                status={showSkipStatus}
+                startNew={() => setInitializeGame(true)}
+                setStatus={setShowSkipStatus} />}
             <ScoreAlert
                 score={connectionsCount}
                 mode="custom" />
             <Button 
               className={styles.skip_button}
-              onClick={() => setStatus("skipped")}
+              onClick={() => setShowSkipStatus(true)}
             >
                 <FaPlay />
             </Button>
-            <div
+           {initializeGame && <Loading /> }
+           <div
                 id="phaser-container"
                 className={styles.phaser_cont} />
         </>

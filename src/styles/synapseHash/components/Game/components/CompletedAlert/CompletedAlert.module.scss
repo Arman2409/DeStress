@@ -48,3 +48,11 @@
     font-weight: 900;
     background-color: $color1;
 }
+
+.cancel_button {
+    @extend .completed_button;
+
+    margin-top: 10px;
+    background-color: $color4;
+    color: $color2;    
+}
