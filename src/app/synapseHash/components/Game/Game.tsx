@@ -42,13 +42,12 @@ const Game = () => {
                     this.load.image("connectionElectrifiedFrame3", "./synapseHash/connectionElectrified3.png")
                     this.load.image("connectionElectrifiedFrame4", "./synapseHash/connectionElectrified4.png")
                     this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
-                    this.load.image("clickedNeuronFrame", "./synapseHash/neuronBlur-removebg-preview.png");
                 }
                 create = () => {
                     addRandomNeurons(this,
                         (connections: number) => {
                             if (connections === possibleConnections.current) setInitializeGame(true);
-                            setConnectionsCount((currCount:number) => currCount + 1)
+                            setConnectionsCount((currCount: number) => currCount + 1)
                         },
                         (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
                     this.cameras.main.setBackgroundColor(backgroundColor)
@@ -82,14 +81,14 @@ const Game = () => {
             <ScoreAlert
                 score={connectionsCount}
                 mode="custom" />
-            <Button 
-              className={styles.skip_button}
-              onClick={() => setShowSkipStatus(true)}
+            <Button
+                className={styles.skip_button}
+                onClick={() => setShowSkipStatus(true)}
             >
                 <FaPlay />
             </Button>
-           {initializeGame && <Loading /> }
-           <div
+            {initializeGame && <Loading />}
+            <div
                 id="phaser-container"
                 className={styles.phaser_cont} />
         </>

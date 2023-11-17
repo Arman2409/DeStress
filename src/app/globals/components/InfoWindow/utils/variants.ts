@@ -6,7 +6,7 @@ export const infoWindowVariants: Variants = {
     boxShadow: "2px 1px 250px 250px rgba(255, 255, 255, 0.7)"
   },
   animate: {
-    height: "70%",
+    height: "auto",
     boxShadow: "2px 1px 5px 5px rgba(255, 255, 255, 0.7)",
     transition: {
       duration: 0.4

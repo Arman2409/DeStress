@@ -7,6 +7,7 @@
 
    z-index: 10;
    position: absolute;
+   overflow: hidden;
 }
 
 .info_demo {
@@ -18,7 +19,7 @@
 
 .info_content {
    width: 70%;
-   height: 70%;
+   height: auto;
    padding: 25px;
    background-color: $color3;
    overflow: hidden;
@@ -26,12 +27,12 @@
 }
 
 .info_data {
-  @extend .centered;
+   @extend .centered;
 
-  color: $color4;
+   color: $color4;
    width: 100%;
    height: 85%;
-   overflow-y: auto;
+   overflow-y: hidden;
    font-size: 20px;
    flex-direction: column;
    justify-content: unset;
@@ -48,6 +49,7 @@
    max-width: 100%;
    max-height: 60%;
 }
+
 .buttons_cont {
    width: 100%;
    height: 15%;
