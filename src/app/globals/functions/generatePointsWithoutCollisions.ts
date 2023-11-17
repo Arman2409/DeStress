@@ -7,8 +7,8 @@ const generateWithoutCollisions = (
     width: number,
     height: number,
     distance: number): Point => {
-    const x = random(distance, width);
-    const y = random(distance, height);
+    const x = random(distance, width - distance);
+    const y = random(distance, height - distance);
     let hasCollides = false;
     others.forEach(({ x: otherX, y: otherY }) => {
         if (inRange(x, otherX - distance, otherX + distance)

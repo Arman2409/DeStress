@@ -16,10 +16,9 @@ import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
 
 const { info, infoImage } = { ...configs };
 
-export const RoshamboContext = createContext<RoshamboContextDetails>({} as RoshamboContext);
+export const RoshamboContext = createContext<RoshamboContextDetails>({} as RoshamboContextDetails);
 
 const Roshambo = () => {
-    const router = useRouter();
     const [chosenJest, setChosenJest] = useState<Jest | null>(null);
     const [opponentJest, setOpponentJest] = useState<Jest | null>(null);
     const [userScore, setUserScore] = useState<number>(0);
@@ -28,6 +27,7 @@ const Roshambo = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
     const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);
+    const router = useRouter();
 
     useEffect(() => {
         const visited = updateVisitedStatus("roshambo");

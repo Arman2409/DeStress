@@ -48,7 +48,7 @@ const Game = () => {
                     addRandomNeurons(this,
                         (connections: number) => {
                             if (connections === possibleConnections.current) setInitializeGame(true);
-                            setConnectionsCount((currCount:number) => currCount + connections)
+                            setConnectionsCount((currCount:number) => currCount + 1)
                         },
                         (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
                     this.cameras.main.setBackgroundColor(backgroundColor)

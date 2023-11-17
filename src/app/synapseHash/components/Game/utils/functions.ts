@@ -94,7 +94,7 @@ export const addRandomNeurons = (scene: NetworkScene, clickCallback: Function, c
 
   for (let i = 0; i < neuronsCount; i++) {
     const others = scene.neurons.map(({ placement }) => ({ ...placement }));
-    const { x, y } = generateWithoutCollisions(others, width, height, 75);
+    const { x, y } = generateWithoutCollisions(others, width, height, 100);
     const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
       .setRotation(random(0, 6.24))
       .setScale(0.25)
@@ -108,6 +108,7 @@ export const addRandomNeurons = (scene: NetworkScene, clickCallback: Function, c
       },
       sprite: newNeuronSprite,
     }
+    scene.neurons.push(newNeuron);
     newNeuronSprite.on("pointerover", () => scene.input.setDefaultCursor("pointer"));
     newNeuronSprite.on("pointerout", () => scene.input.setDefaultCursor("default"));
     newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron, clickCallback))
