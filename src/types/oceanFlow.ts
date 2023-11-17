@@ -1,24 +1,26 @@
-import { PointType } from "./main"
+import { Point } from "./main"
+
+// props
+
+export type ScoreProps = {
+    score: number
+}
 
 // interfaces 
-export interface FishSchoolType  {
+export interface FishSchool  {
     id: string
     fishes: Array<any>
     startingPoint: any
     fishCount: number
-    direction: PointType
+    direction: Point
     interval: any
-    currentPosition: PointType
-    escapingFrom: null|PointType
-    escapeDirections: Array<PointType>
+    currentPosition: Point
+    escapingFrom: null|Point
+    escapeDirections: Array<Point>
 }
 
-export interface OceanSceneType extends Phaser.Scene
+export interface OceanScene extends Phaser.Scene
 {
     jellyfish:  Phaser.GameObjects.Sprite
-    fishSchools: FishSchoolType[]
-}
-
-export type ScoreProps = {
-    score: number
+    fishSchools: FishSchool[]
 }

@@ -1,14 +1,14 @@
 import { inRange, random } from "lodash"
 
-import type { PointType } from "../../../types/main"
+import type { Point } from "../../../types/main"
 
 const generateWithoutCollisions = (
-    others: PointType[],
+    others: Point[],
     width: number,
     height: number,
-    distance: number): PointType => {
-    const x = random(distance, width);
-    const y = random(distance, height);
+    distance: number): Point => {
+    const x = random(distance, width - distance);
+    const y = random(distance, height - distance);
     let hasCollides = false;
     others.forEach(({ x: otherX, y: otherY }) => {
         if (inRange(x, otherX - distance, otherX + distance)

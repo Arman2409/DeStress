@@ -1,13 +1,13 @@
-export type JestType = "scissors"|"rock"|"paper"
-export type GameStatusType = "draw"|"lose"|"win"
+export type Jest = "scissors"|"rock"|"paper"
+export type GameStatus = "draw"|"lose"|"win"
 
 // context 
-export type RoshamboContextType = {
-    chosenJest: JestType | null
-    opponentJest: JestType | null
+export type RoshamboContextDetails = {
+    chosenJest: Jest | null
+    opponentJest: Jest | null
     opponentScore: number
     userScore: number
-    result: GameStatusType
+    result: GameStatus
     dispatchJest: Function
     dispatchOpponentJest: Function
 }
@@ -24,9 +24,9 @@ export type JestProps = {
 }
 
 export type ShakingHandProps = {
-    jest: JestType|null
+    jest: Jest|null
     showingMode: boolean
-    initialJest: JestType|null
+    initialJest: Jest|null
     side: "left"|"right"
     duration: number
 }
@@ -41,9 +41,9 @@ export type AnimationProps = {
 
 // interfaces 
 
-export interface JestDetailsType {
+export interface JestDetails {
     keyClicked?: boolean
-    name: JestType
+    name: Jest
     keyboardImg: string
     jestImg: string
     keys: string[]

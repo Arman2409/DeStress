@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react"
 import Phaser from "phaser"
 
 import styles from "../../../../styles/oceanFlow/components/Game.module.scss"
-import type { FishSchoolType } from "../../../../types/oceanFlow"
+import type { FishSchool } from "../../../../types/oceanFlow"
 import configs from "../../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
 import { addPlants, checkForCollision, createRandomFishSchool } from "./utils/functions"
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
+import Loading from "../../../globals/components/Loading/Loading"
 
 const {
   createFishSchoolInterval,
@@ -17,11 +18,12 @@ const {
 
 const Game = () => {
   const [escapedCount, setEscapedCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
   const scene = useRef<any>();
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
-      fishSchools: FishSchoolType[] = [];
+      fishSchools: FishSchool[] = [];
       jellyfish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
       constructor(props?: any) {
         super(props)
@@ -56,7 +58,11 @@ const Game = () => {
         const { width, height } = this.sys.game.canvas;
         this.time.addEvent({
           delay: 100,
-          callback: () => checkForCollision(this, width, height, (_: string, count: number) => setEscapedCount(curr => curr + count)),
+          callback: () => checkForCollision(
+            this,
+            width,
+            height,
+            (count: number) => setEscapedCount(curr => curr + count)),
           loop: true,
         })
       }
@@ -77,6 +83,7 @@ const Game = () => {
         default: 'arcade',
       },
     });
+    setLoading(false);
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (eventKeys.top.includes(e.key)) {
         scene.current.jellyfish.setRotation(0);
@@ -109,7 +116,7 @@ const Game = () => {
         scene.current.jellyfish.x = scene.current.jellyfish.x + jellyfishStep;
       }
     })
-  }, [Phaser, checkForCollision, addPlants, createRandomFishSchool]);
+  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool]);
 
   return (
     <>
@@ -117,6 +124,7 @@ const Game = () => {
         score={escapedCount}
         mode="custom"
       />
+      {loading && <Loading />}
       <div id="phaser-container" className={styles.phaser_cont} />
     </>
   );

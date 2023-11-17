@@ -1,12 +1,12 @@
-import type { GameStatusType, JestType } from "../../../types/roshambo"
+import type { GameStatus, Jest } from "../../../types/roshambo"
 import { combinations } from "./data"
 import configs from "../../../configs/roshambo"
 
 const {backgrounds} = {...configs};
 
-export const defineGameStatus = (jest1:JestType|null, jest2:JestType|null):GameStatusType|null => {
+export const defineGameStatus = (jest1:Jest|null, jest2:Jest|null):GameStatus|null => {
   if(!jest1 || !jest2) return null;
-    let status:GameStatusType = "draw";
+    let status:GameStatus = "draw";
     if(jest1 === jest2) {
       return "draw";
   };

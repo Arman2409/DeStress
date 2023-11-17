@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss"
-import type { GameStatusType } from "../../../../types/roshambo"
+import type { GameStatus } from "../../../../types/roshambo"
 import { RoshamboContext } from "../../page"
 import { defineGameStatus } from "../../utils/functions"
 import { statusesData } from "./utils/data"
@@ -12,7 +12,7 @@ const {texts, icons} = {...statusesData};
 
 const Summary = () => {
     const { chosenJest, opponentJest, dispatchJest, dispatchOpponentJest } = useContext(RoshamboContext);
-    const [gameStatus, setGameStatus] = useState<GameStatusType>("draw");
+    const [gameStatus, setGameStatus] = useState<GameStatus>("draw");
     const [iconState, setIconState] = useState<any>(null);
 
     useEffect(() => {

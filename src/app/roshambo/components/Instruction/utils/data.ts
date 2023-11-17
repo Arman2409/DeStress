@@ -1,6 +1,6 @@
-import type { JestDetailsType } from "../../../../../types/roshambo";
+import type { JestDetails } from "../../../../../types/roshambo";
 
-export const jestsData:JestDetailsType[] = [
+export const jestsData:JestDetails[] = [
     {
         name: "paper",
         keys: ["1", "End"],
