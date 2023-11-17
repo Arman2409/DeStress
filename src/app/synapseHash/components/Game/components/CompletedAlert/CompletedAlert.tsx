@@ -1,26 +1,42 @@
+import { useCallback } from "react"
 import Button from "antd/lib/button"
 
 import styles from "../../../../../../styles/synapseHash/components/Game/components/CompletedAlert/CompletedAlert.module.scss"
 import type { CompletedAlertProps } from "../../../../../../types/synapseHash"
 
-const CompletedAlert = ({setStatus, status}:CompletedAlertProps) => {
-    return (
-        <div className={styles.completed_main}>
-            <div className={styles.completed_demo} />
-            <div className={styles.completed_content}>
-                <h4>
-                  {status === "completed" &&  "Possible Connections Completed"}
-                  {status === "skipped" &&  "Finish this level?"}
-                </h4>
-                <Button
-                    onClick={() => setStatus(false)}
-                    className={styles.completed_button}
-                >
-                    Get Next Neurons!
-                </Button>
-            </div>
-        </div>
-    )
-}
+const CompleteAlert = ({ setStatus, status, startNew }: CompletedAlertProps) => {
+    const completeOrCancel = useCallback((complete:boolean) => {
+       if(complete) {
+        startNew();
+        setStatus(false);
+        return;
+       }
+       setStatus(false);
+    }, [setStatus, startNew])
 
-export default CompletedAlert;
+    return (
+    <div className={styles.completed_main}>
+        <div 
+          className={styles.completed_demo}
+          onClick={() => completeOrCancel(false)} />
+        <div className={styles.completed_content}>
+            <h4>
+                {status && "Finish this level?"}
+            </h4>
+            <Button
+                onClick={() => completeOrCancel(true)}
+                className={styles.completed_button}
+            >
+                Get Next Neurons!
+            </Button>
+            <Button
+                onClick={() => completeOrCancel(false)}
+                className={styles.cancel_button}
+            >
+                Cancel
+            </Button>
+        </div>
+    </div>
+)}
+
+export default CompleteAlert;

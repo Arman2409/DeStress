@@ -2,7 +2,6 @@
 import type { PointType } from "./main"
 
 export type ConnectionType =  Array<[string, string]>
-export type ConnectionsStatusType = "completed" | "skipped" | false
 
 // interfaces 
 
@@ -21,5 +20,6 @@ export interface NetworkSceneType extends Phaser.Scene {
 
 export type CompletedAlertProps = {
     setStatus: Function
-    status: ConnectionsStatusType
+    status: boolean
+    startNew: Function
 }

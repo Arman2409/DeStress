@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 
 import styles from "../../styles/roshambo/page.module.scss"
 import type { RoshamboContextType, GameStatusType, JestType } from "../../types/roshambo"
-import useInfoWindow from "../globals/hooks/useInfoWindow"
 import Instruction from "./components/Instruction/Instruction"
 import Animation from "./components/Animation/Animation"
 import Summary from "./components/Summary/Summary"
@@ -13,8 +12,9 @@ import Score from "./components/Score/Score"
 import { defineGameStatus, getRandomBackground } from "./utils/functions"
 import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
 import configs from "../../configs/roshambo";
+import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
 
-const {info, infoImage} = {...configs};
+const { info, infoImage } = { ...configs };
 
 export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
@@ -25,27 +25,16 @@ const Roshambo = () => {
     const [userScore, setUserScore] = useState<number>(0);
     const [opponentScore, setOpponentScore] = useState<number>(0);
     const [result, setResult] = useState<GameStatusType>("draw");
+    const [showInfo, setShowInfo] = useState<boolean>(false);
     const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
     const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);
-
-    const { openWindow, Provider: InfoWindowProvider, closeWindow } = useInfoWindow();
-
-    const openInfo = () => openWindow(
-        {
-            text: info,
-            image: infoImage,
-            onOk: closeWindow,
-            onCancel: () => router.push("/"),
-            cancelText: "Go Back",
-            confirmText: "Continue"
-        })
 
     useEffect(() => {
         const visited = updateVisitedStatus("roshambo");
         if (!visited) {
-            openInfo()
+            setShowInfo(true);
         }
-    }, [updateVisitedStatus, openWindow])
+    }, [updateVisitedStatus, setShowInfo])
 
     useEffect(() => {
         if (chosenJest && opponentJest) {
@@ -70,24 +59,32 @@ const Roshambo = () => {
             userScore,
             result
         }}>
-            <InfoWindowProvider>
-                <div className={styles.roshambo_main}>
-                    <CornerButton
-                        type="back"
-                        extraStyles={{ zIndex: 6 }} />
-                    <CornerButton
-                        type="info"
-                        extraStyles={{ zIndex: 6 }}
-                        action={openInfo} />
-                    <div className={styles.roshambo_cont}>
-                        {showScore && <Score />}
-                        {chosenJest ? <Animation
-                            background={backgroundMemo} />
-                            : <Instruction />}
-                        {opponentJest && <Summary />}
-                    </div>
+            <InfoWindow
+                visible={showInfo}
+                setVisible={setShowInfo}
+                text={info}
+                image={infoImage}
+                onOk={() => setShowInfo(false)}
+                onCancel={() => router.push("/")}
+                cancelText={"Go Back"}
+                confirmText={"Continue"}
+            />
+            <div className={styles.roshambo_main}>
+                <CornerButton
+                    type="back"
+                   />
+                <CornerButton
+                    type="info"
+                    action={() => setShowInfo(true)}
+                />
+                <div className={styles.roshambo_cont}>
+                    {showScore && <Score />}
+                    {chosenJest ? <Animation
+                        background={backgroundMemo} />
+                        : <Instruction />}
+                    {opponentJest && <Summary />}
                 </div>
-            </InfoWindowProvider>
+            </div>
         </RoshamboContext.Provider>
     )
 }
