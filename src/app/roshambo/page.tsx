@@ -12,6 +12,9 @@ import CornerButton from "../globals/components/CornerButton/CornerButton"
 import Score from "./components/Score/Score"
 import { defineGameStatus, getRandomBackground } from "./utils/functions"
 import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
+import configs from "../../configs/roshambo";
+
+const {info, infoImage} = {...configs};
 
 export const RoshamboContext = createContext<RoshamboContextType>({} as RoshamboContextType);
 
@@ -29,16 +32,17 @@ const Roshambo = () => {
 
     const openInfo = () => openWindow(
         {
-            text: "5This is cool game",
+            text: info,
+            image: infoImage,
             onOk: closeWindow,
             onCancel: () => router.push("/"),
             cancelText: "Go Back",
             confirmText: "Continue"
-    })
-    
+        })
+
     useEffect(() => {
         const visited = updateVisitedStatus("roshambo");
-        if(!visited) {
+        if (!visited) {
             openInfo()
         }
     }, [updateVisitedStatus, openWindow])
@@ -68,12 +72,18 @@ const Roshambo = () => {
         }}>
             <InfoWindowProvider>
                 <div className={styles.roshambo_main}>
-                <CornerButton type="back" extraStyles={{ zIndex: 6}} />
-                <CornerButton type="info" extraStyles={{ zIndex: 6}} action={openInfo}/>
+                    <CornerButton
+                        type="back"
+                        extraStyles={{ zIndex: 6 }} />
+                    <CornerButton
+                        type="info"
+                        extraStyles={{ zIndex: 6 }}
+                        action={openInfo} />
                     <div className={styles.roshambo_cont}>
                         {showScore && <Score />}
-                        {chosenJest ? <Animation background={backgroundMemo} />
-                         :  <Instruction /> }
+                        {chosenJest ? <Animation
+                            background={backgroundMemo} />
+                            : <Instruction />}
                         {opponentJest && <Summary />}
                     </div>
                 </div>
