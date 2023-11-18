@@ -5,9 +5,10 @@ import styles from "../../../../styles/oceanFlow/components/Game.module.scss"
 import type { FishSchool } from "../../../../types/oceanFlow"
 import configs from "../../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
-import { addPlants, checkForCollision, createRandomFishSchool } from "./utils/functions"
+import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw } from "./utils/functions"
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
 import Loading from "../../../globals/components/Loading/Loading"
+import getAngle from "../../../globals/functions/getAngle"
 
 const {
   createFishSchoolInterval,
@@ -16,10 +17,11 @@ const {
   jellyFishFramesCount
 } = { ...configs };
 
+
 const Game = () => {
   const [escapedCount, setEscapedCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const scene = useRef<any>();
+  const scene = useRef<any>(null);
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
@@ -57,7 +59,7 @@ const Game = () => {
         })
         const { width, height } = this.sys.game.canvas;
         this.time.addEvent({
-          delay: 100,
+          delay: 300,
           callback: () => checkForCollision(
             this,
             width,
@@ -116,7 +118,19 @@ const Game = () => {
         scene.current.jellyfish.x = scene.current.jellyfish.x + jellyfishStep;
       }
     })
-  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool]);
+    let oldX = 0, oldY = 0, oldAngle = 0;
+    window.addEventListener("mousemove", (e:MouseEvent)=> {
+      scene.current.jellyfish.x = e.clientX - getVw(5);
+      scene.current.jellyfish.y = e.clientY  - getVh(5);
+      const angle = getAngle(oldX, oldY, e.clientX, e.clientY, );
+      if(Math.abs(oldAngle - angle) > 0.4){
+        scene.current.jellyfish.setRotation(angle);    
+      }
+      oldAngle = angle;
+      oldX = e.clientX;
+      oldY = e.clientY;
+    })
+  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool, getAngle, getVh, getVw]);
 
   return (
     <>
