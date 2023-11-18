@@ -96,7 +96,7 @@ export const getEscapeDirection = (width: number, height: number) => {
 export const checkForCollision = (scene: OceanScene, sysWidth: number, sysHeight: number, callback: Function) => {
     const { x = 0, y = 0 } = { ...scene.jellyfish }
     scene.fishSchools = scene.fishSchools.map((school: FishSchool) => {
-        const { currentPosition = { x: 0, y: 0 }, id, fishCount = 1, fishes, escapingFrom } = { ...school }
+        const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
         if (escapingFrom) return { ...school };
         const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
         if ((inRange(x, schoolX - collisionDistance, schoolX)
@@ -234,3 +234,12 @@ export const createRandomFishSchool = (scene: OceanScene) => {
 }
 
 
+export const getVh = (percent: number) => {
+    var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    return (percent * height) / 100;
+}
+
+export const getVw = (percent: number) => {
+    var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    return (percent * width) / 100;
+}
