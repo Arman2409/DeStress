@@ -1,9 +1,10 @@
+import { random } from "lodash";
 import type { Variants } from "framer-motion";
 
-export const titleVariants:Variants = {
+export const titleVariants: Variants = {
     initial: {
-       fontSize: "0px",
-       opacity: 1
+        fontSize: "0px",
+        opacity: 1
     },
     animate: {
         fontSize: "20px",
@@ -14,8 +15,8 @@ export const titleVariants:Variants = {
     }
 }
 
-export const cornerImageVariants:Variants = {
-    initial:{
+export const cornerImageInitializeVariants: Variants = {
+    initial: {
         maxWidth: "40px",
         maxHeight: "40px",
         top: "-20px",
@@ -30,6 +31,40 @@ export const cornerImageVariants:Variants = {
             duration: 2
         }
     }
+}
+
+export const getCornerImageVariants = (): Variants => {
+    const getRandomPlace = () => random(30, 50);
+    const repeatance = 4;
+    const initial = "-40px";
+    const topArr: string[] = [initial];
+    const rightArr: string[] = [initial];
+    for (let i = 1; i <= repeatance; i++) {
+        if (i === repeatance) {
+            topArr.push(initial);
+            rightArr.push(initial);
+            continue;
+        }
+        topArr.push(`-${getRandomPlace()}px`);
+        rightArr.push(`-${getRandomPlace()}px`);
+    }
+    return (
+        {
+            initial: {
+                maxWidth: "80px",
+                maxHeight: "80px",
+                top: "-40px",
+                right: "-40px",
+            },
+            animate: {
+                top: topArr,
+                right: rightArr,
+                transition: {
+                    duration: 5,
+                    repeat: Infinity
+                }
+            }
+        })
 }
 
 export const backgroundImageVariants = {

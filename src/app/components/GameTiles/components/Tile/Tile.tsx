@@ -5,15 +5,15 @@ import { motion } from "framer-motion";
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
 import type { TileProps } from "../../../../../types/main";
-import { backgroundImageVariants, cornerImageVariants, titleVariants } from "./utils/variants";
+import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, titleVariants } from "./utils/variants";
 
-const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
+const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);
     const router = useRouter();
 
     const clickTile = useCallback(() => {
         router.push(link)
-        choseGame && choseGame()
+        choseGame && choseGame();
     }, [choseGame, router])
     
     return (
@@ -26,7 +26,7 @@ const Tile = ({ image, cornerImage, link, name, choseGame}: TileProps) => {
            {cornerImage && <motion.img
                 src={cornerImage}
                 className={styles.tile_corner_image}
-                variants={cornerImageVariants}
+                variants={cornerInitialized ? getCornerImageVariants() : cornerImageInitializeVariants}
                 initial="initial"
                 animate="animate"
             />}

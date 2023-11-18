@@ -22,6 +22,7 @@ const Game = () => {
   const [escapedCount, setEscapedCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const scene = useRef<any>(null);
+  const mouseMoving = useRef<boolean>(false);
 
   useEffect(() => {
     class Ocean extends Phaser.Scene {
@@ -87,6 +88,7 @@ const Game = () => {
     });
     setLoading(false);
     window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (mouseMoving.current) return;
       if (eventKeys.top.includes(e.key)) {
         scene.current.jellyfish.setRotation(0);
         if (scene.current.jellyfish.y <= 80) {
@@ -119,12 +121,23 @@ const Game = () => {
       }
     })
     let oldX = 0, oldY = 0, oldAngle = 0;
-    window.addEventListener("mousemove", (e:MouseEvent)=> {
-      scene.current.jellyfish.x = e.clientX - getVw(5);
-      scene.current.jellyfish.y = e.clientY  - getVh(5);
-      const angle = getAngle(oldX, oldY, e.clientX, e.clientY, );
-      if(Math.abs(oldAngle - angle) > 0.4){
-        scene.current.jellyfish.setRotation(angle);    
+    const extraX = getVw(5);
+    const extraY = getVh(5);
+    window.addEventListener("mousemove", (e: MouseEvent) => {
+      if (!mouseMoving.current) {
+        mouseMoving.current = true;
+        setTimeout(() => {
+          mouseMoving.current = false;
+        }, 1000);
+      }
+      setTimeout(() => {
+        scene.current.jellyfish.x = e.clientX - extraX;
+        scene.current.jellyfish.y = e.clientY - extraY;
+      }, 300);
+
+      const angle = getAngle(oldX, oldY, e.clientX, e.clientY,);
+      if (Math.abs(oldAngle - angle) > 0.4) {
+        scene.current.jellyfish.setRotation && scene.current.jellyfish.setRotation(angle);
       }
       oldAngle = angle;
       oldX = e.clientX;

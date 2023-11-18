@@ -3,7 +3,10 @@ export type GameTilesProps = {
     choseGame: Function
 }
 
-export type TileProps = Omit<Game, "order"> & {choseGame: Function}
+export type TileProps = Omit<Game, "order"> & {
+    choseGame: Function
+    cornerInitialized?: boolean
+}
 
 export type CornerButtonProps = {
     type: "info" | "back"
