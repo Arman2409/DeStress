@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import { chunk } from "lodash"
 
 import styles from "../../../styles/components/GameTiles/GameTiles.module.scss"
-
 import type { GameTilesProps, Game } from "../../../types/main"
+import configs from "../../../configs/components";
 import { gamesData } from "./utils/data"
 import Tile from "./components/Tile/Tile"
+
+const {cornerImageInitialingDuration} = {...configs};
 
 const GameTiles = ({ choseGame }: GameTilesProps) => {
    const [initializedCorners, setInitializedCorners] = useState<boolean>(false);
@@ -18,7 +20,7 @@ const GameTiles = ({ choseGame }: GameTilesProps) => {
     useEffect(() => {
       setTimeout(() => {
         setInitializedCorners(true);
-      }, 2000)
+      }, cornerImageInitialingDuration * 1000)
     }, [setInitializedCorners])
 
     return (

@@ -1,6 +1,10 @@
 import { random } from "lodash";
 import type { Variants } from "framer-motion";
 
+import configs from "../../../../../../configs/components";
+
+const {cornerImageInitialingDuration} = {...configs};
+
 export const titleVariants: Variants = {
     initial: {
         fontSize: "0px",
@@ -28,7 +32,7 @@ export const cornerImageInitializeVariants: Variants = {
         top: "-40px",
         right: "-40px",
         transition: {
-            duration: 2
+            duration: cornerImageInitialingDuration
         }
     }
 }

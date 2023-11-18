@@ -5,6 +5,9 @@ export interface InfoDetailsProps {
     cancelText: string
     text: string
     image?: string
+    imageWidth1?: string
+    imageWidth2?: string
+    image2?: string
     visible:boolean
     onOk: Function
     onCancel: Function
