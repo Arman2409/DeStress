@@ -38,7 +38,7 @@ const InfoWindow = ({ visible,
                         <h1 className={styles.info_title}>
                             Info
                         </h1>
-                        <p>
+                        <p className={styles.info_text}>
                             {text}
                         </p>
                         <div style={image2 ? { height: "220px" } : {}}>

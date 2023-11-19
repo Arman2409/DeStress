@@ -7,20 +7,20 @@ import configs from "../../../configs/components";
 import { gamesData } from "./utils/data"
 import Tile from "./components/Tile/Tile"
 
-const {cornerImageInitialingDuration} = {...configs};
+const { cornerImageInitialingDuration } = { ...configs };
 
 const GameTiles = ({ choseGame }: GameTilesProps) => {
-   const [initializedCorners, setInitializedCorners] = useState<boolean>(false);
+    const [initializedCorners, setInitializedCorners] = useState<boolean>(false);
 
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
-    const gameGroups = chunk(games, 4);
+    const gameGroups = chunk(games, 3);
 
     useEffect(() => {
-      setTimeout(() => {
-        setInitializedCorners(true);
-      }, cornerImageInitialingDuration * 1000)
+        setTimeout(() => {
+            setInitializedCorners(true);
+        }, cornerImageInitialingDuration * 1000)
     }, [setInitializedCorners])
 
     return (
