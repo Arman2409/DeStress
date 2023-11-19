@@ -88,16 +88,18 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
   sprite.setTexture("neuronElectrifiedFrame");
 }
 
-export const addRandomNeurons = (scene: NetworkScene, clickCallback: Function, callback:Function) => {
+export const addRandomNeurons = (scene: NetworkScene, isLarge:boolean, clickCallback: Function, callback:Function) => {
   const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
   const { width, height } = scene.sys.cameras.main;
 
   for (let i = 0; i < neuronsCount; i++) {
     const others = scene.neurons.map(({ placement }) => ({ ...placement }));
-    const { x, y } = generateWithoutCollisions(others, width, height, 100);
+    const distance = isLarge ? 100 : 50;
+    const { x, y } = generateWithoutCollisions(others, width, height, distance);
+    const scale = isLarge ? 0.25 : 0.125;
     const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
       .setRotation(random(0, 6.24))
-      .setScale(0.25)
+      .setScale(scale)
       .setDepth(2)
       .setInteractive();
     const newNeuron = {

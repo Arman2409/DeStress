@@ -1,5 +1,6 @@
 @import "../../colors.scss";
 @import "../../customs.scss";
+@import "../../breakpoints.scss";
 
 .info_window {
    @extend .centered;
@@ -24,6 +25,11 @@
    background-color: $color3;
    overflow: hidden;
    z-index: 12;
+
+   @media screen and (max-width: $main_large) {
+      width: 100%;
+      height: 100%;
+  }
 }
 
 .info_data {

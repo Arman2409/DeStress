@@ -29,6 +29,10 @@
     color: $color4;
     z-index: 6;
     font-weight: 900;
+
+    @media screen and (max-width: $main_small) {
+      font-size: 12px;
+    }
   }
 
   &_image {

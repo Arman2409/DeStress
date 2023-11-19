@@ -1,5 +1,6 @@
 @import "../colors.scss";
 @import "../customs.scss";
+@import "../breakpoints.scss";
 
 .synapseHash_main {
     @extend .centered;
@@ -11,6 +12,10 @@
 
 .synapseHash_cont {
     @include mainBoxShadow();
+
+    @media screen and (max-width: $main_large) {
+        height: 85vh;
+    }
 
     overflow: hidden;
     height: 90vh;

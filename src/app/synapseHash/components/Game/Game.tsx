@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Phaser from "phaser"
 import Button from "antd/lib/button"
 import { FaPlay } from "react-icons/fa"
@@ -19,11 +19,20 @@ const Game = () => {
     const [connectionsCount, setConnectionsCount] = useState<number>(0);
     const [showSkipStatus, setShowSkipStatus] = useState<boolean>(false);
     const [initializeGame, setInitializeGame] = useState<boolean>(true);
-
+    const [loading, setLoading] = useState<boolean>(false);
     const scene = useRef<any>(null);
     const possibleConnections = useRef<number>(0);
 
+    const startNewGame = useCallback(() => {
+        setInitializeGame(true);
+        setLoading(true);
+    }, [setInitializeGame, setLoading])
+
     useEffect(() => {
+        const isLarge = window.innerWidth > 900;
+        window.addEventListener("resize", () => {
+            setLoading(true);
+        })
         if (initializeGame) {
             class NetWork extends Phaser.Scene {
                 neurons: Neuron[] = [];
@@ -44,9 +53,12 @@ const Game = () => {
                     this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
                 }
                 create = () => {
-                    addRandomNeurons(this,
+                    addRandomNeurons(this, isLarge,
                         (connections: number) => {
-                            if (connections === possibleConnections.current) setInitializeGame(true);
+                            if (connections === possibleConnections.current) {
+                                setInitializeGame(true);
+                                setLoading(true);
+                            }
                             setConnectionsCount((currCount: number) => currCount + 1)
                         },
                         (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
@@ -69,14 +81,15 @@ const Game = () => {
                 },
             })
             setInitializeGame(false);
+            setLoading(false)
         }
-    }, [showSkipStatus, Phaser, initializeGame, setInitializeGame, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
+    }, [showSkipStatus, Phaser, initializeGame, setInitializeGame, setLoading, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
 
     return (
         <>
             {showSkipStatus && <CompleteAlert
                 status={showSkipStatus}
-                startNew={() => setInitializeGame(true)}
+                startNew={startNewGame}
                 setStatus={setShowSkipStatus} />}
             <ScoreAlert
                 score={connectionsCount}
@@ -87,7 +100,7 @@ const Game = () => {
             >
                 <FaPlay />
             </Button>
-            {initializeGame && <Loading />}
+            {loading && <Loading />}
             <div
                 id="phaser-container"
                 className={styles.phaser_cont} />

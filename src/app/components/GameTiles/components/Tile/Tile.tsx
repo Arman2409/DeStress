@@ -5,11 +5,13 @@ import { motion } from "framer-motion";
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
 import type { TileProps } from "../../../../../types/main";
-import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, titleVariants } from "./utils/variants";
+import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants";
 
 const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);
     const router = useRouter();
+
+    const isMedium = window.innerWidth > 650;
 
     const clickTile = useCallback(() => {
         router.push(link)
@@ -43,7 +45,7 @@ const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: T
                 initial="initial"
                 animate="animate"
                 className={styles.tile_title}
-                variants={titleVariants}
+                variants={getTitleVariants(isMedium)}
             >
                 {name}
             </motion.p>

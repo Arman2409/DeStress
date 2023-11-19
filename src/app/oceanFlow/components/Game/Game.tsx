@@ -25,6 +25,10 @@ const Game = () => {
   const mouseMoving = useRef<boolean>(false);
 
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      setLoading(true);
+    })
+    const isLarge = window.innerWidth > 900; 
     class Ocean extends Phaser.Scene {
       fishSchools: FishSchool[] = [];
       jellyfish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
@@ -44,7 +48,8 @@ const Game = () => {
       create = () => {
         addPlants(this);
         this.cameras.main.setBackgroundColor(backgroundColor);
-        this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(0.5).setDepth(5);
+        const scale = isLarge ? 0.5 : 0.25;
+        this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(scale).setDepth(5);
         this.jellyfish.anims.create({
           key: "jellyfishAnimation",
           frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + order })),
@@ -55,7 +60,7 @@ const Game = () => {
         this.jellyfish.anims.play("jellyfishAnimation")
         this.time.addEvent({
           delay: createFishSchoolInterval * 1000,
-          callback: () => createRandomFishSchool(this),
+          callback: () => createRandomFishSchool(this, isLarge),
           loop: true,
         })
         const { width, height } = this.sys.game.canvas;

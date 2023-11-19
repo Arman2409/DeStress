@@ -5,19 +5,19 @@ import configs from "../../../../../../configs/components";
 
 const {cornerImageInitialingDuration} = {...configs};
 
-export const titleVariants: Variants = {
+export const getTitleVariants = (isMedium: boolean):Variants => ({
     initial: {
         fontSize: "0px",
         opacity: 1
     },
     animate: {
-        fontSize: "20px",
+        fontSize: isMedium ? "20px" : "13px",
         opacity: 1,
         transition: {
             duration: 0.4
         }
     }
-}
+})
 
 export const cornerImageInitializeVariants: Variants = {
     initial: {
