@@ -5,6 +5,8 @@ const getBackgroundsArr = (arr:Array<string>) => arr.map((background:string) => 
 export default {
         animationDuration: 2.5,
         summaryWaitTime: 2,
+        windowMediumSize: 700,
+        windowSmallSize: 480,
         infoImage: "/roshambo/info.jpg",
         info: "This is the traditional game of Roshambo, where two players use three jests: 'scissors', 'rock' and 'paper', from which 'paper' wins over 'rock', 'rock' over 'scissors' and 'scissors' over 'paper'. ",
         backgrounds: getBackgroundsArr([
