@@ -18,7 +18,7 @@ const Score = () => {
       height={65}
       content={
         <>
-          <div className={styles.score_cont}>
+          <div className={styles.score_cont_bordered}>
             {shouldAnimateLeft ? <AnimatingScores score={userScore} />
               : <p>{userScore}</p>}
           </div>

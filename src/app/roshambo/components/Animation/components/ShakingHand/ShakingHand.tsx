@@ -6,7 +6,13 @@ import type { ShakingHandProps } from "../../../../../../types/roshambo"
 import { shakingImageVariants } from "./utils/variants"
 import { getImageSrc } from "./utils/functions"
 
-const ShakingHand = ({ jest, showingMode, side, initialJest, duration }: ShakingHandProps) => {
+const ShakingHand = ({ 
+  jest,
+  windowSize,
+  showingMode,
+  side,
+  initialJest,
+  duration }: ShakingHandProps) => {
   const [imageSource, setImageSource] = useState<string>("");
 
   useEffect(() => {
@@ -17,8 +23,8 @@ const ShakingHand = ({ jest, showingMode, side, initialJest, duration }: Shaking
     setImageSource(getImageSrc(initialJest || "rock", side))
     setTimeout(() => {
       setImageSource(getImageSrc(jest || "rock", side))
-    }, duration * 1000)
-  }, [])
+    }, duration * 1000 + 500)
+  }, [setImageSource, getImageSrc, showingMode, jest, side, duration])
 
   return (
     <motion.img
@@ -26,11 +32,13 @@ const ShakingHand = ({ jest, showingMode, side, initialJest, duration }: Shaking
       variants={showingMode ? {} : shakingImageVariants}
       initial="initial"
       animate="animate"
+      src={imageSource}
       style={{
-        left: side === "left" ? "-15px" : undefined,
-        right: side === "right" ? "-15px" : undefined,
+        left: side === "left" ? windowSize == "medium" || windowSize === "small" ? "-115px" : "-15px" : undefined,
+        right: side === "right" ? windowSize == "medium" || windowSize === "small" ? "-150px" : "-50px" : undefined,
+        top: windowSize == "small" ? side === "left" ? "0px" : "250px" : "100px",
       }}
-      src={imageSource} />
+    />
   )
 }
 

@@ -1,19 +1,23 @@
 import { random } from "lodash";
 import type { Variants } from "framer-motion";
 
-export const titleVariants: Variants = {
+import configs from "../../../../../../configs/components";
+
+const {cornerImageInitialingDuration} = {...configs};
+
+export const getTitleVariants = (isMedium: boolean):Variants => ({
     initial: {
         fontSize: "0px",
         opacity: 1
     },
     animate: {
-        fontSize: "20px",
+        fontSize: isMedium ? "20px" : "13px",
         opacity: 1,
         transition: {
             duration: 0.4
         }
     }
-}
+})
 
 export const cornerImageInitializeVariants: Variants = {
     initial: {
@@ -28,7 +32,7 @@ export const cornerImageInitializeVariants: Variants = {
         top: "-40px",
         right: "-40px",
         transition: {
-            duration: 2
+            duration: cornerImageInitialingDuration
         }
     }
 }

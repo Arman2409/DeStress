@@ -11,5 +11,11 @@
   font-weight: 900;
   color: $color4;
   background: rgba($color: $color1, $alpha: 0.4);
-  text-shadow: $color1 1px 5px 2px;
+  text-shadow: $color1 1px 2px 2px;
+}
+
+.score_cont_bordered {
+  @extend .score_cont;
+
+  border-right:1px solid $color4;
 }

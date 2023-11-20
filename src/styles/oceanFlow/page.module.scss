@@ -1,5 +1,6 @@
 @import "../colors.scss";
 @import "../customs.scss";
+@import "../breakpoints.scss";
 
 .ocean_flow_main {
     @extend .centered;
@@ -11,6 +12,10 @@
 
 .ocean_flow_cont {
     @include mainBoxShadow();
+
+    @media screen and (max-width: $main_large) {
+        height: 85vh;
+    }
 
     height: 90vh;
     width: 90vw;

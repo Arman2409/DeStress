@@ -9,7 +9,7 @@ import configs from "../../configs/oceanFlow"
 import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
 import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
 
-const { info, infoImage } = { ...configs };
+const { info, infoImage, infoImage2 } = { ...configs };
 
 const OceanFlow = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -29,6 +29,9 @@ const OceanFlow = () => {
                 setVisible={setShowInfo}
                 text={info}
                 image={infoImage}
+                image2={infoImage2}
+                imageWidth1={"66%"}
+                imageWidth2={"33%"}
                 onOk={() => setShowInfo(false)}
                 onCancel={() => router.push("/")}
                 cancelText={"Go Back"}

@@ -12,6 +12,7 @@ const Greeting = () => (
          initial="initial"
          animate="animate"
          whileHover="hover"
+         className={styles.title}
          variants={logoVariants}
       />
       <motion.p

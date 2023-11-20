@@ -1,5 +1,11 @@
 import type { Variants } from "framer-motion";
 
+import configs from "../../../../../../../configs/roshambo";
+
+const {
+    animationDuration
+} = {...configs};
+
 export const shakingImageVariants: Variants = {
     initial: {
         transform: "rotate(0deg)"
@@ -7,7 +13,7 @@ export const shakingImageVariants: Variants = {
     animate: {
         transform: ["rotate(5deg)", "rotate(5deg)", "rotate(0deg)"],
         transition: {
-            duration: 0.5,
+            duration: animationDuration / 3,
             repeat: 3,
             repeatType: "reverse"
         }

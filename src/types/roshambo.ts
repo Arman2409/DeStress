@@ -1,4 +1,5 @@
 export type Jest = "scissors"|"rock"|"paper"
+export type WindowSize = "small" | "medium" | "large"
 export type GameStatus = "draw"|"lose"|"win"
 
 // context 
@@ -27,6 +28,7 @@ export type ShakingHandProps = {
     jest: Jest|null
     showingMode: boolean
     initialJest: Jest|null
+    windowSize: WindowSize
     side: "left"|"right"
     duration: number
 }

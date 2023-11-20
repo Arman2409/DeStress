@@ -157,7 +157,7 @@ const removeFishSchool = (school: FishSchool, scene: OceanScene) => {
     })
 }
 
-export const createRandomFishSchool = (scene: OceanScene) => {
+export const createRandomFishSchool = (scene: OceanScene, isLarge: boolean) => {
     const fishCount = random(fishEachSchoolRange[0], fishEachSchoolRange[1]);
     const newSchool: FishSchool =
     {
@@ -175,7 +175,8 @@ export const createRandomFishSchool = (scene: OceanScene) => {
     let { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
 
     for (let count = 0; count < fishCount; count++) {
-        const newFish = scene.add.sprite(x + random(0, fishSchoolRadius), y + random(0, fishSchoolRadius), "fishFrame1").setScale(0.075);
+        const scale = isLarge ? 0.075 : 0.035;
+        const newFish = scene.add.sprite(x + random(0, fishSchoolRadius), y + random(0, fishSchoolRadius), "fishFrame1").setScale(scale);
         newFish.setRotation(angle).setDepth(1).setTint(getRandomFishColor());
         newSchool.fishes.push(newFish);
     }

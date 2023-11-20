@@ -6,7 +6,17 @@ import styles from "../../../../styles/globals/components/InfoWindow.module.scss
 import type { InfoDetailsProps } from "../../../../types/globals"
 import { infoWindowVariants } from "./utils/variants"
 
-const InfoWindow = ({ visible, setVisible, text, onOk, onCancel, confirmText, cancelText, image }: InfoDetailsProps) => (
+const InfoWindow = ({ visible,
+    imageWidth1,
+    imageWidth2,
+    setVisible,
+    text,
+    onOk,
+    onCancel,
+    confirmText,
+    cancelText,
+    image2,
+    image }: InfoDetailsProps) => (
     <>
         {visible && (
             <div className={styles.info_window}>
@@ -28,13 +38,25 @@ const InfoWindow = ({ visible, setVisible, text, onOk, onCancel, confirmText, ca
                         <h1 className={styles.info_title}>
                             Info
                         </h1>
-                        <p>
+                        <p className={styles.info_text}>
                             {text}
                         </p>
-                        {image && <img
-                            src={image}
-                            className={styles.info_image}
-                        />}
+                        <div style={image2 ? { height: "220px" } : {}}>
+                            {image && <img
+                                src={image}
+                                className={image2 ? styles.info_image_double : styles.info_image}
+                                style={{
+                                    width: imageWidth1 ? imageWidth1 : ""
+                                }}
+                            />}
+                            {image2 && <img
+                                src={image2}
+                                className={styles.info_image_double}
+                                style={{
+                                    width: imageWidth2 ? imageWidth2 : ""
+                                }}
+                            />}
+                        </div>
                     </div>
                     <div className={styles.buttons_cont}>
                         {cancelText && (
