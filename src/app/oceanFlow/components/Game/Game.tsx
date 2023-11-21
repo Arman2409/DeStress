@@ -25,6 +25,8 @@ const Game = () => {
   const mouseMoving = useRef<boolean>(false);
 
   useEffect(() => {
+    const phaserContainer = document.querySelector("#phaser-container");
+    if(phaserContainer?.innerHTML) return;
     window.addEventListener("resize", () => {
       setLoading(true);
     })
@@ -52,7 +54,7 @@ const Game = () => {
         this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(scale).setDepth(5);
         this.jellyfish.anims.create({
           key: "jellyfishAnimation",
-          frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + order })),
+          frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + (order + 1)})),
           frameRate: 7.5,
           duration: 2,
           repeat: -1,
@@ -77,10 +79,6 @@ const Game = () => {
 
     }
     scene.current = new Ocean();
-    const phaserContainer = document.querySelector("#phaser-container");
-    if (phaserContainer) {
-      phaserContainer.innerHTML = "";
-    }
     new Phaser.Game({
       type: Phaser.AUTO,
       width: "100%",
@@ -157,7 +155,9 @@ const Game = () => {
         mode="custom"
       />
       {loading && <Loading />}
-      <div id="phaser-container" className={styles.phaser_cont} />
+      <div
+       id="phaser-container"
+       className={styles.phaser_cont} />
     </>
   );
 };

@@ -29,6 +29,8 @@ const Game = () => {
     }, [setInitializeGame, setLoading])
 
     useEffect(() => {
+        const phaserContainer = document.querySelector("#phaser-container");
+        if(phaserContainer?.innerHTML) return;
         const isLarge = window.innerWidth > 900;
         window.addEventListener("resize", () => {
             setLoading(true);
@@ -66,10 +68,6 @@ const Game = () => {
                 }
             }
             scene.current = new NetWork();
-            const phaserContainer = document.querySelector("#phaser-container");
-            if (phaserContainer) {
-                phaserContainer.innerHTML = "";
-            }
             new Phaser.Game({
                 type: Phaser.AUTO,
                 width: "100%",
