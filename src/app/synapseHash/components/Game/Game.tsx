@@ -30,59 +30,81 @@ const Game = () => {
 
     useEffect(() => {
         const phaserContainer = document.querySelector("#phaser-container");
-        if(phaserContainer?.innerHTML) return;
+        if (phaserContainer?.innerHTML) return;
         const isLarge = window.innerWidth > 900;
         window.addEventListener("resize", () => {
             setLoading(true);
         })
-        if (initializeGame) {
-            class NetWork extends Phaser.Scene {
-                neurons: Neuron[] = [];
-                clickedNeuron: string = "";
-                neuronConnections: Connection[] = [];
+        class NetWork extends Phaser.Scene {
+            neurons: Neuron[] = [];
+            clickedNeuron: string = "";
+            connectionSprites: Phaser.GameObjects.Sprite[] = [];
+            neuronConnections: Connection[] = [];
 
-                constructor(props?: any) {
-                    super(props)
-                }
-
-                preload = () => {
-                    this.load.image("neuronFrame", "./synapseHash/neuron.png");
-                    this.load.image("connectionFrame", "./synapseHash/connection.png");
-                    this.load.image("connectionElectrifiedFrame1", "./synapseHash/connectionElectrified1.png")
-                    this.load.image("connectionElectrifiedFrame2", "./synapseHash/connectionElectrified2.png")
-                    this.load.image("connectionElectrifiedFrame3", "./synapseHash/connectionElectrified3.png")
-                    this.load.image("connectionElectrifiedFrame4", "./synapseHash/connectionElectrified4.png")
-                    this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
-                }
-                create = () => {
-                    addRandomNeurons(this, isLarge,
-                        (connections: number) => {
-                            if (connections === possibleConnections.current) {
-                                setInitializeGame(true);
-                                setLoading(true);
-                            }
-                            setConnectionsCount((currCount: number) => currCount + 1)
-                        },
-                        (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
-                    this.cameras.main.setBackgroundColor(backgroundColor)
-                }
+            constructor(props?: any) {
+                super(props)
             }
-            scene.current = new NetWork();
-            new Phaser.Game({
-                type: Phaser.AUTO,
-                width: "100%",
-                height: "100%",
-                parent: "phaser-container",
-                scene: scene.current,
-                physics: {
-                    default: 'arcade',
-                },
-            })
-            setInitializeGame(false);
-            setLoading(false)
-        }
-    }, [showSkipStatus, Phaser, initializeGame, setInitializeGame, setLoading, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
 
+            preload = () => {
+                this.load.image("neuronFrame", "./synapseHash/neuron.png");
+                this.load.image("connectionFrame", "./synapseHash/connection.png");
+                this.load.image("connectionElectrifiedFrame1", "./synapseHash/connectionElectrified1.png")
+                this.load.image("connectionElectrifiedFrame2", "./synapseHash/connectionElectrified2.png")
+                this.load.image("connectionElectrifiedFrame3", "./synapseHash/connectionElectrified3.png")
+                this.load.image("connectionElectrifiedFrame4", "./synapseHash/connectionElectrified4.png")
+                this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
+            }
+            create = () => {
+                addRandomNeurons(this, isLarge,
+                    (connections: number) => {
+                        if (connections === possibleConnections.current) {
+                            setInitializeGame(true);
+                            setLoading(true);
+                        }
+                        setConnectionsCount((currCount: number) => currCount + 1)
+                    },
+                    (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
+                this.cameras.main.setBackgroundColor(backgroundColor)
+            }
+        }
+        scene.current = new NetWork();
+        new Phaser.Game({
+            type: Phaser.AUTO,
+            width: "100%",
+            height: "100%",
+            parent: "phaser-container",
+            scene: scene.current,
+            physics: {
+                default: 'arcade',
+            },
+        })
+        setInitializeGame(false);
+        setLoading(false)
+    }, [showSkipStatus, Phaser, setInitializeGame, setLoading, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
+
+    useEffect(() => {
+        const isLarge = window.innerWidth > 900;
+
+        if (initializeGame) {
+            scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => {
+                sprite.destroy();
+            })
+            addRandomNeurons(scene.current, isLarge,
+                (connections: number) => {
+                    console.log(connections);
+
+                    if (connections === possibleConnections.current) {
+                        setInitializeGame(true);
+                        setLoading(true);
+                    }
+                    setConnectionsCount((currCount: number) => currCount + 1)
+                },
+                (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2
+            );
+            setLoading(false);
+            scene.current.clickedNeuron = null;
+        }
+    }, [initializeGame, addRandomNeurons, setInitializeGame, setLoading, setConnectionsCount])
     return (
         <>
             {showSkipStatus && <CompleteAlert
