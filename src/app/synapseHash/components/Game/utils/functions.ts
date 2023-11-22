@@ -60,6 +60,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
       .setRotation(-Math.PI / 2 + angle)
       .setScale(distance * 0.0010, 1)
       .setDepth(1);
+    scene.connectionSprites.push(newConnection);
     newConnection.anims.create({
       key: "neuronConnectionAnimation",
       frames: Array.from({ length: electrifiedConnectionFramesCount }, (_, order) => ({ key: "connectionElectrifiedFrame" + (order + 1) })),
@@ -88,32 +89,36 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
   sprite.setTexture("neuronElectrifiedFrame");
 }
 
-export const addRandomNeurons = (scene: NetworkScene, isLarge:boolean, clickCallback: Function, callback:Function) => {
-  const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
-  const { width, height } = scene.sys.cameras.main;
-
-  for (let i = 0; i < neuronsCount; i++) {
-    const others = scene.neurons.map(({ placement }) => ({ ...placement }));
-    const distance = isLarge ? 100 : 50;
-    const { x, y } = generateWithoutCollisions(others, width, height, distance);
-    const scale = isLarge ? 0.25 : 0.125;
-    const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
-      .setRotation(random(0, 6.24))
-      .setScale(scale)
-      .setDepth(2)
-      .setInteractive();
-    const newNeuron = {
-      id: generateUniqueId(scene.neurons),
-      placement: {
-        x,
-        y
-      },
-      sprite: newNeuronSprite,
+export const addRandomNeurons = (scene: NetworkScene, isLarge: boolean, clickCallback: Function, callback: Function) => {
+  scene.neurons.forEach(({ sprite }: Neuron) => {
+    sprite.destroy();
+  })
+  if (scene.sys?.cameras?.main) {
+    const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
+    const { width, height } = scene.sys?.cameras?.main || {};
+    for (let i = 0; i < neuronsCount; i++) {
+      const others = scene.neurons.map(({ placement }) => ({ ...placement }));
+      const distance = isLarge ? 100 : 50;
+      const { x, y } = generateWithoutCollisions(others, width, height, distance);
+      const scale = isLarge ? 0.25 : 0.125;
+      const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
+        .setRotation(random(0, 6.24))
+        .setScale(scale)
+        .setDepth(2)
+        .setInteractive();
+      const newNeuron = {
+        id: generateUniqueId(scene.neurons),
+        placement: {
+          x,
+          y
+        },
+        sprite: newNeuronSprite,
+      }
+      scene.neurons.push(newNeuron);
+      newNeuronSprite.on("pointerover", () => scene.input.setDefaultCursor("pointer"));
+      newNeuronSprite.on("pointerout", () => scene.input.setDefaultCursor("default"));
+      newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron, clickCallback))
     }
-    scene.neurons.push(newNeuron);
-    newNeuronSprite.on("pointerover", () => scene.input.setDefaultCursor("pointer"));
-    newNeuronSprite.on("pointerout", () => scene.input.setDefaultCursor("default"));
-    newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron, clickCallback))
+    callback(neuronsCount);
   }
-  callback(neuronsCount);
 }

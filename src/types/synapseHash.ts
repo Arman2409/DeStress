@@ -21,6 +21,7 @@ export interface Neuron {
 
 export interface NetworkScene extends Phaser.Scene {
     clickedNeuron: any
-    neurons: Neuron[]
+    neurons: Neuron[],
+    connectionSprites: Phaser.GameObjects.Sprite[];
     neuronConnections: Connection[]
 }
