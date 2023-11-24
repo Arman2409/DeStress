@@ -20,6 +20,8 @@
 }
 
 .title {
+        max-width: 425px;
+
         @media screen and (max-width: $main_small) {
                 max-width: 300px;
         }

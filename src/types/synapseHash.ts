@@ -3,7 +3,8 @@ import type { Point } from "./main"
 
 export type Connection =  Array<[string, string]>
 
-// props 
+// props
+
 export type CompletedAlertProps = {
     setStatus: Function
     status: boolean
