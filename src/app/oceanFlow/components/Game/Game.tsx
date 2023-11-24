@@ -26,11 +26,9 @@ const Game = () => {
 
   useEffect(() => {
     const phaserContainer = document.querySelector("#phaser-container");
-    if(phaserContainer?.innerHTML) return;
-    window.addEventListener("resize", () => {
-      setLoading(true);
-    })
-    const isLarge = window.innerWidth > 900; 
+    if (phaserContainer?.innerHTML) return;
+    window.addEventListener("resize", () => setLoading(true))
+    const isLarge = window.innerWidth > 900;
     class Ocean extends Phaser.Scene {
       fishSchools: FishSchool[] = [];
       jellyfish: Phaser.GameObjects.Sprite = {} as Phaser.GameObjects.Sprite;
@@ -54,7 +52,7 @@ const Game = () => {
         this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(scale).setDepth(5);
         this.jellyfish.anims.create({
           key: "jellyfishAnimation",
-          frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + (order + 1)})),
+          frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + (order + 1) })),
           frameRate: 7.5,
           duration: 2,
           repeat: -1,
@@ -156,8 +154,8 @@ const Game = () => {
       />
       {loading && <Loading />}
       <div
-       id="phaser-container"
-       className={styles.phaser_cont} />
+        id="phaser-container"
+        className={styles.phaser_cont} />
     </>
   );
 };
