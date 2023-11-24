@@ -67,7 +67,7 @@ const Game = () => {
         })
         const { width, height } = this.sys.game.canvas;
         this.time.addEvent({
-          delay: 300,
+          delay: 100,
           callback: () => checkForCollision(
             this,
             width,
