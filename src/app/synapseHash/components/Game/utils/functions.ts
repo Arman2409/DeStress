@@ -89,7 +89,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
   sprite.setTexture("neuronElectrifiedFrame");
 }
 
-export const addRandomNeurons = (scene: NetworkScene, isLarge: boolean, clickCallback: Function, callback: Function) => {
+export const addRandomNeurons = (scene: NetworkScene, size: "medium"|"large"|"veryLarge", clickCallback: Function, callback: Function) => {
   scene.neurons.forEach(({ sprite }: Neuron) => {
     sprite.destroy();
   })
@@ -98,9 +98,9 @@ export const addRandomNeurons = (scene: NetworkScene, isLarge: boolean, clickCal
     const { width, height } = scene.sys?.cameras?.main || {};
     for (let i = 0; i < neuronsCount; i++) {
       const others = scene.neurons.map(({ placement }) => ({ ...placement }));
-      const distance = isLarge ? 100 : 50;
+      const distance = size === "veryLarge" ? 100 : size === "large" ? 75 : 50;
       const { x, y } = generateWithoutCollisions(others, width, height, distance);
-      const scale = isLarge ? 0.25 : 0.125;
+      const scale = size === "veryLarge" ? 0.25 : 0.125;
       const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
         .setRotation(random(0, 6.24))
         .setScale(scale)

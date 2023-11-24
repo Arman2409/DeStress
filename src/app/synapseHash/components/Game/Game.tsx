@@ -31,10 +31,9 @@ const Game = () => {
     useEffect(() => {
         const phaserContainer = document.querySelector("#phaser-container");
         if (phaserContainer?.innerHTML) return;
-        const isLarge = window.innerWidth > 900;
-        window.addEventListener("resize", () => {
-            setLoading(true);
-        })
+        const windowWidth = window.innerWidth;
+        const size = windowWidth > 1100 ? "veryLarge" :  windowWidth > 900 ? "large" : "medium";
+        window.addEventListener("resize", () => setLoading(true))
         class NetWork extends Phaser.Scene {
             neurons: Neuron[] = [];
             clickedNeuron: string = "";
@@ -55,7 +54,7 @@ const Game = () => {
                 this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
             }
             create = () => {
-                addRandomNeurons(this, isLarge,
+                addRandomNeurons(this, size,
                     (connections: number) => {
                         if (connections === possibleConnections.current) {
                             setInitializeGame(true);
@@ -83,15 +82,17 @@ const Game = () => {
     }, [showSkipStatus, Phaser, setInitializeGame, setLoading, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
 
     useEffect(() => {
-        const isLarge = window.innerWidth > 900;
+        const windowWidth = window.innerWidth;
+        const size = windowWidth > 1100 ? "veryLarge" :  windowWidth > 900 ? "large" : "medium";
 
         if (initializeGame) {
             scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => {
                 sprite.destroy();
             })
-            addRandomNeurons(scene.current, isLarge,
+            scene.current.neuronConnections = [];
+            addRandomNeurons(scene.current, size,
                 (connections: number) => {
-                    console.log(connections);
+                    console.log({ connections, possibleConnections: possibleConnections.current });
 
                     if (connections === possibleConnections.current) {
                         setInitializeGame(true);
@@ -102,6 +103,7 @@ const Game = () => {
                 (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2
             );
             setLoading(false);
+            setInitializeGame(false);
             scene.current.clickedNeuron = null;
         }
     }, [initializeGame, addRandomNeurons, setInitializeGame, setLoading, setConnectionsCount])
