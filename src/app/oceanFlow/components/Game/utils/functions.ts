@@ -13,6 +13,7 @@ const {
     fishSchoolRadius,
     plantsCountRange } = { ...configs };
 const pi = Math.PI;
+// colors for fish 
 const randomFishColors = [
     0xFF0000, 0x00FF00, 0x0000FF, 0xFFCC00, 0x00FFCC,
     0xCC00FF, 0xFFFFFF, 0x000000, 0xABCDEF, 0xFF6347,
@@ -30,6 +31,7 @@ const getRandomFishColor = () => {
 
 export const getRandomSchoolDetails = (width: number, height: number) => {
     let x: number, y: number, angle = 0;
+    // define wheteher to start from sides or not 
     const fromSide = getRandomBoolean();
     if (fromSide) {
         const fromLeft = getRandomBoolean();
@@ -52,6 +54,7 @@ export const getRandomSchoolDetails = (width: number, height: number) => {
             angle
         }
     }
+    // define wheteher to start from top or not 
     const fromTop = getRandomBoolean();
     const dirX = random(0, width);
     let dirY = 0;
@@ -97,8 +100,10 @@ export const checkForCollision = (scene: OceanScene, sysWidth: number, sysHeight
     const { x = 0, y = 0 } = { ...scene.jellyfish }
     scene.fishSchools = scene.fishSchools.map((school: FishSchool) => {
         const { currentPosition = { x: 0, y: 0 }, fishCount = 1, fishes, escapingFrom } = { ...school }
+        // checking if school already is escaping 
         if (escapingFrom) return { ...school };
         const { x: schoolX = 0, y: schoolY = 0 } = { ...currentPosition }
+        // checking if is in the range to escape 
         if ((inRange(x, schoolX - collisionDistance, schoolX)
             || inRange(x, schoolX, schoolX + collisionDistance)
         ) &&
@@ -113,6 +118,7 @@ export const checkForCollision = (scene: OceanScene, sysWidth: number, sysHeight
                 const angle = getAngle(schoolX, schoolY, escapeX, escapeY);
                 let rotateFishIntervalRep = 0;
                 const repeatance = random(1, 5);
+                // interval to change the angle randomly several times and then to the needed angle
                 const rotateInterval = setInterval(() => {
                     if (repeatance === rotateFishIntervalRep) {
                         fishes[i].setRotation(angle);
@@ -141,6 +147,7 @@ export const addPlants = (scene: OceanScene) => {
     const placeMents: Point[] = [];
     const { width, height } = scene.sys.cameras.main;
     for (let i = 1; i <= plantsCount; i++) {
+        // geting random points for the plants 
         const { x, y } = generateWithoutCollisions(placeMents, width, height, 75);
         scene.add.sprite(x, y, "plantFrame").setScale(0.2).setDepth(1).setRotation(Math.random() * 6.24);
     }

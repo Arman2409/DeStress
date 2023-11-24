@@ -125,16 +125,10 @@ const Game = () => {
     const extraX = getVw(5);
     const extraY = getVh(5);
     window.addEventListener("mousemove", (e: MouseEvent) => {
-      if (!mouseMoving.current) {
-        mouseMoving.current = true;
-        setTimeout(() => {
-          mouseMoving.current = false;
-        }, 1000);
-      }
       setTimeout(() => {
         scene.current.jellyfish.x = e.clientX - extraX;
         scene.current.jellyfish.y = e.clientY - extraY;
-      }, 300);
+      }, 500);
 
       const angle = getAngle(oldX, oldY, e.clientX, e.clientY,);
       if (Math.abs(oldAngle - angle) > 0.4) {

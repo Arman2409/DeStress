@@ -6,22 +6,22 @@ import Jest from "./components/Jest/Jest"
 import { RoshamboContext } from "../../page"
 import { jestsData } from "./utils/data"
 
+// get keys for keypress event 
 let keysArr: string[] = [];
 jestsData.forEach(({ keys }: JestDetails) => {
   keysArr.push(...keys);
 })
 
 const Instruction = () => {
-  const [ jests, setJests ] = useState<JestDetails[]>(jestsData);
+  const [jests, setJests] = useState<JestDetails[]>(jestsData);
   const [chosen, setChosen] = useState("");
   const { dispatchJest } = useContext(RoshamboContext);
   const alreadyChosen = useRef<boolean>(false);
 
-  const handleNewJest = useCallback((key:string|"", name?: string) => {
-    if(alreadyChosen.current) return;
+  const handleNewJest = useCallback((key: string | "", name?: string) => {
+    if (alreadyChosen.current) return;
     alreadyChosen.current = true;
-    setJests(jests =>  jests.map((jest: JestDetails) => 
-      {  
+    setJests(jests => jests.map((jest: JestDetails) => {
       if (jest.keys.includes(key) || jest.name === name) {
         setChosen(jest.name)
         return (
@@ -39,19 +39,19 @@ const Instruction = () => {
   useEffect(() => {
     window.addEventListener("keypress", (event: KeyboardEvent) => {
       if (alreadyChosen.current) return;
-      if (keysArr.includes(event.key)) { 
+      if (keysArr.includes(event.key)) {
         handleNewJest(event.key);
       }
-    })    
+    })
   }, [setJests, handleNewJest])
 
-   useEffect(() => {
-     if (chosen) {
+  useEffect(() => {
+    if (chosen) {
       setTimeout(() => {
         dispatchJest(chosen);
       }, 500)
-     }
-   }, [chosen])
+    }
+  }, [chosen])
 
   return (
     <div className={styles.instruction_main}>

@@ -55,6 +55,7 @@ const Game = () => {
             }
             create = () => {
                 addRandomNeurons(this, size,
+                    // callback function for clicking a neuron 
                     (connections: number) => {
                         if (connections === possibleConnections.current) {
                             setInitializeGame(true);
@@ -62,6 +63,7 @@ const Game = () => {
                         }
                         setConnectionsCount((currCount: number) => currCount + 1)
                     },
+                    // callback function to run after initializing the neurons 
                     (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
                 this.cameras.main.setBackgroundColor(backgroundColor)
             }
@@ -85,6 +87,7 @@ const Game = () => {
         const windowWidth = window.innerWidth;
         const size = windowWidth > 1100 ? "veryLarge" :  windowWidth > 900 ? "large" : "medium";
 
+        // creating new game whenever finished 
         if (initializeGame) {
             scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => {
                 sprite.destroy();
