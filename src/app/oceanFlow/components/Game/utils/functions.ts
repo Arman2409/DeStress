@@ -179,6 +179,7 @@ export const createRandomFishSchool = (scene: OceanScene, isLarge: boolean) => {
         escapeDirections: []
     };
     const { width, height } = scene.sys.game.canvas;
+    // get random direction for the school 
     let { x, y, dirX, dirY, angle } = getRandomSchoolDetails(width, height);
 
     for (let count = 0; count < fishCount; count++) {
@@ -217,6 +218,7 @@ export const createRandomFishSchool = (scene: OceanScene, isLarge: boolean) => {
             x: currentX += xChange,
             y: currentY += yChange,
         }
+        // find the school in fishSchools and update the position 
         scene.fishSchools = scene.fishSchools.map((school) => {
             const { id = 0 } = { ...school };
             if (id === newSchool.id) {
@@ -227,6 +229,7 @@ export const createRandomFishSchool = (scene: OceanScene, isLarge: boolean) => {
             }
             return { ...school };
         })
+        // update the position for each fish 
         newSchool.fishes.forEach((fish: any, index: number) => {
             if (isEscaping) {
                 const { x: dirX, y: dirY } = school?.escapeDirections[index] as Point;

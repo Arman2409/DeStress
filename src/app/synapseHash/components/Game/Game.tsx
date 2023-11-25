@@ -22,6 +22,8 @@ const Game = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const scene = useRef<any>(null);
     const possibleConnections = useRef<number>(0);
+    const windowWidth = window.innerWidth;
+    const size = windowWidth > 1100 ? "veryLarge" : windowWidth > 900 ? "large" : "medium";
 
     const startNewGame = useCallback(() => {
         setInitializeGame(true);
@@ -31,8 +33,6 @@ const Game = () => {
     useEffect(() => {
         const phaserContainer = document.querySelector("#phaser-container");
         if (phaserContainer?.innerHTML) return;
-        const windowWidth = window.innerWidth;
-        const size = windowWidth > 1100 ? "veryLarge" :  windowWidth > 900 ? "large" : "medium";
         window.addEventListener("resize", () => setLoading(true))
         class NetWork extends Phaser.Scene {
             neurons: Neuron[] = [];
@@ -84,9 +84,6 @@ const Game = () => {
     }, [showSkipStatus, Phaser, setInitializeGame, setLoading, addRandomNeurons, setConnectionsCount, setShowSkipStatus])
 
     useEffect(() => {
-        const windowWidth = window.innerWidth;
-        const size = windowWidth > 1100 ? "veryLarge" :  windowWidth > 900 ? "large" : "medium";
-
         // creating new game whenever finished 
         if (initializeGame) {
             scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => {
@@ -95,8 +92,6 @@ const Game = () => {
             scene.current.neuronConnections = [];
             addRandomNeurons(scene.current, size,
                 (connections: number) => {
-                    console.log({ connections, possibleConnections: possibleConnections.current });
-
                     if (connections === possibleConnections.current) {
                         setInitializeGame(true);
                         setLoading(true);
@@ -117,10 +112,12 @@ const Game = () => {
                 startNew={startNewGame}
                 setStatus={setShowSkipStatus} />}
             <ScoreAlert
+                width={size === "veryLarge" ? undefined : 70}
+                height={size === "veryLarge" ? undefined : 20}
                 score={connectionsCount}
                 mode="custom" />
             <Button
-                className={styles.skip_button}
+                className={size === "veryLarge" ? styles.skip_button : styles.skip_button_small}
                 onClick={() => setShowSkipStatus(true)}
             >
                 <FaPlay />

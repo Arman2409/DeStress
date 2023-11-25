@@ -5,7 +5,7 @@ import { scoreContVariants } from "./utils/variants"
 import type { ScoreAlertProps } from "../../../../types/globals"
 
 const ScoreAlert = ({ content, mode = "custom", score, width, height }: ScoreAlertProps) => {
-    const scoreWidth = mode === "custom" ? 125 : width;
+    const scoreWidth = width ? width : 125;
 
     return (
         <motion.div

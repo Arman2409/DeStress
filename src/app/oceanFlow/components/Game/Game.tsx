@@ -23,6 +23,7 @@ const Game = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const scene = useRef<any>(null);
   const mouseMoving = useRef<boolean>(false);
+  const calledCount = useRef<number>(0);
 
   useEffect(() => {
     const phaserContainer = document.querySelector("#phaser-container");
@@ -49,7 +50,10 @@ const Game = () => {
         addPlants(this);
         this.cameras.main.setBackgroundColor(backgroundColor);
         const scale = isLarge ? 0.5 : 0.25;
-        this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1").setScale(scale).setDepth(5);
+        this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1")
+          .setScale(scale)
+          .setDepth(5);
+        // animation for changing the frames of the jellyfish 
         this.jellyfish.anims.create({
           key: "jellyfishAnimation",
           frames: Array.from({ length: jellyFishFramesCount }, (_, order) => ({ key: "jellyfishFrame" + (order + 1) })),
@@ -64,8 +68,9 @@ const Game = () => {
           loop: true,
         })
         const { width, height } = this.sys.game.canvas;
+        // checking for collisions for schools and jellyfish 
         this.time.addEvent({
-          delay: 100,
+          delay: 30,
           callback: () => checkForCollision(
             this,
             width,
@@ -124,12 +129,17 @@ const Game = () => {
     let oldX = 0, oldY = 0, oldAngle = 0;
     const extraX = getVw(5);
     const extraY = getVh(5);
+    // making jellyfish to follow the mouse 
     window.addEventListener("mousemove", (e: MouseEvent) => {
-      setTimeout(() => {
-        scene.current.jellyfish.x = e.clientX - extraX;
-        scene.current.jellyfish.y = e.clientY - extraY;
-      }, 500);
-
+      calledCount.current = calledCount.current + 1;
+      if (!mouseMoving.current) {
+        mouseMoving.current = true;
+        setTimeout(() => {
+          mouseMoving.current = false;
+        }, 1000)
+      }
+      scene.current.jellyfish.x = e.clientX - extraX;
+      scene.current.jellyfish.y = e.clientY - extraY;
       const angle = getAngle(oldX, oldY, e.clientX, e.clientY,);
       if (Math.abs(oldAngle - angle) > 0.4) {
         scene.current.jellyfish.setRotation && scene.current.jellyfish.setRotation(angle);
