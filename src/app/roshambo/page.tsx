@@ -30,6 +30,7 @@ const Roshambo = () => {
     const router = useRouter();
 
     useEffect(() => {
+        // update local storage 
         const visited = updateVisitedStatus("roshambo");
         if (!visited) {
             setShowInfo(true);

@@ -16,6 +16,7 @@ const OceanFlow = () => {
     const router = useRouter();
 
     useEffect(() => {
+        // update local storage 
         const visited = updateVisitedStatus("oceanFlow");
         if (!visited) {
             setShowInfo(true);

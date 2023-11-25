@@ -3,6 +3,7 @@ const pi = Math.PI;
 const getAngle = (startX: number, startY: number, endX: number, endY: number) => {
   const xDifference = endX - startX;
   const yDifference = endY - startY;
+  // find the quarter of the angle 
   let toQuarter: 1 | 2 | 3 | 4;
   if (xDifference >= 0) {
     if (yDifference >= 0) {

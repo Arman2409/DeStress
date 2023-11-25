@@ -8,7 +8,8 @@ import getAngle from "../../../../globals/functions/getAngle"
 
 const {
   neuronsCountRange,
-  electrifiedConnectionFramesCount
+  electrifiedConnectionFramesCount,
+  neuronDistanceBreakpoints
 } = { ...configs }
 
 const getNeuronTweenConfig = (target: any) => ({
@@ -44,6 +45,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
       }
     })
     scene.clickedNeuron = {
+      // adding rotating animation to the neuron 
       tween: scene.tweens.add(getNeuronTweenConfig(sprite)),
       ...neuron
     }
@@ -56,6 +58,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
     const { x: endX, y: endY } = { ...neuron.sprite };
     const angle = getAngle(startX, startY, endX, endY);
     const { middleX, middleY, distance } = calculateDistance(startX, startY, endX, endY);
+    // creating the connection sprite from one neuron to another 
     const newConnection = scene.physics.add.sprite(startX + middleX / 3, startY + middleY / 3, "connectionFrame")
       .setRotation(-Math.PI / 2 + angle)
       .setScale(distance * 0.0010, 1)
@@ -69,6 +72,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
       repeat: -1,
     })
     newConnection.anims.play("neuronConnectionAnimation")
+    // timeout for changing the connections size until it reached to the next neuron 
     setTimeout(() => {
       newConnection.x = startX + middleX / 2;
       newConnection.y = startY + middleY / 2;
@@ -98,7 +102,9 @@ export const addRandomNeurons = (scene: NetworkScene, size: "medium"|"large"|"ve
     const { width, height } = scene.sys?.cameras?.main || {};
     for (let i = 0; i < neuronsCount; i++) {
       const others = scene.neurons.map(({ placement }) => ({ ...placement }));
-      const distance = size === "veryLarge" ? 100 : size === "large" ? 75 : 50;
+      // defining the distance between the neurons regarding the window's width 
+      const distance = size === "veryLarge" ? neuronDistanceBreakpoints[2] : size === "large" ? neuronDistanceBreakpoints[1] : neuronDistanceBreakpoints[0];
+      // generating random points for neurons 
       const { x, y } = generateWithoutCollisions(others, width, height, distance);
       const scale = size === "veryLarge" ? 0.25 : 0.125;
       const newNeuronSprite = scene.add.sprite(x, y, "neuronFrame")
@@ -115,6 +121,7 @@ export const addRandomNeurons = (scene: NetworkScene, size: "medium"|"large"|"ve
         sprite: newNeuronSprite,
       }
       scene.neurons.push(newNeuron);
+      // set pointer events for the neuron 
       newNeuronSprite.on("pointerover", () => scene.input.setDefaultCursor("pointer"));
       newNeuronSprite.on("pointerout", () => scene.input.setDefaultCursor("default"));
       newNeuronSprite.on("pointerdown", () => clickNeuron(scene, newNeuron, clickCallback))

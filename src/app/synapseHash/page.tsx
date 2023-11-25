@@ -16,6 +16,7 @@ const SynapseHash = () => {
     const router = useRouter();
 
     useEffect(() => {
+        // update local storage 
         const visited = updateVisitedStatus("synapseHash");
         if (!visited) {
             setShowInfo(true);

@@ -7,23 +7,32 @@ const generateWithoutCollisions = (
     width: number,
     height: number,
     distance: number): Point => {
-    const x = random(distance, width - distance);
-    const y = random(distance, height - distance);
-    let hasCollides = false;
-    others.forEach(({ x: otherX, y: otherY }) => {
-        if (inRange(x, otherX - distance, otherX + distance)
-            && inRange(y, otherY - distance, otherY + distance)) {
-            hasCollides = true;
+    try {
+        const x = random(distance, width - distance);
+        const y = random(distance, height - distance);
+        // checking for collisions 
+        let hasCollides = false;
+        others.forEach(({ x: otherX, y: otherY }) => {
+            if (inRange(x, otherX - distance, otherX + distance)
+                && inRange(y, otherY - distance, otherY + distance)) {
+                hasCollides = true;
+            }
+        })
+        if (hasCollides) {
+            return generateWithoutCollisions(
+                others,
+                width,
+                height,
+                distance);
+        } else {
+            return { x, y };
         }
-    })
-    if (hasCollides) {
-        return generateWithoutCollisions(
-            others,
-            width,
-            height,
-            distance);
-    } else {
-        return { x, y };
+    } catch (e) {
+       return generateWithoutCollisions(
+        others,
+        width,
+        height,
+        distance);;
     }
 }
 

@@ -19,4 +19,11 @@
     position: absolute;
     top: 15px;
     left: 15px;
+
+    &_small {
+        @extend .skip_button;
+
+        width: 40px;
+        height: 25px;
+    }
 }
