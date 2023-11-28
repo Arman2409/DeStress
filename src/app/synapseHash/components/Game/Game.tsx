@@ -85,26 +85,19 @@ const Game = () => {
 
     useEffect(() => {
         // creating new game whenever finished 
-        if (initializeGame) {
-            scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => {
-                sprite.destroy();
-            })
+        if (initializeGame && scene.current.physics) {
+            scene.current.neurons.forEach(({ sprite }: Neuron) => sprite.destroy())
+            scene.current.connectionSprites.forEach((sprite: Phaser.GameObjects.Sprite) => sprite.destroy())
+            scene.current.connectionSprites = []
             scene.current.neuronConnections = [];
-            addRandomNeurons(scene.current, size,
-                (connections: number) => {
-                    if (connections === possibleConnections.current) {
-                        setInitializeGame(true);
-                        setLoading(true);
-                    }
-                    setConnectionsCount((currCount: number) => currCount + 1)
-                },
-                (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2
-            );
+            scene.current.neurons = [];
+            scene.current.clickedNeuron = null;
+            scene.current.create();
             setLoading(false);
             setInitializeGame(false);
-            scene.current.clickedNeuron = null;
         }
     }, [initializeGame, addRandomNeurons, setInitializeGame, setLoading, setConnectionsCount])
+
     return (
         <>
             {showSkipStatus && <CompleteAlert
