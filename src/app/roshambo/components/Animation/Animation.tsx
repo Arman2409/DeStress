@@ -28,7 +28,7 @@ const Animation = ({ background }: AnimationProps) => {
         setWindowSize("small");
       }
     })
-  }, [setWindowSize])
+  }, [setWindowSize, windowMediumSize])
 
   useEffect(() => {
     if (!opponentJest) {

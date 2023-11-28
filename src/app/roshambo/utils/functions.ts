@@ -2,28 +2,23 @@ import type { GameStatus, Jest } from "../../../types/roshambo"
 import { combinations } from "./data"
 import configs from "../../../configs/roshambo"
 
-const {backgrounds} = {...configs};
+const { backgrounds } = { ...configs };
 
-export const defineGameStatus = (jest1:Jest|null, jest2:Jest|null):GameStatus|null => {
-  if(!jest1 || !jest2) return null;
-    let status:GameStatus = "draw";
-    if(jest1 === jest2) {
-      return "draw";
+export const defineGameStatus = (jest1: Jest | null, jest2: Jest | null): GameStatus | null => {
+  if (!jest1 || !jest2) return null;
+  let status: GameStatus = "draw";
+  if (jest1 === jest2) {
+    return "draw";
   };
-    combinations.winning.forEach((arr:any) => {
-      if(arr[0] === jest1 && arr[1] === jest2) {  
-        status = "win";
-      }
-    })
-    combinations.losing.forEach((arr:any) => {
-      if(arr[0] === jest1 && arr[1] === jest2) {
-        status = "lose";
-      }
-    })
-    return status;
+  combinations.forEach((arr: any) => {
+    if (arr[0] === jest1 && arr[1] === jest2) {
+      status = "win";
+    }
+    if (arr[1] === jest1 && arr[0] === jest2) {
+      status = "lose";
+    }
+  })
+  return status;
 }
 
-export const getRandomBackground = () => {
-  const randomOrder = Math.floor(Math.random() * backgrounds.length);
-  return backgrounds[randomOrder];
-}
+export const getRandomBackground = () => backgrounds[Math.floor(Math.random() * backgrounds.length)];

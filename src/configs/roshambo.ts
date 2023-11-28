@@ -3,8 +3,8 @@ const backgroundsPath = "/roshambo/backgrounds/";
 const getBackgroundsArr = (arr:Array<string>) => arr.map((background:string) => backgroundsPath + background);
 
 export default {
-        animationDuration: 2.5,
-        summaryWaitTime: 2,
+        animationDuration: 1.5,
+        summaryWaitTime: 1.5,
         windowMediumSize: 700,
         windowSmallSize: 480,
         infoImage: "/roshambo/info.jpg",

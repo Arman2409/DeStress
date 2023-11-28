@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import styles from "../../styles/oceanFlow/page.module.scss"
@@ -15,6 +15,8 @@ const OceanFlow = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const router = useRouter();
 
+    const changeShowStatus = useCallback((newStatus:boolean) => setShowInfo(newStatus), [setShowInfo])
+
     useEffect(() => {
         // update local storage 
         const visited = updateVisitedStatus("oceanFlow");
@@ -27,13 +29,13 @@ const OceanFlow = () => {
         <div className={styles.ocean_flow_main}>
             <InfoWindow
                 visible={showInfo}
-                setVisible={setShowInfo}
+                setVisible={changeShowStatus}
                 text={info}
                 image={infoImage}
                 image2={infoImage2}
                 imageWidth1={"66%"}
                 imageWidth2={"33%"}
-                onOk={() => setShowInfo(false)}
+                onOk={() => changeShowStatus(false)}
                 onCancel={() => router.push("/")}
                 cancelText={"Go Back"}
                 confirmText={"Continue"}
@@ -41,7 +43,7 @@ const OceanFlow = () => {
             <CornerButton type="back" />
             <CornerButton
                 type="info"
-                action={() => setShowInfo(true)} />
+                action={() => changeShowStatus(true)} />
             <div
                 className={styles.ocean_flow_cont}>
                 <Game />
