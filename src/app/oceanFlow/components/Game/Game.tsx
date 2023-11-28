@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Phaser from "phaser"
 
 import styles from "../../../../styles/oceanFlow/components/Game.module.scss"
 import type { FishSchool } from "../../../../types/oceanFlow"
 import configs from "../../../../configs/oceanFlow"
 import { eventKeys } from "./utils/data"
-import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw } from "./utils/functions"
+import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw, updateJellyfishDetails } from "./utils/functions"
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
 import Loading from "../../../globals/components/Loading/Loading"
 import getAngle from "../../../globals/functions/getAngle"
@@ -23,7 +23,16 @@ const Game = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const scene = useRef<any>(null);
   const mouseMoving = useRef<boolean>(false);
-  const calledCount = useRef<number>(0);
+
+  const updateJellyfish = useCallback((
+    rotation: number,
+    direction: "x" | "y",
+    step: number,
+    height: number | null,
+    width: number | null) => {
+    const isLarge = window.innerWidth > 900;
+    updateJellyfishDetails(scene.current, rotation, direction, step, height, width, isLarge)
+  }, [updateJellyfishDetails])
 
   useEffect(() => {
     const phaserContainer = document.querySelector("#phaser-container");
@@ -49,9 +58,8 @@ const Game = () => {
       create = () => {
         addPlants(this);
         this.cameras.main.setBackgroundColor(backgroundColor);
-        const scale = isLarge ? 0.5 : 0.25;
         this.jellyfish = this.physics.add.sprite(100, 100, "jellyfishFrame1")
-          .setScale(scale)
+          .setScale(isLarge ? 0.5 : 0.25)
           .setDepth(5);
         // animation for changing the frames of the jellyfish 
         this.jellyfish.anims.create({
@@ -96,59 +104,43 @@ const Game = () => {
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (mouseMoving.current) return;
       if (eventKeys.top.includes(e.key)) {
-        scene.current.jellyfish.setRotation(0);
-        if (scene.current.jellyfish.y <= 80) {
-          return;
-        }
-        scene.current.jellyfish.y = scene.current.jellyfish.y - jellyfishStep;
+        updateJellyfish(0, "y", -jellyfishStep, null, null);
       }
       if (eventKeys.bottom.includes(e.key)) {
-        scene.current.jellyfish.setRotation(3);
         const { height } = scene.current?.sys?.game?.canvas;
-        if (scene.current.jellyfish.y >= height - 80) {
-          return;
-        }
-        scene.current.jellyfish.y = scene.current.jellyfish.y + jellyfishStep;
+        updateJellyfish(3, "y", jellyfishStep, height, null);
       }
       if (eventKeys.left.includes(e.key)) {
-        scene.current.jellyfish.setRotation(4.5)
-        if (scene.current.jellyfish.x <= 80) {
-          return;
-        }
-        scene.current.jellyfish.x = scene.current.jellyfish.x - jellyfishStep;
+        updateJellyfish(4.5, "x", -jellyfishStep, null, null);
       }
       if (eventKeys.right.includes(e.key)) {
-        scene.current.jellyfish.setRotation(1.5);
         const { width } = scene.current?.sys?.game?.canvas;
-        if (scene.current.jellyfish.x >= width - 80) {
-          return;
-        }
-        scene.current.jellyfish.x = scene.current.jellyfish.x + jellyfishStep;
+        updateJellyfish(1.5, "x", jellyfishStep, null, width);
       }
     })
     let oldX = 0, oldY = 0, oldAngle = 0;
     const extraX = getVw(5);
     const extraY = getVh(5);
     // making jellyfish to follow the mouse 
-    window.addEventListener("mousemove", (e: MouseEvent) => {
-      calledCount.current = calledCount.current + 1;
+    window.addEventListener("mousemove", (event: MouseEvent) => {
       if (!mouseMoving.current) {
         mouseMoving.current = true;
-        setTimeout(() => {
-          mouseMoving.current = false;
-        }, 1000)
+        setTimeout(() => mouseMoving.current = false, 1000)
       }
-      scene.current.jellyfish.x = e.clientX - extraX;
-      scene.current.jellyfish.y = e.clientY - extraY;
-      const angle = getAngle(oldX, oldY, e.clientX, e.clientY,);
-      if (Math.abs(oldAngle - angle) > 0.4) {
-        scene.current.jellyfish.setRotation && scene.current.jellyfish.setRotation(angle);
+      if(scene.current.sys.game) {
+        const {clientX, clientY} = event;
+        const angle = getAngle(oldX, oldY, clientX, clientY);
+        if (Math.abs(oldAngle - angle) > 0.2) {
+          scene.current.jellyfish.setRotation && scene.current.jellyfish.setRotation(angle);
+        }
+        scene.current.jellyfish.x = clientX - extraX;
+        scene.current.jellyfish.y = clientY - extraY;
+        oldAngle = angle;
+        oldX = clientX;
+        oldY = clientY;
       }
-      oldAngle = angle;
-      oldX = e.clientX;
-      oldY = e.clientY;
     })
-  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool, getAngle, getVh, getVw]);
+  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool, updateJellyfish, getAngle, getVh, getVw]);
 
   return (
     <>

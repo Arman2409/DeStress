@@ -1,11 +1,11 @@
 "use client"
-import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { useCallback, useState } from "react"
+import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
-import type { TileProps } from "../../../../../types/main";
-import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants";
+import type { TileProps } from "../../../../../types/main"
+import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants"
 
 const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);
@@ -13,6 +13,8 @@ const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: T
 
     const isMedium = window.innerWidth > 650;
 
+    const changeHovered = useCallback((newValue: boolean) => setHovered(newValue), [setHovered])
+    
     const clickTile = useCallback(() => {
         router.push(link)
         choseGame && choseGame();
@@ -22,8 +24,8 @@ const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: T
         <motion.div
             className={styles.tile}
             onClick={clickTile}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            onMouseEnter={() => changeHovered(true)}
+            onMouseLeave={() => changeHovered(false)}
         >
            {cornerImage && <motion.img
                 src={cornerImage}

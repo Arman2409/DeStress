@@ -45,12 +45,11 @@ const Game = () => {
             }
 
             preload = () => {
+                for(let i = 1; i <= 4; i++){
+                    this.load.image(`connectionElectrifiedFrame${i}`, `./synapseHash/connectionElectrified${i}.png`)
+                }
                 this.load.image("neuronFrame", "./synapseHash/neuron.png");
                 this.load.image("connectionFrame", "./synapseHash/connection.png");
-                this.load.image("connectionElectrifiedFrame1", "./synapseHash/connectionElectrified1.png")
-                this.load.image("connectionElectrifiedFrame2", "./synapseHash/connectionElectrified2.png")
-                this.load.image("connectionElectrifiedFrame3", "./synapseHash/connectionElectrified3.png")
-                this.load.image("connectionElectrifiedFrame4", "./synapseHash/connectionElectrified4.png")
                 this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
             }
             create = () => {

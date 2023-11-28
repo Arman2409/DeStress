@@ -1,15 +1,14 @@
-import { useContext } from "react";
+import { useContext } from "react"
 
 import styles from "../../../../styles/roshambo/components/Score/Score.module.scss"
-import { RoshamboContext } from "../../page";
-import AnimatingScores from "./components/AnimatingScores/AnimatingScores";
-import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert";
+import { RoshamboContext } from "../../page"
+import AnimatingScores from "./components/AnimatingScores/AnimatingScores"
+import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
 
 const Score = () => {
   const { opponentScore, userScore, result, opponentJest, chosenJest } = useContext(RoshamboContext);
-
-  const shouldAnimateLeft = opponentJest && chosenJest && result === "win";
-  const shouldAnimateRight = opponentJest && chosenJest && result === "lose";
+  // define which side of the score window should be animated 
+  const shouldAnimate = opponentJest && chosenJest && result === "win" ? "left" : "right";
 
   return (
     <ScoreAlert
@@ -19,11 +18,11 @@ const Score = () => {
       content={
         <>
           <div className={styles.score_cont_bordered}>
-            {shouldAnimateLeft ? <AnimatingScores score={userScore} />
+            {shouldAnimate === "left" ? <AnimatingScores score={userScore} />
               : <p>{userScore}</p>}
           </div>
           <div className={styles.score_cont}>
-            {shouldAnimateRight ? <AnimatingScores score={opponentScore} />
+            {shouldAnimate === "right" ? <AnimatingScores score={opponentScore} />
               : <p>{opponentScore}</p>}
           </div>
         </>

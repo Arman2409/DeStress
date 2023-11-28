@@ -1,12 +1,5 @@
-export const combinations = {
-    winning: [
-        ["scissors", "paper"],
-        ["paper", "rock"],
-        ["rock", "scissors"]
-    ],
-    losing: [
-        ["scissors", "rock"],
-        ["paper", "scissors"],
-        ["rock", "paper"]
-    ]
-}
+export const combinations = [
+    ["scissors", "paper"],
+    ["paper", "rock"],
+    ["rock", "scissors"]
+]

@@ -254,3 +254,37 @@ export const getVw = (percent: number) => {
     var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     return (percent * width) / 100;
 }
+
+export const updateJellyfishDetails = (
+    scene: OceanScene,
+    rotation: number,
+    direction: "x" | "y",
+    step: number,
+    height: number | null,
+    width: number | null, 
+    isLarge: boolean) => {
+    if (typeof rotation === "number") {
+        scene.jellyfish.setRotation(rotation);
+    }
+    const limitDistance = isLarge ? 80 : 40;
+    if (direction && step) {
+        if (direction === "x") {
+            if (!width && scene.jellyfish.x <= limitDistance) {
+                return;
+            }
+            if (width && scene.jellyfish.x >= width - limitDistance) {
+                return;
+            }
+            scene.jellyfish.x = scene.jellyfish.x + step;
+        }
+        if (direction === "y") {
+            if (!height && scene.jellyfish.y <= limitDistance) {
+                return;
+            }
+            if (height && scene.jellyfish.y >= height - limitDistance) {
+                return;
+            }
+            scene.jellyfish.y = scene.jellyfish.y + step;
+        }
+    }
+}
