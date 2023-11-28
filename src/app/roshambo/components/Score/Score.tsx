@@ -1,9 +1,9 @@
-import { useContext } from "react"
+import { useContext } from "react";
 
-import styles from "../../../../styles/roshambo/components/Score/Score.module.scss"
-import { RoshamboContext } from "../../page"
-import AnimatingScores from "./components/AnimatingScores/AnimatingScores"
-import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
+import styles from "../../../../styles/roshambo/components/Score/Score.module.scss";
+import { RoshamboContext } from "../../page";
+import AnimatingScores from "./components/AnimatingScores/AnimatingScores";
+import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert";
 
 const Score = () => {
   const { opponentScore, userScore, result, opponentJest, chosenJest } = useContext(RoshamboContext);

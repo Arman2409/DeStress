@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react"
-import Phaser from "phaser"
+import { useCallback, useEffect, useRef, useState } from "react";
+import Phaser from "phaser";
 
-import styles from "../../../../styles/oceanFlow/components/Game.module.scss"
-import type { FishSchool } from "../../../../types/oceanFlow"
-import configs from "../../../../configs/oceanFlow"
-import { eventKeys } from "./utils/data"
-import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw, updateJellyfishDetails } from "./utils/functions"
-import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
-import Loading from "../../../globals/components/Loading/Loading"
-import getAngle from "../../../globals/functions/getAngle"
+import styles from "../../../../styles/oceanFlow/components/Game.module.scss";
+import type { FishSchool } from "../../../../types/oceanFlow";
+import configs from "../../../../configs/oceanFlow";
+import { eventKeys } from "./utils/data";
+import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw, updateJellyfishDetails } from "./utils/functions";
+import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert";
+import Loading from "../../../globals/components/Loading/Loading";
+import getAngle from "../../../globals/functions/getAngle";
 
 const {
   createFishSchoolInterval,

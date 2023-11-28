@@ -1,12 +1,12 @@
 "use client"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import styles from "../../styles/synapseHash/page.module.scss"
-import Game from "./components/Game/Game"
-import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
-import CornerButton from "../globals/components/CornerButton/CornerButton"
-import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
+import styles from "../../styles/synapseHash/page.module.scss";
+import Game from "./components/Game/Game";
+import updateVisitedStatus from "../globals/functions/updateVisitedStatus";
+import CornerButton from "../globals/components/CornerButton/CornerButton";
+import InfoWindow from "../globals/components/InfoWindow/InfoWindow";
 import configs from "../../configs/synapseHash";
 
 const { info, infoImage } = { ...configs };

@@ -1,13 +1,13 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
-import styles from "../styles/page.module.scss"
-import type { MousePosition } from "../types/main"
-import GameTiles from "./components/GameTiles/GameTiles"
-import Greeting from "./components/Greeting/Greeting"
-import Footer from "./components/Footer/Footer"
-import Loading from "./globals/components/Loading/Loading"
-import { animateCircle } from "./utils/functions"
+import styles from "../styles/page.module.scss";
+import type { MousePosition } from "../types/main";
+import GameTiles from "./components/GameTiles/GameTiles";
+import Greeting from "./components/Greeting/Greeting";
+import Footer from "./components/Footer/Footer";
+import Loading from "./globals/components/Loading/Loading";
+import { animateCircle } from "./utils/functions";
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);

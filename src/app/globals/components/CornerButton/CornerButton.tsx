@@ -1,12 +1,12 @@
-import { useCallback, useState } from "react"
-import { useRouter } from "next/navigation"
-import { FaArrowLeft } from "react-icons/fa"
-import { motion } from "framer-motion"
-import { FaInfo } from "react-icons/fa"
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FaArrowLeft } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaInfo } from "react-icons/fa";
 
-import styles from "../../../../styles/globals/components/CornerButton.module.scss"
-import type { CornerButtonProps } from "../../../../types/main"
-import { arrowIconVariants } from "./utils/variants"
+import styles from "../../../../styles/globals/components/CornerButton.module.scss";
+import type { CornerButtonProps } from "../../../../types/main";
+import { arrowIconVariants } from "./utils/variants";
 
 const BackButton = ({ extraStyles = {}, action, type = "back" }: CornerButtonProps) => {
     const [hovered, setHovered] = useState<boolean>(false)

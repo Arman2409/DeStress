@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash"
+import { uniqueId } from "lodash";
 
 const generateUniqueId = (others: any[]):string => {
   const newId = uniqueId();

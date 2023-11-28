@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss"
-import type { GameStatus } from "../../../../types/roshambo"
-import { RoshamboContext } from "../../page"
-import { defineGameStatus } from "../../utils/functions"
-import { statusesData } from "./utils/data"
-import configs from "../../../../configs/roshambo"
+import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss";
+import type { GameStatus } from "../../../../types/roshambo";
+import { RoshamboContext } from "../../page";
+import { defineGameStatus } from "../../utils/functions";
+import { statusesData } from "./utils/data";
+import configs from "../../../../configs/roshambo";
 
 const {summaryWaitTime} = {...configs};
 const {texts, icons} = {...statusesData};

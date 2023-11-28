@@ -1,6 +1,6 @@
-import { inRange, random } from "lodash"
+import { inRange, random } from "lodash";
 
-import type { Point } from "../../../types/main"
+import type { Point } from "../../../types/main";
 
 const generateWithoutCollisions = (
     others: Point[],
