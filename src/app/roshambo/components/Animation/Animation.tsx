@@ -1,11 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Animation/Animation.module.scss"
-import type { AnimationProps, Jest, WindowSize } from "../../../../types/roshambo"
-import ShakingHand from "./components/ShakingHand/ShakingHand"
-import { RoshamboContext } from "../../page"
-import { getRandomJest } from "./utils/functions"
-import configs from "../../../../configs/roshambo"
+import styles from "../../../../styles/roshambo/components/Animation/Animation.module.scss";
+import type { AnimationProps, Jest, WindowSize } from "../../../../types/roshambo";
+import ShakingHand from "./components/ShakingHand/ShakingHand";
+import { RoshamboContext } from "../../page";
+import { getRandomJest } from "./utils/functions";
+import configs from "../../../../configs/roshambo";
 
 const {
   animationDuration,

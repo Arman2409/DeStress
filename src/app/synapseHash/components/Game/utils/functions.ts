@@ -1,10 +1,10 @@
-import { random } from "lodash"
+import { random } from "lodash";
 
-import type { NetworkScene, Neuron } from "../../../../../types/synapseHash"
-import configs from "../../../../../configs/synapseHash"
-import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions"
-import generateUniqueId from "../../../../globals/functions/generateUniqueId"
-import getAngle from "../../../../globals/functions/getAngle"
+import type { NetworkScene, Neuron } from "../../../../../types/synapseHash";
+import configs from "../../../../../configs/synapseHash";
+import generateWithoutCollisions from "../../../../globals/functions/generatePointsWithoutCollisions";
+import generateUniqueId from "../../../../globals/functions/generateUniqueId";
+import getAngle from "../../../../globals/functions/getAngle";
 
 const {
   neuronsCountRange,

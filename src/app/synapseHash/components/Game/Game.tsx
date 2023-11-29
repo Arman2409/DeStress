@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react"
-import Phaser from "phaser"
-import Button from "antd/lib/button"
-import { FaPlay } from "react-icons/fa"
+import { useCallback, useEffect, useRef, useState } from "react";
+import Phaser from "phaser";
+import Button from "antd/lib/button";
+import { FaPlay } from "react-icons/fa";
 
-import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss"
-import type { Neuron, Connection } from "../../../../types/synapseHash"
-import configs from "../../../../configs/synapseHash"
-import { addRandomNeurons } from "./utils/functions"
-import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert"
-import CompleteAlert from "./components/CompletedAlert/CompletedAlert"
-import Loading from "../../../globals/components/Loading/Loading"
+import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss";
+import type { Neuron, Connection } from "../../../../types/synapseHash";
+import configs from "../../../../configs/synapseHash";
+import { addRandomNeurons } from "./utils/functions";
+import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert";
+import CompleteAlert from "./components/CompletedAlert/CompletedAlert";
+import Loading from "../../../globals/components/Loading/Loading";
 
 const {
     backgroundColor

@@ -1,10 +1,10 @@
-import { motion } from "framer-motion"
-import { AiOutlineClose } from "react-icons/ai"
-import Button from "antd/lib/button"
+import { motion } from "framer-motion";
+import { AiOutlineClose } from "react-icons/ai";
+import Button from "antd/lib/button";
 
-import styles from "../../../../styles/globals/components/InfoWindow.module.scss"
-import type { InfoDetailsProps } from "../../../../types/globals"
-import { infoWindowVariants } from "./utils/variants"
+import styles from "../../../../styles/globals/components/InfoWindow.module.scss";
+import type { InfoDetailsProps } from "../../../../types/globals";
+import { infoWindowVariants } from "./utils/variants";
 
 const InfoWindow = ({ visible,
     imageWidth1,

@@ -1,5 +1,5 @@
-import { PiWineBold } from "react-icons/pi"
-import { FaHeartBroken, FaEquals } from "react-icons/fa"
+import { PiWineBold } from "react-icons/pi";
+import { FaHeartBroken, FaEquals } from "react-icons/fa";
 
 export const statusesData = {
     texts: {

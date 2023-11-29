@@ -1,10 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Instruction/Instruction.module.scss"
-import type { JestDetails } from "../../../../types/roshambo"
-import Jest from "./components/Jest/Jest"
-import { RoshamboContext } from "../../page"
-import { jestsData } from "./utils/data"
+import styles from "../../../../styles/roshambo/components/Instruction/Instruction.module.scss";
+import type { JestDetails } from "../../../../types/roshambo";
+import Jest from "./components/Jest/Jest";
+import { RoshamboContext } from "../../page";
+import { jestsData } from "./utils/data";
 
 // get keys for keypress event 
 let keysArr: string[] = [];

@@ -1,11 +1,11 @@
 "use client"
-import { useCallback, useState } from "react"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
+import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
-import styles from "../../../../../styles/components/GameTiles/Tile.module.scss"
-import type { TileProps } from "../../../../../types/main"
-import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants"
+import styles from "../../../../../styles/components/GameTiles/Tile.module.scss";
+import type { TileProps } from "../../../../../types/main";
+import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants";
 
 const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);

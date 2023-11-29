@@ -1,6 +1,6 @@
-import type { GameStatus, Jest } from "../../../types/roshambo"
-import { combinations } from "./data"
-import configs from "../../../configs/roshambo"
+import type { GameStatus, Jest } from "../../../types/roshambo";
+import { combinations } from "./data";
+import configs from "../../../configs/roshambo";
 
 const { backgrounds } = { ...configs };
 

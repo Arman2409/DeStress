@@ -1,13 +1,13 @@
 "use client"
-import { useCallback, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import styles from "../../styles/oceanFlow/page.module.scss"
-import Game from "./components/Game/Game"
-import CornerButton from "../globals/components/CornerButton/CornerButton"
-import configs from "../../configs/oceanFlow"
-import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
-import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
+import styles from "../../styles/oceanFlow/page.module.scss";
+import Game from "./components/Game/Game";
+import CornerButton from "../globals/components/CornerButton/CornerButton";
+import configs from "../../configs/oceanFlow";
+import updateVisitedStatus from "../globals/functions/updateVisitedStatus";
+import InfoWindow from "../globals/components/InfoWindow/InfoWindow";
 
 const { info, infoImage, infoImage2 } = { ...configs };
 

@@ -1,18 +1,18 @@
 "use client"
-import { createContext, useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
+import { createContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import styles from "../../styles/roshambo/page.module.scss"
-import type { RoshamboContextDetails, GameStatus, Jest } from "../../types/roshambo"
-import Instruction from "./components/Instruction/Instruction"
-import Animation from "./components/Animation/Animation"
-import Summary from "./components/Summary/Summary"
-import CornerButton from "../globals/components/CornerButton/CornerButton"
-import Score from "./components/Score/Score"
-import { defineGameStatus, getRandomBackground } from "./utils/functions"
-import updateVisitedStatus from "../globals/functions/updateVisitedStatus"
+import styles from "../../styles/roshambo/page.module.scss";
+import type { RoshamboContextDetails, GameStatus, Jest } from "../../types/roshambo";
+import Instruction from "./components/Instruction/Instruction";
+import Animation from "./components/Animation/Animation";
+import Summary from "./components/Summary/Summary";
+import CornerButton from "../globals/components/CornerButton/CornerButton";
+import Score from "./components/Score/Score";
+import { defineGameStatus, getRandomBackground } from "./utils/functions";
+import updateVisitedStatus from "../globals/functions/updateVisitedStatus";
 import configs from "../../configs/roshambo";
-import InfoWindow from "../globals/components/InfoWindow/InfoWindow"
+import InfoWindow from "../globals/components/InfoWindow/InfoWindow";
 
 const { info, infoImage } = { ...configs };
 
