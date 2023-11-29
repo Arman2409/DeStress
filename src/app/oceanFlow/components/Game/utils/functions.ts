@@ -255,36 +255,55 @@ export const getVw = (percent: number) => {
     return (percent * width) / 100;
 }
 
+const extraX = getVw(5);
+const extraY = getVh(5);
+
 export const updateJellyfishDetails = (
     scene: OceanScene,
-    rotation: number,
-    direction: "x" | "y",
-    step: number,
-    height: number | null,
-    width: number | null, 
-    isLarge: boolean) => {
+    type: "mouse" | "keypress",
+    isLarge: boolean,
+    rotation?: number,
+    direction?: "x" | "y",
+    stepX?: number,
+    stepY?: number,
+    step?: number,
+    height?: number,
+    width?: number,
+) => {
     if (typeof rotation === "number") {
-        scene.jellyfish.setRotation(rotation);
+        scene.jellyfish.setRotation && scene.jellyfish.setRotation(rotation);
     }
-    const limitDistance = isLarge ? 80 : 40;
-    if (direction && step) {
-        if (direction === "x") {
-            if (!width && scene.jellyfish.x <= limitDistance) {
-                return;
+    if (type === "keypress") {
+        const limitDistance = isLarge ? 80 : 40;
+        if (direction && step) {
+            if (direction === "x") {
+                if (!width && scene.jellyfish.x <= limitDistance) {
+                    return;
+                }
+                if (width && scene.jellyfish.x >= width - limitDistance) {
+                    return;
+                }
+                scene.jellyfish.x = scene.jellyfish.x + step;
             }
-            if (width && scene.jellyfish.x >= width - limitDistance) {
-                return;
+            if (direction === "y") {
+                if (!height && scene.jellyfish.y <= limitDistance) {
+                    return;
+                }
+                if (height && scene.jellyfish.y >= height - limitDistance) {
+                    return;
+                }
+                scene.jellyfish.y = scene.jellyfish.y + step;
             }
-            scene.jellyfish.x = scene.jellyfish.x + step;
         }
-        if (direction === "y") {
-            if (!height && scene.jellyfish.y <= limitDistance) {
-                return;
-            }
-            if (height && scene.jellyfish.y >= height - limitDistance) {
-                return;
-            }
-            scene.jellyfish.y = scene.jellyfish.y + step;
+    }
+    if (type === "mouse" && stepX && stepY && width && height) {
+        if (!(stepX - 50 < 0
+            || width - stepX < -60)) {
+            scene.jellyfish.x = stepX - extraX;
+        }
+        if (!(stepY - 50 < 0
+            || height - stepY < -25)) {
+            scene.jellyfish.y = stepY - extraY;
         }
     }
 }

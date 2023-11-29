@@ -5,7 +5,7 @@ import styles from "../../../../styles/oceanFlow/components/Game.module.scss";
 import type { FishSchool } from "../../../../types/oceanFlow";
 import configs from "../../../../configs/oceanFlow";
 import { eventKeys } from "./utils/data";
-import { addPlants, checkForCollision, createRandomFishSchool, getVh, getVw, updateJellyfishDetails } from "./utils/functions";
+import { addPlants, checkForCollision, createRandomFishSchool, updateJellyfishDetails } from "./utils/functions";
 import ScoreAlert from "../../../globals/components/ScoreAlert/ScoreAlert";
 import Loading from "../../../globals/components/Loading/Loading";
 import getAngle from "../../../globals/functions/getAngle";
@@ -25,13 +25,26 @@ const Game = () => {
   const mouseMoving = useRef<boolean>(false);
 
   const updateJellyfish = useCallback((
-    rotation: number,
-    direction: "x" | "y",
-    step: number,
-    height: number | null,
-    width: number | null) => {
+    type: "keypress" | "mouse",
+    rotation?: number,
+    direction?: "x" | "y",
+    stepX?: number,
+    stepY?: number,
+    step?: number,
+    height?: number,
+    width?: number,) => {
     const isLarge = window.innerWidth > 900;
-    updateJellyfishDetails(scene.current, rotation, direction, step, height, width, isLarge)
+    updateJellyfishDetails(
+      scene.current,
+      type,
+      isLarge,
+      rotation,
+      direction,
+      stepX,
+      stepY,
+      step,
+      height,
+      width)
   }, [updateJellyfishDetails])
 
   useEffect(() => {
@@ -104,43 +117,47 @@ const Game = () => {
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (mouseMoving.current) return;
       if (eventKeys.top.includes(e.key)) {
-        updateJellyfish(0, "y", -jellyfishStep, null, null);
+        updateJellyfish("keypress", 0, "y", undefined, undefined, -jellyfishStep, undefined, undefined);
       }
       if (eventKeys.bottom.includes(e.key)) {
         const { height } = scene.current?.sys?.game?.canvas;
-        updateJellyfish(3, "y", jellyfishStep, height, null);
+        updateJellyfish("keypress", 3, "y", undefined, undefined, jellyfishStep, height, undefined);
       }
       if (eventKeys.left.includes(e.key)) {
-        updateJellyfish(4.5, "x", -jellyfishStep, null, null);
+        updateJellyfish("keypress", 4.5, "x", undefined, undefined, -jellyfishStep, undefined, undefined);
       }
       if (eventKeys.right.includes(e.key)) {
         const { width } = scene.current?.sys?.game?.canvas;
-        updateJellyfish(1.5, "x", jellyfishStep, null, width);
+        updateJellyfish("keypress", 1.5, "x", undefined, undefined, jellyfishStep, undefined, width);
       }
     })
     let oldX = 0, oldY = 0, oldAngle = 0;
-    const extraX = getVw(5);
-    const extraY = getVh(5);
     // making jellyfish to follow the mouse 
     window.addEventListener("mousemove", (event: MouseEvent) => {
       if (!mouseMoving.current) {
         mouseMoving.current = true;
         setTimeout(() => mouseMoving.current = false, 1000)
       }
-      if(scene.current.sys.game) {
-        const {clientX, clientY} = event;
-        const angle = getAngle(oldX, oldY, clientX, clientY);
-        if (Math.abs(oldAngle - angle) > 0.2) {
-          scene.current.jellyfish.setRotation && scene.current.jellyfish.setRotation(angle);
-        }
-        scene.current.jellyfish.x = clientX - extraX;
-        scene.current.jellyfish.y = clientY - extraY;
+      if (scene.current.sys.game) {
+        const { clientX, clientY } = event;
+        let angle = getAngle(oldX, oldY, clientX, clientY);
+        const { height,width } = scene.current?.sys?.game?.canvas;
+        updateJellyfish(
+          "mouse",
+          Math.abs(oldAngle - angle) > 0.5 ? angle : undefined,
+          undefined,
+          clientX,
+          clientY,
+          undefined,
+          height,
+          width,
+        )
         oldAngle = angle;
         oldX = clientX;
         oldY = clientY;
       }
     })
-  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool, updateJellyfish, getAngle, getVh, getVw]);
+  }, [Phaser, setLoading, checkForCollision, addPlants, createRandomFishSchool, updateJellyfish, getAngle]);
 
   return (
     <>
