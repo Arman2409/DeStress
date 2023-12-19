@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 import styles from "../../styles/roshambo/page.module.scss";
 import type { RoshamboContextDetails, GameStatus, Jest } from "../../types/roshambo";
@@ -27,7 +27,7 @@ const Roshambo = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
     const backgroundMemo = useMemo<string>(() => getRandomBackground(), [chosenJest]);
-    const router = useRouter();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // update local storage 
@@ -66,7 +66,7 @@ const Roshambo = () => {
                 text={info}
                 image={infoImage}
                 onOk={() => setShowInfo(false)}
-                onCancel={() => router.push("/")}
+                onCancel={() => navigate("/")}
                 cancelText={"Go Back"}
                 confirmText={"Continue"}
             />

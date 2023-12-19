@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 import styles from "../../styles/synapseHash/page.module.scss";
 import Game from "./components/Game/Game";
@@ -13,7 +13,7 @@ const { info, infoImage } = { ...configs };
 
 const SynapseHash = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
-    const router = useRouter();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // update local storage 
@@ -31,7 +31,7 @@ const SynapseHash = () => {
                 text={info}
                 image={infoImage}
                 onOk={() => setShowInfo(false)}
-                onCancel={() => router.push("/")}
+                onCancel={() => navigate("/")}
                 cancelText={"Go Back"}
                 confirmText={"Continue"}
             />

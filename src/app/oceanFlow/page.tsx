@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 
 import styles from "../../styles/oceanFlow/page.module.scss";
 import Game from "./components/Game/Game";
@@ -13,7 +13,7 @@ const { info, infoImage, infoImage2 } = { ...configs };
 
 const OceanFlow = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const changeShowStatus = useCallback((newStatus:boolean) => setShowInfo(newStatus), [setShowInfo])
 
@@ -36,7 +36,7 @@ const OceanFlow = () => {
                 imageWidth1={"66%"}
                 imageWidth2={"33%"}
                 onOk={() => changeShowStatus(false)}
-                onCancel={() => router.push("/")}
+                onCancel={() => navigate("/")}
                 cancelText={"Go Back"}
                 confirmText={"Continue"}
             />

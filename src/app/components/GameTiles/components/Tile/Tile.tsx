@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import styles from "../../../../../styles/components/GameTiles/Tile.module.scss";
@@ -9,16 +9,16 @@ import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageV
 
 const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {
     const [hovered, setHovered] = useState<boolean>(false);
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const isMedium = window.innerWidth > 650;
 
     const changeHovered = useCallback((newValue: boolean) => setHovered(newValue), [setHovered])
     
     const clickTile = useCallback(() => {
-        router.push(link)
+        navigate(link)
         choseGame && choseGame();
-    }, [choseGame, router])
+    }, [choseGame, navigate])
     
     return (
         <motion.div
