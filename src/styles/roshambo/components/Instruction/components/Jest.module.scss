@@ -1,0 +1,61 @@
+@import "../../../../customs.scss";
+@import "../../../../colors.scss";
+@import "../../../../breakpoints.scss";
+
+.jest_main {
+    height: 400px;
+    width: 200px;
+    cursor: pointer;
+    position: relative;
+
+    @media screen and (max-width: $main_small) {
+         width: 100px;
+         height: 200px;
+    }
+}
+
+.jest_main_clicked {
+    @extend .jest_main;
+    
+    background-color: $color2;
+}
+
+.partial_border {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 60%;
+    top: 20%;
+    background-color: $color4;
+}
+
+.partial_border_right {
+    @extend .partial_border;
+
+    right: 0px;
+}
+.image_cont {
+    @extend .centered;
+
+    width: 100%;
+    height: 60%;
+    border-style: solid;
+    border-color: $color1;
+}
+
+.jest_image {
+    width: 80%;
+    height: 80%;
+}
+.keyboard_key_cont {
+    @extend .centered;
+
+    width: 100%;
+    height: 40%;
+    position: relative;
+}
+
+.keyboard_key {
+    height: 50px;
+    width: 50px;
+}

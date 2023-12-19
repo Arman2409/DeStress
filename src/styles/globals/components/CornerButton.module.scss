@@ -1,0 +1,19 @@
+@import "../../customs.scss";
+@import "../../colors.scss";
+
+.corner_button_main {
+    @extend .centered;
+    @include mainBoxShadow();
+
+    width: 60px;
+    height: 40px;
+    font-size: 20px;
+    background-color: $color2;
+    border: 1px solid $color3;
+    color: $color1;
+    position: absolute;
+    top: 10px;
+    border-radius: 25px;
+    z-index: 6;
+    cursor: pointer;
+}

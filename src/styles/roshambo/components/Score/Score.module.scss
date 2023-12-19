@@ -1,0 +1,21 @@
+@import "../../../colors.scss";
+@import "../../../customs.scss";
+
+.score_cont {
+  @extend .centered;
+
+  position: relative;
+  width: 50%;
+  height: 100%;
+  font-size: 24px;
+  font-weight: 900;
+  color: $color4;
+  background: rgba($color: $color1, $alpha: 0.4);
+  text-shadow: $color1 1px 2px 2px;
+}
+
+.score_cont_bordered {
+  @extend .score_cont;
+
+  border-right:1px solid $color4;
+}
