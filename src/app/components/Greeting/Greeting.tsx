@@ -1,4 +1,3 @@
-"use client"
 import { motion } from "framer-motion";
 
 import styles from "../../../styles/components/Greeting.module.scss";
@@ -6,7 +5,7 @@ import { logoVariants, subTitleVariants } from "./utils/variants";
 
 const Greeting = () => (
    <div
-     className={styles.main}>
+      className={styles.main}>
       <motion.img
          src="/logos/logo_title.png"
          initial="initial"
