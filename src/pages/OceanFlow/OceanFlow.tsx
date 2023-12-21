@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styles from "../../styles/pages/OceanFlow/OceanFLow.module.scss";
+import styles from "../../styles/pages/OceanFlow/OceanFlow.module.scss";
 import Game from "./components/OceanFlowGame/OceanFlowGame";
 import CornerButton from "../../globals/components/CornerButton/CornerButton";
 import configs from "../../configs/oceanFlow";

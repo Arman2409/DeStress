@@ -9,14 +9,14 @@ const Loading = () => (
             variants={logoVariants}
             initial="initial"
             animate="animateLogo1"
-            src="./logos/logo_loading.png"
+            src="/logos/logo_loading.png"
             className={styles.loading_image}
         />
         <motion.img
             variants={logoVariants}
             initial="initial"
             animate="animateLogo2"
-            src="./logos/logo_loading.png"
+            src="/logos/logo_loading.png"
             className={styles.loading_image}
         />
     </div>

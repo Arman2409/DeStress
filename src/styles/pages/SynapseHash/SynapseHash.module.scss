@@ -5,6 +5,7 @@
 .synapseHash_main {
     @extend .centered;
 
+    padding-top: 5vh;
     height: 100vh;
     width: 100vw;
     background-color: $color1;
@@ -12,14 +13,9 @@
 
 .synapseHash_cont {
     @include mainBoxShadow();
-
-    @media screen and (max-width: $main_large) {
-        height: 85vh;
-    }
+    @extend .game_window;
 
     overflow: hidden;
-    height: 90vh;
-    width: 90vw;
     position: relative;
     background-color: $color3;
     border-radius: 25px;
