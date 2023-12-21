@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Summary/Summary.module.scss";
+import styles from "../../../../styles/pages/Roshambo/components/Summary/Summary.module.scss";
 import type { GameStatus } from "../../../../types/roshambo";
 import { RoshamboContext } from "../../Roshambo";
 import { defineGameStatus } from "../../utils/functions";

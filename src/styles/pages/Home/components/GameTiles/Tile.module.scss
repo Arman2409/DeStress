@@ -1,0 +1,41 @@
+@import "../../../../customs.scss";
+@import "../../../../colors.scss";
+@import "../../../../breakpoints.scss";
+
+.tile {
+  @extend .centered;
+  @include mainBoxShadow($color3);
+
+  width: 150px;
+  height: 150px;
+  position: relative;
+  border: 1px solid $color4;
+  border-radius: 5px;
+  margin: 25px;
+  cursor: pointer;
+
+  @media screen and (max-width: $main_small) {
+    width: 100px;
+    height: 100px;
+  }
+
+  &_corner_image {
+    position: absolute;
+    z-index: 20;
+  }
+
+  &_title {
+    @include mainTextShadow($color3);
+    color: $color4;
+    z-index: 6;
+    font-weight: 900;
+
+    @media screen and (max-width: $main_small) {
+      font-size: 12px;
+    }
+  }
+
+  &_image {
+    @extend .absolute_background;
+  }
+}

@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import Button from "antd/lib/button";
 import { FaPlay } from "react-icons/fa";
 
-import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss";
+import styles from "../../../../styles/pages/SynapseHash/components/SynapseHashGame/SynapseHashGame.module.scss";
 import type { Neuron, Connection } from "../../../../types/synapseHash";
 import configs from "../../../../configs/synapseHash";
 import { addRandomNeurons } from "./utils/functions";

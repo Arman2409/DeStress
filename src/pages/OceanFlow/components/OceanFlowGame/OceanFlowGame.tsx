@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
 
-import styles from "../../../../styles/oceanFlow/components/Game.module.scss";
+import styles from "../../../../styles/pages/OceanFlow/components/OceanFlowGame.module.scss";
 import type { FishSchool } from "../../../../types/oceanFlow";
 import configs from "../../../../configs/oceanFlow";
 import { eventKeys } from "./utils/data";
@@ -155,7 +155,7 @@ const Game = () => {
         oldY = clientY;
       }
     })
-  }, [setLoading, updateJellyfish]);
+  }, [setLoading, Phaser, updateJellyfish]);
 
   return (
     <>

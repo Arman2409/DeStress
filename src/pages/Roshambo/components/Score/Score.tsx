@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import styles from "../../../../styles/roshambo/components/Score/Score.module.scss";
+import styles from "../../../../styles/pages/Roshambo/components/Score/Score.module.scss";
 import { RoshamboContext } from "../../Roshambo";
 import AnimatingScores from "./components/AnimatingScores/AnimatingScores";
 import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";

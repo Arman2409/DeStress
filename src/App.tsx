@@ -1,7 +1,7 @@
-import { Route, BrowserRouter, Routes } from "react-router-dom"
-import { routes } from "./utils/data";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 
 import "./styles/globals.scss";
+import { routes } from "./utils/data";
 
 const App = ()  => {
   return (
