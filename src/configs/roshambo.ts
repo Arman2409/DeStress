@@ -2,7 +2,7 @@ const backgroundsPath = "/roshambo/backgrounds/";
 
 const getBackgroundsArr = (arr:Array<string>) => arr.map((background:string) => backgroundsPath + background);
 
-export default {
+const configs = {
         animationDuration: 1.5,
         summaryWaitTime: 1.5,
         windowMediumSize: 700,
@@ -20,3 +20,5 @@ export default {
             "factory.webp",
         ])
 }
+
+export default configs;

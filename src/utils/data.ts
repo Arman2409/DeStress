@@ -1,7 +1,7 @@
-import Home from "../app/Home";
-import OceanFlow from "../app/oceanFlow/page";
-import Roshambo from "../app/roshambo/page";
-import SynapseHash from "../app/synapseHash/page";
+import Home from "../pages/Home/Home";
+import OceanFlow from "../pages/OceanFlow/OceanFlow";
+import Roshambo from "../pages/Roshambo/Roshambo";
+import SynapseHash from "../pages/SynapseHash/SynapseHash";
 
 export const routes = [
     {
