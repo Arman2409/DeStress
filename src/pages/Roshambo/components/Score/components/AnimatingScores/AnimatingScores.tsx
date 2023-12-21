@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-import styles from "../../../../../../styles/roshambo/components/Score/components/AnimatingScores.module.scss";
+import styles from "../../../../../../styles/pages/Roshambo/components/Score/components/AnimatingScores.module.scss";
 import type { AnimatingScoresProps } from "../../../../../../types/roshambo";
 import { getVariants } from "./utils/variants";
 

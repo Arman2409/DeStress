@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
 
-import styles from "../../../../styles/oceanFlow/components/Game.module.scss";
 import type { FishSchool } from "../../../../types/oceanFlow";
 import configs from "../../../../configs/oceanFlow";
 import { eventKeys } from "./utils/data";
@@ -9,6 +8,7 @@ import { addPlants, checkForCollision, createRandomFishSchool, updateJellyfishDe
 import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 import Loading from "../../../../globals/components/Loading/Loading";
 import getAngle from "../../../../globals/functions/getAngle";
+import { getConfig } from "./utils/config";
 
 const {
   createFishSchoolInterval,
@@ -59,12 +59,12 @@ const Game = () => {
 
       preload = () => {
         for (let i = 1; i <= jellyFishFramesCount; i++) {
-          this.load.image(`jellyfishFrame${i}`, `./oceanFlow/jellyfishFrames/jellyfishFrame${i}.gif`);
+          this.load.image(`jellyfishFrame${i}`, `/oceanFlow/jellyfishFrames/jellyfishFrame${i}.gif`);
         }
-        this.load.image("plantFrame", "./oceanFlow/plantFrames/plant1.png");
-        this.load.image("fishFrame1", "./oceanFlow/fishFrames/frame1.gif");
-        this.load.image("fishFrame2", "./oceanFlow/fishFrames/frame2.gif");
-        this.load.image("fishFrame3", "./oceanFlow/fishFrames/frame3.gif");
+        this.load.image("plantFrame", "/oceanFlow/plantFrames/plant1.png");
+        this.load.image("fishFrame1", "/oceanFlow/fishFrames/frame1.gif");
+        this.load.image("fishFrame2", "/oceanFlow/fishFrames/frame2.gif");
+        this.load.image("fishFrame3", "/oceanFlow/fishFrames/frame3.gif");
       }
       create = () => {
         addPlants(this);
@@ -98,19 +98,10 @@ const Game = () => {
           loop: true,
         })
       }
-
     }
-    scene.current = new Ocean();
-    new Phaser.Game({
-      type: Phaser.AUTO,
-      width: "100%",
-      height: "100%",
-      parent: "phaser-container",
-      scene: scene.current,
-      physics: {
-        default: 'arcade',
-      },
-    });
+    const gameScene = new Ocean()
+    scene.current = gameScene;
+    new Phaser.Game(getConfig(gameScene));
     setLoading(false);
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       if (mouseMoving.current) return;
@@ -164,9 +155,7 @@ const Game = () => {
         mode="custom"
       />
       {loading && <Loading />}
-      <div
-        id="phaser-container"
-        className={styles.phaser_cont} />
+      <div id="phaser-container" />
     </>
   );
 };

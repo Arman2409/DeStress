@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Animation/Animation.module.scss";
+import styles from "../../../../styles/pages/Roshambo/components/Animation/Animation.module.scss";
 import type { AnimationProps, Jest, WindowSize } from "../../../../types/roshambo";
 import ShakingHand from "./components/ShakingHand/ShakingHand";
 import { RoshamboContext } from "../../Roshambo";

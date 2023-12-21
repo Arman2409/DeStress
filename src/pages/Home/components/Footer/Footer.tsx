@@ -1,4 +1,4 @@
-import styles from "../../../../styles/components/Footer.module.scss";
+import styles from "../../../../styles/pages/Home/components/Footer.module.scss";
 import configs from "../../../../configs/components";
 
 const {

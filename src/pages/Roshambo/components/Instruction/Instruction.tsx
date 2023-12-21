@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import styles from "../../../../styles/roshambo/components/Instruction/Instruction.module.scss";
+import styles from "../../../../styles/pages/Roshambo/components/Instruction/Instruction.module.scss";
 import type { JestDetails } from "../../../../types/roshambo";
 import Jest from "./components/Jest/Jest";
 import { RoshamboContext } from "../../Roshambo";

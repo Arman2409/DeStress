@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import Button from "antd/lib/button";
 
-import styles from "../../../../../../styles/synapseHash/components/Game/components/CompletedAlert/CompletedAlert.module.scss";
+import styles from "../../../../../../styles/pages/SynapseHash/components/SynapseHashGame/components/CompletedAlert/CompletedAlert.module.scss";
 import type { CompletedAlertProps } from "../../../../../../types/synapseHash";
 
 const CompleteAlert = ({ setStatus, status, startNew }: CompletedAlertProps) => {

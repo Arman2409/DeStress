@@ -1,8 +1,7 @@
-"use client"
 import { createContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styles from "../../styles/roshambo/page.module.scss";
+import styles from "../../styles/pages/Roshambo/Roshambo.module.scss";
 import type { RoshamboContextDetails, GameStatus, Jest } from "../../types/roshambo";
 import Instruction from "./components/Instruction/Instruction";
 import Animation from "./components/Animation/Animation";

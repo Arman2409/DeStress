@@ -1,0 +1,39 @@
+@import "../../../customs.scss";
+@import "../../../colors.scss";
+@import "../../../breakpoints.scss";
+
+.main {
+        @extend .centered;
+
+        flex-direction: column;
+        width: 30vw;
+        height: 100%;
+
+        @media screen and (max-width: $main_large) {
+                width: 40vw;
+        }
+
+        @media screen and (max-width: $main_medium) {
+                width: 100vw;
+                height: 30%;
+        }
+}
+
+.title {
+        max-width: 425px;
+
+        @media screen and (max-width: $main_small) {
+                max-width: 300px;
+        }
+}
+
+.sub_title {
+        font-weight: 900;
+        color: $color1;
+        font-size: 22px;
+        cursor: default;
+
+        @media screen and (max-width: $main_small) {
+                font-size: 18px;
+        }
+}

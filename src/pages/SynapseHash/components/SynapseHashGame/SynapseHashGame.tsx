@@ -3,13 +3,14 @@ import Phaser from "phaser";
 import Button from "antd/lib/button";
 import { FaPlay } from "react-icons/fa";
 
-import styles from "../../../../styles/synapseHash/components/Game/Game.module.scss";
+import styles from "../../../../styles/pages/SynapseHash/components/SynapseHashGame/SynapseHashGame.module.scss";
 import type { Neuron, Connection } from "../../../../types/synapseHash";
 import configs from "../../../../configs/synapseHash";
 import { addRandomNeurons } from "./utils/functions";
 import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 import CompleteAlert from "./components/CompletedAlert/CompletedAlert";
 import Loading from "../../../../globals/components/Loading/Loading";
+import { getConfig } from "./utils/config";
 
 const {
     backgroundColor
@@ -41,12 +42,12 @@ const Game = () => {
             neuronConnections: Connection[] = [];
 
             preload = () => {
-                for(let i = 1; i <= 4; i++){
-                    this.load.image(`connectionElectrifiedFrame${i}`, `./synapseHash/connectionElectrified${i}.png`)
+                for (let i = 1; i <= 4; i++) {
+                    this.load.image(`connectionElectrifiedFrame${i}`, `/synapseHash/connectionElectrified${i}.png`)
                 }
-                this.load.image("neuronFrame", "./synapseHash/neuron.png");
-                this.load.image("connectionFrame", "./synapseHash/connection.png");
-                this.load.image("neuronElectrifiedFrame", "./synapseHash/neuronElectrified.png");
+                this.load.image("neuronFrame", "/synapseHash/neuron.png");
+                this.load.image("connectionFrame", "/synapseHash/connection.png");
+                this.load.image("neuronElectrifiedFrame", "/synapseHash/neuronElectrified.png");
             }
             create = () => {
                 addRandomNeurons(this, size,
@@ -63,17 +64,9 @@ const Game = () => {
                 this.cameras.main.setBackgroundColor(backgroundColor)
             }
         }
-        scene.current = new NetWork();
-        new Phaser.Game({
-            type: Phaser.AUTO,
-            width: "100%",
-            height: "100%",
-            parent: "phaser-container",
-            scene: scene.current,
-            physics: {
-                default: 'arcade',
-            },
-        })
+        const gameScene = new NetWork()
+        scene.current = gameScene;
+        new Phaser.Game(getConfig(gameScene));
         setInitializeGame(false);
         setLoading(false)
     }, [showSkipStatus, size, setInitializeGame, setLoading, setConnectionsCount, setShowSkipStatus])
@@ -111,9 +104,7 @@ const Game = () => {
                 <FaPlay />
             </Button>
             {loading && <Loading />}
-            <div
-                id="phaser-container"
-                className={styles.phaser_cont} />
+            <div id="phaser-container" />
         </>
     )
 }

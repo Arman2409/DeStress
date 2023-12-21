@@ -1,0 +1,32 @@
+@import "../../../../customs.scss";
+@import "../../../../colors.scss";
+
+.summary_main {
+  @extend .centered;
+  @extend .absolute_background;
+}
+
+.summary_demo {
+  @extend .absolute_background;
+  @extend .demo;
+}
+
+.summary_content {
+    @extend .centered;
+
+    flex-direction: column;
+    width: 200px;
+    height: 200px; 
+    background-color: $color2; 
+    opacity: 1;
+    z-index: 9;
+    font-size: 30px;
+    border-radius: 15px;
+    color: $color1;
+}
+
+.summary_title {
+  font-size: 30px;
+  color: $color4;
+  margin: 15px;
+}

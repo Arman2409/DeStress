@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styles from "../../styles/synapseHash/page.module.scss";
+import styles from "../../styles/pages/SynapseHash/SynapseHash.module.scss";
 import Game from "./components/SynapseHashGame/SynapseHashGame";
 import updateVisitedStatus from "../../globals/functions/updateVisitedStatus";
 import CornerButton from "../../globals/components/CornerButton/CornerButton";
