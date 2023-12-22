@@ -102,7 +102,7 @@ export const addRandomNeurons = (scene: NetworkScene, size: "medium"|"large"|"ve
       // defining the distance between the neurons regarding the window's width 
       const distance = size === "veryLarge" ? neuronDistanceBreakpoints[2] : size === "large" ? neuronDistanceBreakpoints[1] : neuronDistanceBreakpoints[0];
       // generating random points for neurons 
-      const { x, y } = generateWithoutCollisions(others, width, height, distance);
+      const { x, y } = generateWithoutCollisions(others, width, height - 50, distance);
       const scale = size === "veryLarge" ? 0.25 : 0.125;
       const newNeuronSprite = scene.physics.add.sprite(x, y, "neuronFrame")
         .setRotation(random(0, 6.24))
