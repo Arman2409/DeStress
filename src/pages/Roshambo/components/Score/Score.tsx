@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 import styles from "../../../../styles/pages/Roshambo/components/Score/Score.module.scss";
 import { RoshamboContext } from "../../Roshambo";
@@ -6,10 +6,18 @@ import AnimatingScores from "./components/AnimatingScores/AnimatingScores";
 import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 
 const Score = () => {
+  const [userScores, setUserScores] = useState(0);
+  const [opponentScores, setOpponentScores] = useState(0);
   const { opponentScore, userScore, result } = useContext(RoshamboContext);
   // define which side of the score window should be animated 
-  const shouldAnimate =  result === "win" ? "left" : "right";
-   
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUserScores(userScore);
+      setOpponentScores(opponentScore);
+    }, 500)
+  }, [opponentScore, userScore, setUserScores, setOpponentScores])
+
   return (
     <ScoreAlert
       mode="extra"
@@ -18,11 +26,11 @@ const Score = () => {
       content={
         <>
           <div className={styles.score_cont_bordered}>
-            {result === "win" ? <AnimatingScores score={userScore} />
+            {userScore !== userScores ? <AnimatingScores score={userScore} />
               : <p>{userScore}</p>}
           </div>
           <div className={styles.score_cont}>
-            {shouldAnimate === "right" ? <AnimatingScores score={opponentScore} />
+            {opponentScore !== opponentScores ? <AnimatingScores score={opponentScore} />
               : <p>{opponentScore}</p>}
           </div>
         </>
