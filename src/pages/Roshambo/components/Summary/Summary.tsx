@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import { PiWineBold } from "react-icons/pi";
+import { FaHeartBroken, FaEquals } from "react-icons/fa";
 
 import styles from "../../../../styles/pages/Roshambo/components/Summary/Summary.module.scss";
 import type { GameStatus } from "../../../../types/roshambo";
@@ -8,17 +10,15 @@ import { statusesData } from "./utils/data";
 import configs from "../../../../configs/roshambo";
 
 const { summaryWaitTime } = { ...configs };
-const { texts, icons, colors } = { ...statusesData };
+const { texts, colors } = { ...statusesData };
 
 const Summary = () => {
   const { chosenJest, opponentJest, dispatchJest, dispatchOpponentJest } = useContext(RoshamboContext);
   const [gameStatus, setGameStatus] = useState<GameStatus>("draw");
-  const [iconState, setIconState] = useState<any>(null);
 
   useEffect(() => {
     const gameStatus = defineGameStatus(chosenJest || "rock", opponentJest || "rock");
     setGameStatus(gameStatus || "draw");
-    setIconState(icons[gameStatus as keyof typeof icons])
   }, [chosenJest, opponentJest, gameStatus, setGameStatus])
 
   useEffect(() => {
@@ -38,7 +38,9 @@ const Summary = () => {
         <p style={{
           color: colors[gameStatus as keyof typeof texts]
         }}>
-          {iconState}
+          {gameStatus === "win" && <PiWineBold />}
+          {gameStatus === "lose" && <FaHeartBroken />}
+          {gameStatus === "draw" && <FaEquals />}
         </p>
       </div>
     </div>
