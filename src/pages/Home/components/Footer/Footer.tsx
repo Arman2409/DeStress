@@ -1,5 +1,5 @@
 import styles from "../../../../styles/pages/Home/components/Footer.module.scss";
-import configs from "../../../../configs/components";
+import configs from "../../../../configs/home";
 
 const {
     topCopyright,

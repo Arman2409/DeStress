@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { chunk } from "lodash";
 
 import styles from "../../../../styles/pages/Home/components/GameTiles/GameTiles.module.scss";
-import type { GameTilesProps, Game } from "../../../../types/main";
-import configs from "../../../../configs/components";
+import type { GameTilesProps, Game } from "../../../../types/home";
+import configs from "../../../../configs/home";
 import { gamesData } from "./utils/data";
 import Tile from "./components/Tile/Tile";
 

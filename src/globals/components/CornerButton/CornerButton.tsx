@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FaInfo } from "react-icons/fa";
 
 import styles from "../../../styles/globals/components/CornerButton.module.scss";
-import type { CornerButtonProps } from "../../../types/main";
+import type { CornerButtonProps } from "../../../types/home";
 import { arrowIconVariants } from "./utils/variants";
 
 const BackButton = ({ extraStyles = {}, action, type = "back" }: CornerButtonProps) => {

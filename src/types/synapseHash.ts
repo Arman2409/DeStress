@@ -1,5 +1,5 @@
 
-import type { Point } from "./main"
+import type { Point } from "./home"
 
 export type Connection =  Array<[string, string]>
 

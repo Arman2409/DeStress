@@ -1,7 +1,7 @@
 import { inRange, random, remove } from "lodash";
 
 import type { FishSchool, OceanScene } from "../../../../../types/oceanFlow";
-import type { Point } from "../../../../../types/main";
+import type { Point } from "../../../../../types/home";
 import configs from "../../../../../configs/oceanFlow";
 import generateWithoutCollisions from "../../../../../globals/functions/generatePointsWithoutCollisions";
 import generateUniqueId from "../../../../../globals/functions/generateUniqueId";

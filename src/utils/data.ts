@@ -1,4 +1,5 @@
 import Home from "../pages/Home/Home";
+import BounceFall from "../pages/BounceFall/BounceFall";
 import OceanFlow from "../pages/OceanFlow/OceanFlow";
 import Roshambo from "../pages/Roshambo/Roshambo";
 import SynapseHash from "../pages/SynapseHash/SynapseHash";
@@ -23,5 +24,10 @@ export const routes = [
         key: "roshambo",
         path: "/roshambo",
         component: Roshambo
+    },
+    {
+        key: "bounceFall",
+        path: "/bounceFall",
+        component: BounceFall
     },
 ]

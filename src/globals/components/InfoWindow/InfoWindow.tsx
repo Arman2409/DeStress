@@ -41,7 +41,8 @@ const InfoWindow = ({ visible,
                         <p className={styles.info_text}>
                             {text}
                         </p>
-                        <div style={image2 ? { height: "220px" } : {}}>
+                        <div className={image2 ? styles.info_image_cont_double
+                            : styles.info_image_cont}>
                             {image && <img
                                 src={image}
                                 alt="info"
