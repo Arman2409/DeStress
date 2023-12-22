@@ -8,13 +8,13 @@ import configs from "../../configs/bounceFall";
 import updateVisitedStatus from "../../globals/functions/updateVisitedStatus";
 import InfoWindow from "../../globals/components/InfoWindow/InfoWindow";
 
-const { info, infoImage } = { ...configs };
+const { info, infoImage, mouseExtraX, mouseExtraY, ballRadius } = { ...configs };
 
 const BounceFall = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const changeShowStatus = useCallback((newStatus:boolean) => setShowInfo(newStatus), [setShowInfo])
+    const changeShowStatus = useCallback((newStatus: boolean) => setShowInfo(newStatus), [setShowInfo])
 
     useEffect(() => {
         // update local storage 
@@ -26,8 +26,8 @@ const BounceFall = () => {
     }, [setShowInfo])
 
     return (
-        <div 
-        className={styles.bounce_fall_main}
+        <div
+            className={styles.bounce_fall_main}
         >
             <InfoWindow
                 visible={showInfo}
@@ -47,8 +47,13 @@ const BounceFall = () => {
                 action={() => changeShowStatus(true)} />
             <div
                 className={styles.bounce_fall_cont}
-                >
-                <Game canvasHeight={"100%"} canvasWidth={"100%"}/>
+            >
+                <Game
+                    mouseExtraX={mouseExtraX}
+                    mouseExtraY={mouseExtraY}
+                    canvasHeight={90}
+                    canvasWidth={95}
+                    ballRadius={ballRadius} />
             </div>
         </div>
     )

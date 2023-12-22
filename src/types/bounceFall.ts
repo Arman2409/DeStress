@@ -5,8 +5,11 @@ export type DirectionStatus = "left" | "right" | false
 // props 
 
 export type BounceGameProps = {
-    canvasHeight: string
-    canvasWidth: string
+    canvasHeight: number
+    canvasWidth: number
+    mouseExtraX: number
+    mouseExtraY: number
+    ballRadius: number
 }
 // interfaces 
 export interface GradientCoordinates {

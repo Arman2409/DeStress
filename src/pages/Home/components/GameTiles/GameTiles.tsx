@@ -15,7 +15,7 @@ const GameTiles = ({ choseGame }: GameTilesProps) => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
-    const gameGroups = chunk(games, 3);
+    const gameGroups = chunk(games, 2);
 
     useEffect(() => {
         setTimeout(() => {

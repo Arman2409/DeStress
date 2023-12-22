@@ -9,6 +9,8 @@ const configs = {
     colorsPerBall:5,
     info: "This game resembles balls falling and then bouncing due to Earths's graviation.Enjoy watching them fall and bounce.",
     infoImage: "/bounceFall/gravitation.png",
+    mouseExtraX: 2.5,
+    mouseExtraY: 5,
     colors:["red", "black", "green", "white",
         "purple", "orangered", "gold", "blue",
         "grey", "orange", "yellow", "olive", "cyan"]

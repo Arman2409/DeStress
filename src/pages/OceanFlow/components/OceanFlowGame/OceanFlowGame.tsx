@@ -133,7 +133,7 @@ const Game = () => {
         const { height, width } = scene.current?.sys?.game?.canvas;
         updateJellyfish(
           "mouse",
-          Math.abs(oldAngle - angle) > 0.5 ? angle : undefined,
+          Math.abs(oldAngle - angle) > 0.25 ? angle : undefined,
           undefined,
           clientX,
           clientY,
