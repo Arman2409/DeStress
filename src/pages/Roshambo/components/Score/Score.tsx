@@ -8,8 +8,8 @@ import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 const Score = () => {
   const { opponentScore, userScore, result } = useContext(RoshamboContext);
   // define which side of the score window should be animated 
-  const shouldAnimate = result === "win" ? "left" : "right";
-
+  const shouldAnimate =  result === "win" ? "left" : "right";
+   
   return (
     <ScoreAlert
       mode="extra"
@@ -18,7 +18,7 @@ const Score = () => {
       content={
         <>
           <div className={styles.score_cont_bordered}>
-            {shouldAnimate === "left" ? <AnimatingScores score={userScore} />
+            {result === "win" ? <AnimatingScores score={userScore} />
               : <p>{userScore}</p>}
           </div>
           <div className={styles.score_cont}>

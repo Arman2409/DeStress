@@ -11,6 +11,6 @@ const configs =  {
     backgroundColor: "#E0FFFF",
     infoImage: "/oceanFlow/eventKeys.png",
     infoImage2: "/oceanFlow/mouse.png",
-    info: "This game represents a jellyfish, which travels across the ocean, while the fish are afraid of it and jellyfish's appearance makes them escape.You can move the jellyfish using keyboard keys indicated above.Make to escape as more fish as you can!"
+    info: "This game represents a jellyfish, which travels across the ocean, while the fish are afraid of it and jellyfish's appearance makes them escape.You can move the jellyfish using keyboard keys indicated above.Scare as more fish as you can!"
 }
 export default configs;

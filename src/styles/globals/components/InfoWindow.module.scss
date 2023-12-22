@@ -5,6 +5,7 @@
 .info_window {
    @extend .centered;
    @extend .screen_size;
+   @extend .absolute_background;
 
    z-index: 10;
    position: absolute;
