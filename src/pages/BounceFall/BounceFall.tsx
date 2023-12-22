@@ -8,7 +8,7 @@ import configs from "../../configs/bounceFall";
 import updateVisitedStatus from "../../globals/functions/updateVisitedStatus";
 import InfoWindow from "../../globals/components/InfoWindow/InfoWindow";
 
-const { info, infoImage, mouseExtraX, mouseExtraY, ballRadius } = { ...configs };
+const { info, infoImage, infoImage2, mouseExtraX, mouseExtraY, ballRadius } = { ...configs };
 
 const BounceFall = () => {
     const [showInfo, setShowInfo] = useState<boolean>(false);
@@ -34,6 +34,7 @@ const BounceFall = () => {
                 setVisible={changeShowStatus}
                 text={info}
                 image={infoImage}
+                image2={infoImage2}
                 imageWidth1={"66%"}
                 imageWidth2={"33%"}
                 onOk={() => changeShowStatus(false)}

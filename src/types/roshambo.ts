@@ -37,10 +37,6 @@ export type AnimatingScoresProps = {
     score: number
 }
 
-export type AnimationProps = {
-    background: string
-}
-
 // interfaces 
 
 export interface JestDetails {

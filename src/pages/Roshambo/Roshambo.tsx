@@ -8,7 +8,7 @@ import Animation from "./components/Animation/Animation";
 import Summary from "./components/Summary/Summary";
 import CornerButton from "../../globals/components/CornerButton/CornerButton";
 import Score from "./components/Score/Score";
-import { defineGameStatus, getRandomBackground } from "./utils/functions";
+import { defineGameStatus } from "./utils/functions";
 import updateVisitedStatus from "../../globals/functions/updateVisitedStatus";
 import configs from "../../configs/roshambo";
 import InfoWindow from "../../globals/components/InfoWindow/InfoWindow";
@@ -24,8 +24,6 @@ const Roshambo = () => {
     const [opponentScore, setOpponentScore] = useState<number>(0);
     const [result, setResult] = useState<GameStatus>("draw");
     const [showInfo, setShowInfo] = useState<boolean>(false);
-    const showScore = useMemo<boolean>(() => userScore > 0 || opponentScore > 0, [userScore, opponentScore])
-    const backgroundMemo = useMemo<string>(() => getRandomBackground(), []);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -78,9 +76,8 @@ const Roshambo = () => {
                     action={() => setShowInfo(true)}
                 />
                 <div className={styles.roshambo_cont}>
-                    {showScore && <Score />}
-                    {chosenJest ? <Animation
-                        background={backgroundMemo} />
+                    <Score />
+                    {chosenJest ? <Animation />
                         : <Instruction />}
                     {opponentJest && <Summary />}
                 </div>

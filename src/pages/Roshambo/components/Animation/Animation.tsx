@@ -1,22 +1,26 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 
 import styles from "../../../../styles/pages/Roshambo/components/Animation/Animation.module.scss";
-import type { AnimationProps, Jest, WindowSize } from "../../../../types/roshambo";
+import type { Jest, WindowSize } from "../../../../types/roshambo";
 import ShakingHand from "./components/ShakingHand/ShakingHand";
 import { RoshamboContext } from "../../Roshambo";
-import { getRandomJest } from "./utils/functions";
+import { getRandomBackground, getRandomJest, getBackgroundsArr } from "./utils/functions";
 import configs from "../../../../configs/roshambo";
 
 const {
   animationDuration,
   windowMediumSize,
-  windowSmallSize } = { ...configs }
+  windowSmallSize,
+  backgrounds,
+  backgroundsPath } = { ...configs }
 
-const Animation = ({ background }: AnimationProps) => {
+const imageBackgrounds = getBackgroundsArr(backgrounds, backgroundsPath);
+
+const Animation = () => {
   const [windowSize, setWindowSize] = useState<WindowSize>(window.innerWidth > 680 ? "large" : window.innerWidth > 480 ? "medium" : "small");
-
   const { chosenJest, dispatchOpponentJest, opponentJest } = useContext(RoshamboContext);
   const opponentJestMemo = useMemo<Jest>(() => opponentJest || getRandomJest(), [opponentJest]);
+  const backgroundMemo = useMemo<string>(() => getRandomBackground(imageBackgrounds), []);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -42,7 +46,7 @@ const Animation = ({ background }: AnimationProps) => {
     <div
       className={styles.animation_main}
       style={{
-        backgroundImage: `url(${background})`
+        backgroundImage: `url(${backgroundMemo})`
       }}>
       <div className={styles.animations_cont}>
         <div className={styles.animation_cont}>

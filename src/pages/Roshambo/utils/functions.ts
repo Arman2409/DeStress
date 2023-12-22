@@ -21,4 +21,3 @@ export const defineGameStatus = (jest1: Jest | null, jest2: Jest | null): GameSt
   return status;
 }
 
-export const getRandomBackground = () => backgrounds[Math.floor(Math.random() * backgrounds.length)];
