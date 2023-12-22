@@ -5,3 +5,4 @@ export const getRandomJest = ():Jest => {
     const randomNumber = Math.round(Math.random() * 2);
     return Object.keys(jestImages.left)[randomNumber] as Jest;
 }
+export const getRandomBackground = (backgrounds:string[]) => backgrounds[Math.floor(Math.random() * backgrounds.length)];

@@ -62,7 +62,7 @@ const Instruction = () => {
         <img
           alt="^"
           className={styles.click_animation}
-          src="./roshambo/giphy.gif" />
+          src="/roshambo/giphy.gif" />
       </div>
       <div className={styles.instruction_illustration}>
         {jests.map((jest: JestDetails) => {

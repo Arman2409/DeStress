@@ -11,5 +11,10 @@ export const statusesData = {
         "win": PiWineBold,
         "lose": FaHeartBroken,
         "draw": FaEquals
+    },
+    colors: {
+        "win": "green",
+        "lose": "red",
+        "draw": "yellow"
     }
 }
