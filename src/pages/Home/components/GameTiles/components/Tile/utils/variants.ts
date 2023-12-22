@@ -1,7 +1,7 @@
 import { random } from "lodash";
 import type { Variants } from "framer-motion";
 
-import configs from "../../../../../../../configs/components";
+import configs from "../../../../../../../configs/home";
 
 const {cornerImageInitialingDuration} = {...configs};
 

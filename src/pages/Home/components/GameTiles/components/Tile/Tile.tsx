@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import styles from "../../../../../../styles/pages/Home/components/GameTiles/Tile.module.scss";
-import type { TileProps } from "../../../../../../types/main";
+import type { TileProps } from "../../../../../../types/home";
 import { backgroundImageVariants, cornerImageInitializeVariants, getCornerImageVariants, getTitleVariants } from "./utils/variants";
 
 const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: TileProps) => {

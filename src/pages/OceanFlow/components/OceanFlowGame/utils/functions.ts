@@ -1,17 +1,21 @@
 import { inRange, random, remove } from "lodash";
 
 import type { FishSchool, OceanScene } from "../../../../../types/oceanFlow";
-import type { Point } from "../../../../../types/main";
+import type { Point } from "../../../../../types/home";
 import configs from "../../../../../configs/oceanFlow";
 import generateWithoutCollisions from "../../../../../globals/functions/generatePointsWithoutCollisions";
 import generateUniqueId from "../../../../../globals/functions/generateUniqueId";
 import getAngle from "../../../../../globals/functions/getAngle";
+import getVw from "../../../../../globals/functions/getVw";
+import getVh from "../../../../../globals/functions/getVh";
 
 const {
     collisionDistance,
     fishEachSchoolRange,
     fishSchoolRadius,
-    plantsCountRange } = { ...configs };
+    plantsCountRange,
+    extraX,
+    extraY } = { ...configs };
 const pi = Math.PI;
 // colors for fish 
 const randomFishColors = [
@@ -245,18 +249,8 @@ export const createRandomFishSchool = (scene: OceanScene, isLarge: boolean) => {
 }
 
 
-export const getVh = (percent: number) => {
-    var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    return (percent * height) / 100;
-}
-
-export const getVw = (percent: number) => {
-    var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    return (percent * width) / 100;
-}
-
-const extraX = getVw(5);
-const extraY = getVh(5);
+const extraXs = getVw(extraX);
+const extraYs = getVh(extraY);
 
 export const updateJellyfishDetails = (
     scene: OceanScene,
@@ -299,11 +293,11 @@ export const updateJellyfishDetails = (
     if (type === "mouse" && stepX && stepY && width && height) {
         if (!(stepX - 50 < 0
             || width - stepX < -60)) {
-            scene.jellyfish.x = stepX - extraX;
+            scene.jellyfish.x = stepX - extraXs;
         }
         if (!(stepY - 50 < 0
             || height - stepY < -25)) {
-            scene.jellyfish.y = stepY - extraY;
+            scene.jellyfish.y = stepY - extraYs;
         }
     }
 }

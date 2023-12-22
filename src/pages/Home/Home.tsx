@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import styles from "../../styles/pages/Home/Home.module.scss";
-import type { MousePosition } from "../../types/main";
+import type { MousePosition } from "../../types/home";
 import GameTiles from "./components/GameTiles/GameTiles";
 import Greeting from "./components/Greeting/Greeting";
 import Footer from "./components/Footer/Footer";

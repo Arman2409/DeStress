@@ -6,6 +6,8 @@ const configs =  {
     jellyFishFramesCount: 9,
     collisionDistance: 250,
     plantsCountRange: [4, 7],
+    extraX: 2.5,
+    extraY: 5,
     backgroundColor: "#E0FFFF",
     infoImage: "/oceanFlow/eventKeys.png",
     infoImage2: "/oceanFlow/mouse.png",
