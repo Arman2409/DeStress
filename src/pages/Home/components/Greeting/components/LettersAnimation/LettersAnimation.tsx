@@ -2,16 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { animate } from "framer-motion";
 
 import styles from "../../../../../../styles/pages/Home/components/Greeting/components/LettersAnimation.module.scss";
-import type { Point } from "../../../../../../types/home";
-import { getPlacement, getSpacing } from "./utils/functions";
+import type { SubtitleDetails } from "../../../../../../types/home";
 import configs from "../../../../../../configs/home";
+import { getSpacingAndWidth } from "./utils/functions";
 
 const { subTitle } = { ...configs };
 
 const LettersAnimation = () => {
-    const innerWidth = window.innerWidth;
-    const [lettersPlacement, setLettersPlacement] = useState<Point>(getPlacement(innerWidth));
-    const [spacing, setSpacing] = useState<number>(getSpacing(innerWidth));
+    const details = getSpacingAndWidth(window.innerWidth);
+    const { spacing = 0, width = 0 } = { ...details };
+
+    const [letterDetails, setLetterDetails] = useState<SubtitleDetails>({ spacing, width })
     const lettersInitialized = useRef<boolean>(false);
     const lettersMain = useRef<any>(null);
 
@@ -27,41 +28,37 @@ const LettersAnimation = () => {
             letterP.style.top = Math.round(windowWidth * Math.random()) + "px"
             letterP.style.left = Math.round(windowWidth * Math.random()) + "px"
             lettersMain.current.appendChild(letterP);
-            let { x, y } = { ...lettersPlacement };
             animate(letterP,
                 {
-                    top: y + "px",
-                    left: x + Number(order) * spacing + "px"
+                    top: 0 + "px",
+                    left: 0 + Number(order) * letterDetails.spacing + "px"
                 },
                 { duration: 1 })
         })
         window.addEventListener("resize", () => {
-            const windowWidth = window.innerWidth;
-            const placement = getPlacement(windowWidth);
-            setLettersPlacement((currentPlacement: Point) => {
-                if (currentPlacement === placement) {
-                    return currentPlacement;
+            const details = getSpacingAndWidth(window.innerWidth);
+            const { spacing: letterSpacing = 0, width: titleWidth = 0 } = { ...details };
+
+            setLetterDetails((currentDetails: SubtitleDetails) => {
+                const { spacing, width } = { ...currentDetails }
+                if (spacing !== letterSpacing || width !== width) {
+                    lettersInitialized.current = false;
+                    lettersMain.current.innerHTML = "";
+                    return {
+                        spacing: letterSpacing,
+                        width: titleWidth
+                    }
                 }
-                lettersInitialized.current = false;
-                lettersMain.current.innerHTML = "";
-                return placement;
-            });
-            const letterSpacing = getSpacing(windowWidth);
-            setSpacing((currentSpacing: number) => {
-                if (currentSpacing === letterSpacing) {
-                    return currentSpacing;
-                }
-                lettersInitialized.current = false;
-                lettersMain.current.innerHTML = "";
-                return letterSpacing;
-            });
+                return currentDetails;
+            })
         })
-    }, [lettersPlacement, spacing, setLettersPlacement, setSpacing])
+    }, [spacing, width, setLetterDetails])
 
     return (
         <div
             ref={lettersMain}
-            className={styles.letters_title} />
+            className={styles.letters_title}
+            style={{ width: letterDetails.width }} />
     )
 }
 

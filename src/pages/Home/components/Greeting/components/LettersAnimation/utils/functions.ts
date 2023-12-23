@@ -1,28 +1,15 @@
-import { lettersPlacementBreakpoints, lettersSpacingBreakpoints } from "./data";
-import type { Point } from "../../../../../../../types/home";
+import { lettersSpacingsAndWidths } from "./data";
+import type { SubtitleDetails } from "../../../../../../../types/home";
 
-export const getPlacement = (windowWidth: number):Point => {
-    const breakpoints: any[] = Object.keys(lettersPlacementBreakpoints).reverse();
-    let placement:any = null;
+export const getSpacingAndWidth = (windowWidth: number):SubtitleDetails => {
+    let details:any = null;
+    const breakpoints: any[] = Object.keys(lettersSpacingsAndWidths).reverse();
     breakpoints.forEach((breakpoint: string) => {
-        if(placement) return false;
+        if (details) return false;
         if (windowWidth > Number(breakpoint)) {
-            const letterBreakpoints:any = lettersPlacementBreakpoints;
-            placement = letterBreakpoints[breakpoint];
+            const spacingBreakpoints:any = lettersSpacingsAndWidths;
+            details = spacingBreakpoints[breakpoint];
         }
     })
-    return placement;
-}
-
-export const getSpacing = (windowWidth: number) => {
-    let spacing = 0;
-    const breakpoints: any[] = Object.keys(lettersSpacingBreakpoints).reverse();
-    breakpoints.forEach((breakpoint: string) => {
-        if (spacing) return false;
-        if (windowWidth > Number(breakpoint)) {
-            const spacingBreakpoints:any = lettersSpacingBreakpoints;
-            spacing = spacingBreakpoints[breakpoint];
-        }
-    })
-    return spacing;
+    return details;
 }

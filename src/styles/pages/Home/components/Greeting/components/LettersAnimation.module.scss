@@ -8,12 +8,13 @@
     font-size: 18px;
     display: flex;
     cursor: default;
+    position: relative;
 
     &_letter {
         position: absolute;
         transition-duration: 2s;
 
-        @media screen and (max-width: 440px) {
+        @media screen and (max-width: 540px) {
             font-size: 12px;
         }
     }

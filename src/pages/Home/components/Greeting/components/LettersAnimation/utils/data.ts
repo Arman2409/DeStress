@@ -1,29 +1,26 @@
-export const lettersPlacementBreakpoints = {
+export const lettersSpacingsAndWidths = {
+    1200:{
+        width: 300,
+        spacing: 16
+    },
+    1000:{
+        width: 400,
+        spacing: 16
+    },
     925: {
-        x: 25,
-        y: 465,
+        width: 350,
+        spacing: 15,
     },
-    750: {
-        x: 250,
-        y: 175
+    540:  {
+        width: 400,
+        spacing: 14,
     },
-    600: {
-        x: 165,
-        y: 175
-    },
-    480: {
-        x: 100,
-        y: 175
+    400:  {
+        width: 300,
+        spacing: 12,
     },
     0: {
-        x: 10,
-        y: 175
-    }
-}
-
-export const lettersSpacingBreakpoints = {
-    1000: 16,
-    925: 15,
-    440: 15,
-    0: 11,
+        width: 300,
+        spacing: 11,
+    },
 }
