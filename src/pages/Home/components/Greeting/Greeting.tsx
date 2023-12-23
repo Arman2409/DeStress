@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 
-import styles from "../../../../styles/pages/Home/components/Greeting.module.scss";
-import { logoVariants, subTitleVariants } from "./utils/variants";
+import styles from "../../../../styles/pages/Home/components/Greeting/Greeting.module.scss";
+import { logoVariants } from "./utils/variants";
+import LettersAnimation from "./components/LettersAnimation/LettersAnimation";
 
 const Greeting = () => (
    <div
@@ -14,14 +15,7 @@ const Greeting = () => (
          className={styles.title}
          variants={logoVariants}
       />
-      <motion.p
-         initial="initial"
-         animate="animate"
-         whileHover="hover"
-         className={styles.sub_title}
-         variants={subTitleVariants} >
-         Antistress games' compilation
-      </motion.p>
+      <LettersAnimation/>
    </div>
 )
 

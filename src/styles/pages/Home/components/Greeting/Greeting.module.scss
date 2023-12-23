@@ -1,6 +1,6 @@
-@import "../../../customs.scss";
-@import "../../../colors.scss";
-@import "../../../breakpoints.scss";
+@import "../../../../customs.scss";
+@import "../../../../colors.scss";
+@import "../../../../breakpoints.scss";
 
 .main {
         @extend .centered;
@@ -24,16 +24,5 @@
 
         @media screen and (max-width: $main_small) {
                 max-width: 300px;
-        }
-}
-
-.sub_title {
-        font-weight: 900;
-        color: $color1;
-        font-size: 22px;
-        cursor: default;
-
-        @media screen and (max-width: $main_small) {
-                font-size: 18px;
         }
 }
