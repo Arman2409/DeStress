@@ -19,15 +19,3 @@ export const logoVariants: Variants = {
     }
   }
 }
-
-export const subTitleVariants: Variants = {
-  ...logoVariants,
-  animate: {
-    ...logoVariants.animate,
-    transition: {
-      duration: 1,
-      ease: "easeIn",
-      delay: 1,
-    }
-  }
-}

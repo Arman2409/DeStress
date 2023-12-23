@@ -40,8 +40,6 @@ export class Ball {
         this.surfaceHeight = canvasHeight;
         this.surfaceWidth = ctx.canvas.width;
         this.fallHeight = canvasHeight;
-        console.log(ballRadius);
-        
         this.radius = ballRadius;
         this.x = x;
         this.y = y > canvasHeight - ballRadius ? canvasHeight - ballRadius : y;

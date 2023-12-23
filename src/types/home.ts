@@ -1,3 +1,8 @@
+export type SubtitleDetails = {
+    width: number
+    spacing: number
+}
+
 // props 
 export type GameTilesProps = {
     choseGame: Function

@@ -1,0 +1,21 @@
+@import "../../../../../colors.scss";
+@import "../../../../../breakpoints.scss";
+
+
+.letters_title {
+    font-weight: 900;
+    color: $color1;
+    font-size: 18px;
+    display: flex;
+    cursor: default;
+    position: relative;
+
+    &_letter {
+        position: absolute;
+        transition-duration: 2s;
+
+        @media screen and (max-width: 540px) {
+            font-size: 12px;
+        }
+    }
+}
