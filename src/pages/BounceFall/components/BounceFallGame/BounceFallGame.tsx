@@ -35,14 +35,14 @@ const BounceFallGame = ({
             const newBall = new Ball(clientX + extraX, clientY + extraY, context);
             newBall.animate();
             setBallsCount(curr => curr += 1);
-            setLoading(false);
         })
+        setLoading(false);
         function clear() {
             context.clearRect(0, 0, window.innerWidth, window.innerHeight);
             requestAnimationFrame(clear);
         }
         clear();
-    }, [setBallsCount, extraX, extraY])
+    }, [setBallsCount, setLoading, extraX, extraY])
 
     return (
         <>

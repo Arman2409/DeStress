@@ -11,7 +11,6 @@ const Greeting = () => (
          src="/logos/logo_title.png"
          initial="initial"
          animate="animate"
-         whileHover="hover"
          className={styles.title}
          variants={logoVariants}
       />
