@@ -41,6 +41,7 @@ const LettersAnimation = () => {
 
             setLetterDetails((currentDetails: SubtitleDetails) => {
                 const { spacing, width } = { ...currentDetails }
+                // eslint-disable-next-line 
                 if (spacing !== letterSpacing || width !== width) {
                     lettersInitialized.current = false;
                     lettersMain.current.innerHTML = "";
@@ -52,7 +53,7 @@ const LettersAnimation = () => {
                 return currentDetails;
             })
         })
-    }, [spacing, width, setLetterDetails])
+    }, [spacing, width, setLetterDetails, letterDetails.spacing])
 
     return (
         <div

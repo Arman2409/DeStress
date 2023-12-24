@@ -20,16 +20,6 @@ export type CornerButtonProps = {
 }
 
 // interfaces 
-
-export interface MousePosition {
-    left: number,
-    top: number
-}
-
-export interface Point {
-    x: number
-    y: number
- }
 export interface Game {
     order: number
     image: string

@@ -21,3 +21,7 @@ export interface ScoreAlertProps {
     mode: "custom" | "extra"
     score?: number 
 }
+export interface Point {
+    x: number
+    y: number
+ }

@@ -1,4 +1,4 @@
-import type { Point } from "./home"
+import type { Point } from "./globals"
 
 // props
 
