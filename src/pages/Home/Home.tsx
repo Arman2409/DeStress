@@ -1,51 +1,43 @@
 import { useEffect, useRef, useState } from "react";
 
 import styles from "../../styles/pages/Home/Home.module.scss";
-import type { MousePosition } from "../../types/home";
 import GameTiles from "./components/GameTiles/GameTiles";
 import Greeting from "./components/Greeting/Greeting";
 import Footer from "./components/Footer/Footer";
 import Loading from "../../globals/components/Loading/Loading";
-import { animateCircle } from "./utils/functions";
+import { Particle } from "./utils/Particle/Particle";
+import configs from "../../configs/home";
+import { handleMouseMove, startAnimation } from "./utils/functions";
+
+const { mouseCanvasSize, particlesCount, particleSize, particleColor } = { ...configs };
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const isBouncing = useRef<boolean>(false);
-  const mousePosition = useRef<MousePosition>({} as MousePosition);
-  const circle = useRef<any>(null);
-  const animatingTimeout = useRef<any>(null);
+  const mouseCanvasCont = useRef<HTMLDivElement>(null as any);
+  const mouseMoveHandler =  (event: MouseEvent) => handleMouseMove(event, mouseCanvasCont.current, mouseCanvasSize);
 
   useEffect(() => {
-    document.addEventListener('mousemove', (event: MouseEvent) => {
-      let left = event.clientX, top = event.clientY;
-      mousePosition.current = {
-        left,
-        top,
-      }
-      if (isBouncing.current) return;
-      if (event.movementX !== 0 || event.movementY !== 0) {
-        isBouncing.current = true;
-        const checkForChangeInt = setInterval(() => {
-          const { top: currentTop, left: currentLeft } = { ...mousePosition.current };
-          if (currentLeft === left && currentTop === top) {
-            clearInterval(checkForChangeInt);
-            animateCircle(left, top, circle, isBouncing, animatingTimeout, mousePosition)
-            return;
-          }
-          left = currentLeft;
-          top = currentTop;
-        }, 500);
-      }
-    });
-    return clearTimeout(animatingTimeout.current);
+    if (mouseCanvasCont.current.innerHTML || !mouseCanvasCont.current) return;
+    const mouseCanvas = document.createElement("canvas");
+    mouseCanvas.width = mouseCanvasSize;
+    mouseCanvas.height = mouseCanvasSize;
+    const context = mouseCanvas.getContext("2d");
+    document.addEventListener('mousemove',(event:MouseEvent) => mouseMoveHandler(event));
+    const particles: Particle[] = [];
+    for (let i = 0; i < particlesCount; i++) {
+      const newParticle = new Particle(particleSize, particleColor, mouseCanvasSize, mouseCanvasSize, context);
+      particles.push(newParticle);
+    }
+    startAnimation(context, mouseCanvas.width, mouseCanvas.height, particles);
+    mouseCanvasCont.current.appendChild(mouseCanvas);
+    return document.removeEventListener("mousemove", mouseMoveHandler);
   }, [])
 
   return (
     <main className={styles.main} >
       <div
-        id="circle"
-        ref={circle}
-        className={styles.ball}
+        className={styles.main_mouse_canvas}
+        ref={mouseCanvasCont}
       />
       {loading && <Loading />}
       <Greeting />
