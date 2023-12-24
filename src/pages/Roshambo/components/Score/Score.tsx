@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import styles from "../../../../styles/pages/Roshambo/components/Score/Score.module.scss";
 import { RoshamboContext } from "../../Roshambo";
@@ -8,7 +8,7 @@ import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 const Score = () => {
   const [userScores, setUserScores] = useState(0);
   const [opponentScores, setOpponentScores] = useState(0);
-  const { opponentScore, userScore, result } = useContext(RoshamboContext);
+  const { opponentScore, userScore } = useContext(RoshamboContext);
   // define which side of the score window should be animated 
 
   useEffect(() => {

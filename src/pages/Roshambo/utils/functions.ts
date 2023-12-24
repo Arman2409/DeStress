@@ -1,8 +1,5 @@
 import type { GameStatus, Jest } from "../../../types/roshambo";
 import { combinations } from "./data";
-import configs from "../../../configs/roshambo";
-
-const { backgrounds } = { ...configs };
 
 export const defineGameStatus = (jest1: Jest | null, jest2: Jest | null): GameStatus | null => {
   if (!jest1 || !jest2) return null;

@@ -15,7 +15,7 @@ const BounceFallGame = ({
     mouseExtraY = 0,
     ballRadius }: BounceGameProps) => {
     const [ballsCount, setBallsCount] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const mainCanvas = useRef<any>(null);
     const gameInitialized = useRef<boolean>(false);
 
@@ -35,14 +35,14 @@ const BounceFallGame = ({
             const newBall = new Ball(clientX + extraX, clientY + extraY, context);
             newBall.animate();
             setBallsCount(curr => curr += 1);
+            setLoading(false);
         })
-
         function clear() {
             context.clearRect(0, 0, window.innerWidth, window.innerHeight);
             requestAnimationFrame(clear);
         }
         clear();
-    }, [setBallsCount])
+    }, [setBallsCount, extraX, extraY])
 
     return (
         <>
