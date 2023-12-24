@@ -6,7 +6,7 @@ import type { SubtitleDetails } from "../../../../../../types/home";
 import configs from "../../../../../../configs/home";
 import { getSpacingAndWidth } from "./utils/functions";
 
-const { subTitle } = { ...configs };
+const { subTitle, lettersAnimationDuration } = { ...configs };
 
 const LettersAnimation = () => {
     const details = getSpacingAndWidth(window.innerWidth);
@@ -33,7 +33,7 @@ const LettersAnimation = () => {
                     top: 0 + "px",
                     left: 0 + Number(order) * letterDetails.spacing + "px"
                 },
-                { duration: 1 })
+                { duration: lettersAnimationDuration })
         })
         window.addEventListener("resize", () => {
             const details = getSpacingAndWidth(window.innerWidth);

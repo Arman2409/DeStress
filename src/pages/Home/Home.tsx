@@ -14,7 +14,7 @@ const { mouseCanvasSize, particlesCount, particleSize, particleColor } = { ...co
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const mouseCanvasCont = useRef<HTMLDivElement>(null as any);
-  const mouseMoveHandler =  (event: MouseEvent) => handleMouseMove(event, mouseCanvasCont.current, mouseCanvasSize);
+  const mouseMoveHandler = (event: MouseEvent) => handleMouseMove(event, mouseCanvasCont.current, mouseCanvasSize);
 
   useEffect(() => {
     if (mouseCanvasCont.current.innerHTML || !mouseCanvasCont.current) return;
@@ -22,7 +22,7 @@ const Home = () => {
     mouseCanvas.width = mouseCanvasSize;
     mouseCanvas.height = mouseCanvasSize;
     const context = mouseCanvas.getContext("2d");
-    document.addEventListener('mousemove',(event:MouseEvent) => mouseMoveHandler(event));
+    document.addEventListener('mousemove', (event: MouseEvent) => mouseMoveHandler(event));
     const particles: Particle[] = [];
     for (let i = 0; i < particlesCount; i++) {
       const newParticle = new Particle(particleSize, particleColor, mouseCanvasSize, mouseCanvasSize, context);

@@ -10,17 +10,22 @@ export class Particle {
     protected dy = 0;
     private readonly context: any;
 
-    constructor(size: number, color: string, canvasWidth: number, canvasHeight: number, context: any) {
+    constructor(
+        size: number,
+        color: string,
+        canvasWidth: number,
+        canvasHeight: number,
+        context: any) {
         this.size = size;
         this.color = color;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.context = context;
-        const extra = size / 2;
+        const extra = size;
         this.x = Math.random() * (canvasWidth - extra);
         this.y = Math.random() * (canvasHeight - extra);
-        this.dx = Math.random();
-        this.dy = Math.random();
+        this.dx = Math.random() + 0.1;
+        this.dy = Math.random() + 0.1;
     }
 
     animate = () => {
@@ -28,10 +33,10 @@ export class Particle {
         this.x += dx;
         this.y += dy;
         const { x, y } = { ...this };
-        if (x >= canvasWidth - size / 2) this.dx = -dx;
-        if (x <= 0 + size / 2) this.dx = -dx;
-        if (y >= canvasHeight - size / 2) this.dy = -dy;
-        if (y <= 0 + size / 2) this.dy = -dy;
+        if (x >= canvasWidth - size) this.dx = -dx;
+        if (x <= 0 + size) this.dx = -dx;
+        if (y >= canvasHeight - size) this.dy = -dy;
+        if (y <= 0 + size) this.dy = -dy;
         this.context?.beginPath();
         this.context.rect(x, y, size, size);
         this.context.fillStyle = color;

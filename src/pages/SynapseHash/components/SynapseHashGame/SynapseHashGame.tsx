@@ -61,7 +61,7 @@ const Game = () => {
                     },
                     // callback function to run after initializing the neurons 
                     (neuronsCount: number) => possibleConnections.current = neuronsCount * (neuronsCount - 1) / 2);
-                this.cameras.main.setBackgroundColor(backgroundColor)
+                this.cameras.main.setBackgroundColor(backgroundColor);
             }
         }
         const gameScene = new NetWork()

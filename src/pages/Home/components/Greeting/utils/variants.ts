@@ -10,12 +10,5 @@ export const logoVariants: Variants = {
       duration: 1,
       ease: "circInOut"
     }
-  },
-  hover: {
-    transform: "rotate(0deg) scale(0.8)",
-    transition: {
-      duration: 1,
-      ease: "easeIn"
-    }
   }
 }

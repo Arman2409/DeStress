@@ -93,7 +93,7 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
   sprite.setTexture("neuronElectrifiedFrame");
 }
 
-export const addRandomNeurons = (scene: NetworkScene, size: "medium"|"large"|"veryLarge", clickCallback: Function, callback: Function) => {
+export const addRandomNeurons = (scene: NetworkScene, size: "medium" | "large" | "veryLarge", clickCallback: Function, callback: Function) => {
   if (scene.sys?.cameras?.main) {
     const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
     const { width, height } = scene.sys?.cameras?.main || {};
