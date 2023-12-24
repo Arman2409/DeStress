@@ -49,9 +49,7 @@
     ]
   },
   "devDependencies": {
-    "css-loader": "^6.8.1",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
-    "typescript-plugin-css-modules": "^5.0.2"
+    "@types/lodash": "^4.14.202",
+    "sass": "^1.69.5"
   }
 }
