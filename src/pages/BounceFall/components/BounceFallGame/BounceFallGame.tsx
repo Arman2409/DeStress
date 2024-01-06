@@ -27,7 +27,7 @@ const BounceFallGame = ({
     useEffect(() => {
         if (gameInitialized.current) return;
         gameInitialized.current = true;
-        const canvas: any = mainCanvas.current
+        const canvas: any = mainCanvas.current;
         const context = canvas.getContext("2d");
 
         canvas.addEventListener("click", (event: MouseEvent) => {
