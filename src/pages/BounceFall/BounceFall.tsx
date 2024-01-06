@@ -18,11 +18,10 @@ const BounceFall = () => {
 
     useEffect(() => {
         // update local storage 
-        const visited = updateVisitedStatus("oceanFlow");
+        const visited = updateVisitedStatus("bounceFall");
         if (!visited) {
             setShowInfo(true);
         }
-
     }, [setShowInfo])
 
     return (
