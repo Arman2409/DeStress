@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
+import { angle as getAngle} from "pointscape";
 
 import type { FishSchool } from "../../../../types/oceanFlow";
 import configs from "../../../../configs/oceanFlow";
@@ -7,7 +8,6 @@ import { eventKeys } from "./utils/data";
 import { addPlants, checkForCollision, createRandomFishSchool, updateJellyfishDetails } from "./utils/functions";
 import ScoreAlert from "../../../../globals/components/ScoreAlert/ScoreAlert";
 import Loading from "../../../../globals/components/Loading/Loading";
-import getAngle from "../../../../globals/functions/getAngle";
 import { getConfig } from "./utils/config";
 
 const {

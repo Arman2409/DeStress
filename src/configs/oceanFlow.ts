@@ -5,7 +5,7 @@ const configs =  {
     jellyfishStep: 10,
     jellyFishFramesCount: 9,
     collisionDistance: 250,
-    plantsCountRange: [4, 7],
+    plantsCountRange: [5, 8],
     extraX: 2.5,
     extraY: 5,
     backgroundColor: "#E0FFFF",

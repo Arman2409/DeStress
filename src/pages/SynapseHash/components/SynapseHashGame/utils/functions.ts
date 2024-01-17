@@ -1,10 +1,7 @@
-import { random } from "lodash";
+import { uniqueId, randomNumber, angle as getAngle, distance, pointWithoutCollision, middlePoint } from "pointscape";
 
 import type { NetworkScene, Neuron } from "../../../../../types/synapseHash";
 import configs from "../../../../../configs/synapseHash";
-import generateWithoutCollisions from "../../../../../globals/functions/generatePointsWithoutCollisions";
-import generateUniqueId from "../../../../../globals/functions/generateUniqueId";
-import getAngle from "../../../../../globals/functions/getAngle";
 
 const {
   neuronsCountRange,
@@ -18,19 +15,6 @@ const getNeuronTweenConfig = (target: any) => ({
   duration: 120000,
   repeat: -1
 })
-
-const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
-  const xDistance = Math.abs(x1 - x2);
-  const yDistance = Math.abs(y1 - y2);
-  const distance = Math.sqrt(xDistance ** 2 + yDistance ** 2);
-  const middleX = x2 >= x1 ? xDistance / 2 : -xDistance / 2;
-  const middleY = y2 >= y1 ? yDistance / 2 : -yDistance / 2;
-  return ({
-    middleX,
-    middleY,
-    distance
-  });
-}
 
 const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) => {
   const { sprite, id } = { ...neuron };
@@ -57,11 +41,12 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
     const { x: startX = 0, y: startY = 0 } = { ...previousClicked.sprite };
     const { x: endX, y: endY } = { ...neuron.sprite };
     const angle = getAngle(startX, startY, endX, endY);
-    const { middleX, middleY, distance } = calculateDistance(startX, startY, endX, endY);
+    const dist = distance(startX,  startY, endX, endY)
+    const { x: middleX, y: middleY } = middlePoint(startX, startY, endX, endY);
     // creating the connection sprite from one neuron to another 
     const newConnection = scene.physics.add.sprite(startX + middleX / 3, startY + middleY / 3, "connectionFrame")
       .setRotation(-Math.PI / 2 + angle)
-      .setScale(distance * 0.0010, 1)
+      .setScale(dist * 0.0010, 1)
       .setDepth(1);
     scene.connectionSprites.push(newConnection);
     newConnection.anims.create({
@@ -76,11 +61,11 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
     setTimeout(() => {
       newConnection.x = startX + middleX / 2;
       newConnection.y = startY + middleY / 2;
-      newConnection.setScale(distance * 0.0015, 1)
+      newConnection.setScale(dist * 0.0015, 1)
       setTimeout(() => {
         newConnection.x = startX + middleX;
         newConnection.y = startY + middleY;
-        newConnection.setScale(distance * 0.003, 1)
+        newConnection.setScale(dist * 0.003, 1)
       }, 250)
       previousClicked.sprite.setRotation(-1.5 + angle);
     }, 250)
@@ -95,22 +80,25 @@ const clickNeuron = (scene: NetworkScene, neuron: Neuron, callback: Function) =>
 
 export const addRandomNeurons = (scene: NetworkScene, size: "medium" | "large" | "veryLarge", clickCallback: Function, callback: Function) => {
   if (scene.sys?.cameras?.main) {
-    const neuronsCount = random(neuronsCountRange[0], neuronsCountRange[1])
+    const neuronsCount = Math.round(randomNumber(neuronsCountRange[0], neuronsCountRange[1]))
     const { width, height } = scene.sys?.cameras?.main || {};
     for (let i = 0; i < neuronsCount; i++) {
       const others = scene.neurons.map(({ placement }) => ({ ...placement }));
       // defining the distance between the neurons regarding the window's width 
       const distance = size === "veryLarge" ? neuronDistanceBreakpoints[2] : size === "large" ? neuronDistanceBreakpoints[1] : neuronDistanceBreakpoints[0];
       // generating random points for neurons 
-      const { x, y } = generateWithoutCollisions(others, width, height - 50, distance);
+      let { x, y } = pointWithoutCollision(distance, width - distance, distance, height - distance, distance, others);
+      x = Math.round(x);
+      y = Math.round(y);
+      console.log(x, y, distance, width - distance, distance, height - distance, distance,);
       const scale = size === "veryLarge" ? 0.25 : 0.125;
       const newNeuronSprite = scene.physics.add.sprite(x, y, "neuronFrame")
-        .setRotation(random(0, 6.24))
+        .setRotation(randomNumber(0, 6.24))
         .setScale(scale)
         .setDepth(2)
         .setInteractive();
       const newNeuron = {
-        id: generateUniqueId(scene.neurons),
+        id: uniqueId(scene.neurons.map(({ id }: Neuron) => id)),
         placement: {
           x,
           y
