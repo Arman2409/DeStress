@@ -1,4 +1,3 @@
-import { remove } from "lodash";
 import { collision, angle as getAngle, uniqueId, pointWithoutCollision, randomNumber, randomBoolean } from "pointscape"
 
 import type { FishSchool, OceanScene } from "../../../../../types/oceanFlow";
@@ -151,13 +150,13 @@ export const addPlants = (scene: OceanScene) => {
 }
 
 
-const removeFishSchool = (school: FishSchool, scene: OceanScene) => {
+const removeFishSchool = (school: FishSchool, scene: OceanScene) => { 
     school.fishes.forEach((fish) => {
         fish.destroy();
     })
     clearInterval(school.interval);
-    remove(scene.fishSchools, ({ id = 0 }) => {
-        return id === school.id;
+    scene.fishSchools = scene.fishSchools.filter(({id}:FishSchool) => {
+        return id !== school.id;
     })
 }
 

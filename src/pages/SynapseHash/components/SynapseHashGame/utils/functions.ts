@@ -90,7 +90,6 @@ export const addRandomNeurons = (scene: NetworkScene, size: "medium" | "large" |
       let { x, y } = pointWithoutCollision(distance, width - distance, distance, height - distance, distance, others);
       x = Math.round(x);
       y = Math.round(y);
-      console.log(x, y, distance, width - distance, distance, height - distance, distance,);
       const scale = size === "veryLarge" ? 0.25 : 0.125;
       const newNeuronSprite = scene.physics.add.sprite(x, y, "neuronFrame")
         .setRotation(randomNumber(0, 6.24))

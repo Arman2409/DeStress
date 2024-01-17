@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { chunk } from "lodash";
 
 import styles from "../../../../styles/pages/Home/components/GameTiles/GameTiles.module.scss";
 import type { GameTilesProps, Game } from "../../../../types/home";
 import configs from "../../../../configs/home";
 import { gamesData } from "./utils/data";
 import Tile from "./components/Tile/Tile";
+import getChunks from "../../../../globals/functions/grtChunks";
 
 const { cornerImageInitialingDuration } = { ...configs };
 
@@ -15,8 +15,10 @@ const GameTiles = ({ choseGame }: GameTilesProps) => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
-    const gameGroups = chunk(games, 2);
+    const gameGroups = getChunks(games, 2);
 
+    console.log(gameGroups);
+    
     useEffect(() => {
         setTimeout(() => {
             setInitializedCorners(true);
