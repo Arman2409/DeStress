@@ -13,7 +13,7 @@ const CompleteAlert = ({ setStatus, status, startNew }: CompletedAlertProps) => 
     return (
         <div className={styles.completed_main}>
             <div
-                className={styles.completed_demo}
+                className="absolute_background demo"
                 onClick={() => completeOrCancel(false)} />
             <div className={styles.completed_content}>
                 <h4>

@@ -11,11 +11,6 @@
     left: 0;
 }
 
-.completed_demo {
-    @extend .demo;
-    @extend .absolute_background;
-}
-
 .completed_content {
     @extend .centered;
     @include mainBoxShadow($color1);

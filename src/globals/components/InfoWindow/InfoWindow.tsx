@@ -42,7 +42,7 @@ const InfoWindow = ({ visible,
                             {text}
                         </p>
                         <div className={image2 ? styles.info_image_cont_double
-                            : styles.info_image_cont}>
+                            : "centered"}>
                             {image && <img
                                 src={image}
                                 alt="info"
