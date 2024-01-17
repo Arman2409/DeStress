@@ -55,12 +55,8 @@
    color: $color1;
 }
 
-.info_image_cont {
-   @extend .centered;
-}
-
 .info_image_cont_double {
-   @extend .info_image_cont;
+   @extend .centered;
    height: 220px;
 }
 

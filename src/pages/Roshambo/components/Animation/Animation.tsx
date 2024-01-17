@@ -17,6 +17,7 @@ const {
 const imageBackgrounds = getBackgroundsArr(backgrounds, backgroundsPath);
 
 const Animation = () => {
+  const [imageLoaded, setImageLoaded] = useState<any>();
   const [windowSize, setWindowSize] = useState<WindowSize>(window.innerWidth > 680 ? "large" : window.innerWidth > 480 ? "medium" : "small");
   const { chosenJest, dispatchOpponentJest, opponentJest } = useContext(RoshamboContext);
   const opponentJestMemo = useMemo<Jest>(() => opponentJest || getRandomJest(), [opponentJest]);
@@ -45,10 +46,13 @@ const Animation = () => {
   return (
     <div
       className={styles.animation_main}
-      style={{
-        backgroundImage: `url(${backgroundMemo})`
-      }}>
-      <div className={styles.animations_cont}>
+     >
+      <img 
+        alt=""
+        className="absolute_background"
+        src={backgroundMemo}
+        onLoad={() => setImageLoaded(true)} />
+      {imageLoaded && <div className={styles.animations_cont}>
         <div className={styles.animation_cont}>
           <ShakingHand
             side="left"
@@ -69,7 +73,7 @@ const Animation = () => {
             showingMode={Boolean(opponentJest)}
           />
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

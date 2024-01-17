@@ -29,8 +29,8 @@ const Summary = () => {
   }, [dispatchOpponentJest, dispatchJest])
 
   return (
-    <div className={styles.summary_main}>
-      <div className={styles.summary_demo} />
+    <div className="absolute_background centered">
+      <div className="absolute_background demo" />
       <div className={styles.summary_content}>
         <h2 className={styles.summary_title}>
           {texts[gameStatus as keyof typeof texts]}

@@ -1,4 +1,4 @@
-import { random } from "lodash";
+import { randomNumber } from "pointscape";
 import type { Variants } from "framer-motion";
 
 import configs from "../../../../../../../configs/home";
@@ -38,7 +38,7 @@ export const cornerImageInitializeVariants: Variants = {
 }
 
 export const getCornerImageVariants = (): Variants => {
-    const getRandomPlace = () => random(30, 50);
+    const getRandomPlace = () => Math.round(randomNumber(30, 50));
     const repeatance = 4;
     const initial = "-40px";
     const topArr: string[] = [initial];

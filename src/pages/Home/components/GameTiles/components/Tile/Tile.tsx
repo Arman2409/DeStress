@@ -35,7 +35,7 @@ const Tile = ({ image, cornerImage, cornerInitialized, link, name, choseGame}: T
             />}
             <motion.img
                 src={image}
-                className={styles.tile_image}
+                className="absolute_background"
                 alt={name}
                 variants={backgroundImageVariants}
                 initial="initial"
