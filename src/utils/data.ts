@@ -3,6 +3,7 @@ import BounceFall from "../pages/BounceFall/BounceFall";
 import OceanFlow from "../pages/OceanFlow/OceanFlow";
 import Roshambo from "../pages/Roshambo/Roshambo";
 import SynapseHash from "../pages/SynapseHash/SynapseHash";
+import VoidVoyage from "../pages/VoidVoyage/VoidVoyage";
 
 export const routes = [
     {
@@ -29,5 +30,10 @@ export const routes = [
         key: "bounceFall",
         path: "/bounceFall",
         component: BounceFall
+    },
+    {
+        key: "voidVoyage",
+        path: "/voidVoyage",
+        component: VoidVoyage
     },
 ]
