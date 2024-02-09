@@ -12,7 +12,7 @@
 }
 
 
-.voidVoyage_main {
+.voidVoyage_cont {
     @include mainBoxShadow();
     @extend .game_window;
     
@@ -20,5 +20,6 @@
     position: relative;
     background-color: $color3;
     border-radius: 25px;
-    position: relative;   
+    position: relative;  
+    cursor: none; 
 }
