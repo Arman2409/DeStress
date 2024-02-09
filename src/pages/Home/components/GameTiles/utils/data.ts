@@ -27,4 +27,11 @@ export const gamesData = [
         "name": "Roshambo",
         "cornerImage": "/tiles/corner/fist.png",
     },
+    {
+        "order": 5,
+        "image": "/tiles/blackhole.webp",
+        "link": "/voidVoyage",
+        "name": "Void Voyage",
+        "cornerImage": "/tiles/corner/blackHole.png"
+    },
 ]

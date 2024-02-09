@@ -15,10 +15,8 @@ const GameTiles = ({ choseGame }: GameTilesProps) => {
     const games = gamesData.sort(({ order }, { order: currOrder }) => {
         return order - currOrder;
     })
-    const gameGroups = getChunks(games, 2);
+    const gameGroups = getChunks(games, 3);
 
-    console.log(gameGroups);
-    
     useEffect(() => {
         setTimeout(() => {
             setInitializedCorners(true);
